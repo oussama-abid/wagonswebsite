@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Zug extends Model
 {
     use HasFactory;
+    protected $fillable =['name','nachname','versandbanhof','bestimmungsbanhof','datum','ref','zugnummer','Mindestbremshunderstel'];
 }

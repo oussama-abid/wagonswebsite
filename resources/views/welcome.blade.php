@@ -71,46 +71,47 @@
                     <div class="col-lg-4 reservation-img" style="background-image: url(https://assets.deutschlandfunk.de/FILE_58a6ddb9ebc583a688290f44d813140f/1280xauto.jpg?t=1597541533052);" data-aos="zoom-out" data-aos-delay="200"></div>
 
                     <div class="col-lg-8 d-flex align-items-center reservation-form-bg">
-                        <form role="form" class="php-email-form" data-aos="fade-up" data-aos-delay="100">
-                            <div class="row gy-4">
+                        <form role="form" class="php-email-form" data-aos="fade-up" data-aos-delay="100" action="/addzug" method="post">
+                        @csrf   
+                        <div class="row gy-4">
                                 <div class="col-lg-5 col-md-6">
                                     <label for="inputName4">Name</label>
-                                    <input type="text" class="form-control" id="inputName4" placeholder="Name">
+                                    <input type="text" class="form-control" id="name" name="name"  placeholder="Name">
                                     <div class="validate"></div>
                                 </div>
                                 <div class="col-lg-5 col-md-6">
                                     <label for="inputNachname4">Nachname</label>
-                                    <input type="text" class="form-control" id="inputNachname4" placeholder="Nachname">
+                                    <input type="text" class="form-control" id="nachname" name="nachname" placeholder="Nachname">
                                     <div class="validate"></div>
                                 </div>
                                 <div class="col-lg-5 col-md-6">
                                     <label for="inputversandbahnhof4">Versandbahnhof</label>
-                                    <input type="text" class="form-control" id="inputversandbahnhof4" placeholder="versandbahnhof">
+                                    <input type="text" class="form-control" id="versandbanhof" name="versandbanhof" placeholder="versandbahnhof">
                                     <div class="validate"></div>
                                 </div>
                                 <div class="col-lg-5 col-md-6">
                                     <label for="inputBestimmungsbahnhof4">Bestimmungsbahnhof</label>
-                                    <input type="text" class="form-control" id="inputBestimmungsbahnhof4" placeholder="Bestimmungsbahnhof">
+                                    <input type="text" class="form-control" id="bestimmungsbanhof" name="bestimmungsbanhof" placeholder="Bestimmungsbahnhof">
                                     <div class="validate"></div>
                                 </div>
                                 <div class="col-lg-5 col-md-6">
                                     <label for="inputDatum">Datum</label>
-                                    <input type="date" class="form-control" id="inputDatum">
+                                    <input type="date" class="form-control" id="datum" name="datum">
                                     <div class="validate"></div>
                                 </div>
                                 <div class="col-lg-5 col-md-6">
                                     <label for="inputBestimmungsbahnhof4">Ref.-NR.</label>
-                                    <input type="text" class="form-control" id="inputBestimmungsbahnhof4" placeholder="Ref.-NR.">
+                                    <input type="text" class="form-control" id="ref" name="ref" placeholder="Ref.-NR.">
                                     <div class="validate"></div>
                                 </div>
                                 <div class="col-lg-5 col-md-6">
                                     <label for="inputZugnummer4">Zugnummer</label>
-                                    <input type="text" class="form-control" id="inputZugnummer4" placeholder="Zugnummer">
+                                    <input type="text" class="form-control" id="zugnummer" name="zugnummer" placeholder="Zugnummer">
                                     <div class="validate"></div>
                                 </div>
                                 <div class="col-lg-5 col-md-6">
                                     <label for="inputmindestbremshunderstel4">Mindestbremshunderstel</label>
-                                    <input type="text" class="form-control" id="inputmindestbremshunderstel4" placeholder="mindestbremshunderstel">
+                                    <input type="text" class="form-control" id="Mindestbremshunderstel" name="Mindestbremshunderstel" placeholder="mindestbremshunderstel">
                                     <div class="validate"></div>
                                 </div>
                                 
