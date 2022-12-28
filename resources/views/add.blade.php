@@ -57,45 +57,6 @@
     <main id="main">
 
 
-        <!-- ======= Stats Counter Section ======= -->
-        <section id="stats-counter" class="stats-counter">
-            <div class="container" data-aos="zoom-out">
-
-                <div class="row gy-4">
-
-                    <div class="col-lg-3 col-md-6">
-                        <div class="stats-item text-center w-100 h-100">
-                            <span data-purecounter-start="0" data-purecounter-end="232" data-purecounter-duration="1" class="purecounter"></span>
-                            <p>Clients</p>
-                        </div>
-                    </div><!-- End Stats Item -->
-
-                    <div class="col-lg-3 col-md-6">
-                        <div class="stats-item text-center w-100 h-100">
-                            <span data-purecounter-start="0" data-purecounter-end="521" data-purecounter-duration="1" class="purecounter"></span>
-                            <p>Projects</p>
-                        </div>
-                    </div><!-- End Stats Item -->
-
-                    <div class="col-lg-3 col-md-6">
-                        <div class="stats-item text-center w-100 h-100">
-                            <span data-purecounter-start="0" data-purecounter-end="1453" data-purecounter-duration="1" class="purecounter"></span>
-                            <p>Hours Of Support</p>
-                        </div>
-                    </div><!-- End Stats Item -->
-
-                    <div class="col-lg-3 col-md-6">
-                        <div class="stats-item text-center w-100 h-100">
-                            <span data-purecounter-start="0" data-purecounter-end="32" data-purecounter-duration="1" class="purecounter"></span>
-                            <p>Workers</p>
-                        </div>
-                    </div><!-- End Stats Item -->
-
-                </div>
-
-            </div>
-        </section><!-- End Stats Counter Section -->
-
 
 
 
@@ -103,7 +64,7 @@
 
 
         <!-- ======= Book A Table Section ======= -->
-        <section id="book-a-table" class="book-a-table">
+        <section id="book-a-table" class="book-a-table" style="margin-top: 50PX;">
             <div class="container" data-aos="fade-up">
 
                 <div class="section-header">
@@ -252,45 +213,7 @@
     <!-- ======= Footer ======= -->
     <footer id="footer" class="footer">
 
-        <div class="container">
-            <div class="row gy-3">
-                <div class="col-lg-4 col-md-10 d-flex">
-                    <i class="bi bi-geo-alt icon"></i>
-                    <div>
-                        <h4>Address</h4>
-                        <p>
-                            A108 Adam Street <br>
-                            New York, NY 535022 - US<br>
-                        </p>
-                    </div>
-
-                </div>
-
-                <div class="col-lg-4 col-md-10 footer-links d-flex">
-                    <i class="bi bi-telephone icon"></i>
-                    <div>
-                        <h4>Reservations</h4>
-                        <p>
-                            <strong>Phone:</strong> +1 5589 55488 55<br>
-                            <strong>Email:</strong> info@example.com<br>
-                        </p>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-10 footer-links d-flex">
-                    <i class="bi bi-clock icon"></i>
-                    <div>
-                        <h4>Opening Hours</h4>
-                        <p>
-                            <strong>Mon-Sat: 11AM</strong> - 23PM<br>
-                            Sunday: Closed
-                        </p>
-                    </div>
-                </div>
-
-
-            </div>
-        </div>
+     
 
         <div class="container">
             <div class="copyright">
