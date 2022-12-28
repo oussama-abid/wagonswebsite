@@ -751,6 +751,9 @@ section {
 /*--------------------------------------------------------------
 # Contact Section
 --------------------------------------------------------------*/
+.contact{
+  margin-top: -100px;
+}
 .contact .info-item {
   background: #f4f4f4;
   padding: 30px;

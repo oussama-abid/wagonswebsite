@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\HomeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,13 +14,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@index')->name('home');
+Route::get('/WagenHinzufügen', 'HomeController@add')->name('add');
 
-Route::get('/test', function () {
-    return view('test');});
-
-Route::get('/home', function () {
-    return view('home');
-});
