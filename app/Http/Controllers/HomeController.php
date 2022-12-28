@@ -14,4 +14,8 @@ class HomeController extends Controller
     {
         return view('add');
     }
+    public function list()
+    {
+        return view('List');
+    }
 }

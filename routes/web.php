@@ -33,3 +33,4 @@ Route::post('/addzug', function () {
     ]);
     return redirect('/');
 });
+Route::get('/list', 'HomeController@list')->name('list');
