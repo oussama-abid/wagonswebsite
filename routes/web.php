@@ -16,4 +16,4 @@ use App\Http\Controllers\HomeController;
 
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/WagenHinzufügen', 'HomeController@add')->name('add');
-
+Route::get('/list', 'HomeController@list')->name('list');
