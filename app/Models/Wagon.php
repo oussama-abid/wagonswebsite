@@ -8,4 +8,24 @@ use Illuminate\Database\Eloquent\Model;
 class Wagon extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'wagennummer',
+        'gattungsbuchstabe',
+        'längeüberpuffer',
+        'eigenmasse',
+        'AnzahlderAcshen',
+        'GewichtderLadung',
+        'Bremsgewicht',
+        'lastwechselundbremsgewicht',
+        'bremsstellung',
+        'hinweisezureibungsbremse',
+        'bemerkungenzurfeststellbremse',
+        'bemerkung',
+        'Schadwagen',
+        'Beladenmitgefahrgut',
+        'UNNummer',
+        'versandbanhof',
+        'bestimmungsbanhof',
+        'datum'
+    ];
 }

@@ -43,11 +43,11 @@
             </a>
 
             <nav id="navbar" class="navbar">
-           
+
             </nav><!-- .navbar -->
             <a class="btn-book-a-table" href="/">Startseite</a>
 
-            
+
 
         </div>
     </header><!-- End Header -->
@@ -69,134 +69,134 @@
 
                 <div class="section-header">
                     <h2>Wagen Hinzufügen</h2>
-                    <p>Neues <span>Wagen</span> Hinzufügen</p>
+                    <p>Neues <span>Wagen</span> Hinzufügen</p><br>
+                    
+                    
                 </div>
 
-                <div class="row g-0" >
+                <div class="row g-0">
 
                     <div class="col-lg-4 reservation-img" style="background-image: url(https://media.istockphoto.com/id/1337377361/photo/deutsche-bahn-train-arriving-at-greifswald-central-station.jpg?b=1&s=170667a&w=0&k=20&c=_AKnl_sYJtATWDiPGsm3lE1wks50UuUOeXe1bREwnpU=);" data-aos="zoom-out" data-aos-delay="200"></div>
 
                     <div class="col-lg-8 d-flex align-items-center reservation-form-bg">
-                        <form action="forms/book-a-table.php" method="post" role="form" class="php-email-form" data-aos="fade-up" data-aos-delay="100">
+                        <form role="form" class="php-email-form" data-aos="fade-up" data-aos-delay="100" action="/addwagen" method="post">
+                            @csrf
                             <div class="row gy-4">
-                                <div class="col-lg-9 col-md-6" >
-                                    <input type="text" name="name" class="form-control" id="name" placeholder="Wagen Nummer : Z.B 33 80 51 6470 564-6" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
+                                <div class="col-lg-9 col-md-6">
+                                    <input type="text" id="wagennummer" name="wagennummer" class="form-control" id="name" placeholder="Wagen Nummer : Z.B 33 80 51 6470 564-6" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
                                     <div class="validate"></div>
                                 </div>
                                 <div class="col-lg-5 col-md-6">
-                                    <input type="email" class="form-control" name="email" id="email" placeholder="Gattungsbuchstabe" data-rule="email" data-msg="Please enter a valid email">
+                                    <input type="text" id="gattungsbuchstabe" name="gattungsbuchstabe" class="form-control" placeholder="Gattungsbuchstabe" data-rule="email" data-msg="Please enter a valid email">
                                     <div class="validate"></div>
                                 </div>
                                 <div class="col-lg-5 col-md-6">
-                                    <input type="text" class="form-control" name="phone" id="phone" placeholder="Länge über puffer (LüP)" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
+                                    <input type="text" class="form-control" name="längeüberpuffer" id="längeüberpuffer" placeholder="Länge über puffer (LüP)" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
                                     <div class="validate"></div>
                                 </div>
                                 <div class="col-lg-5 col-md-6">
-                                    <input type="text" name="date" class="form-control" id="date" placeholder="Eigenmasse (T)" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
+                                    <input type="text" name="eigenmasse" id="eigenmasse" class="form-control" placeholder="Eigenmasse (T)" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
                                     <div class="validate"></div>
                                 </div>
                                 <div class="col-lg-5 col-md-6">
-                                    <input type="text" class="form-control" name="time" id="time" placeholder="Anzahl der Acshen" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
+                                    <input type="text" class="form-control" name="AnzahlderAcshen" id="AnzahlderAcshen" placeholder="Anzahl der Acshen" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
                                     <div class="validate"></div>
                                 </div>
                                 <div class="col-lg-5 col-md-6">
-                                    <input type="number" class="form-control" name="people" id="people" placeholder="Gewicht der Ladung" data-rule="minlen:1" data-msg="Please enter at least 1 chars">
+                                    <input type="text" class="form-control" name="GewichtderLadung" id="GewichtderLadung" placeholder="Gewicht der Ladung" data-rule="minlen:1" data-msg="Please enter at least 1 chars">
                                     <div class="validate"></div>
                                 </div>
                                 <div class="col-lg-5 col-md-6">
-                                    <input type="number" class="form-control" name="people" id="people" placeholder=" Bremsgewicht" data-rule="minlen:1" data-msg="Please enter at least 1 chars">
+                                    <input type="text" class="form-control" name="Bremsgewicht" id="Bremsgewicht" placeholder=" Bremsgewicht" data-rule="minlen:1" data-msg="Please enter at least 1 chars">
                                     <div class="validate"></div>
                                 </div>
                                 <div class="col-lg-5 col-md-6">
-
-                                    <select class="form-control">
-                                        <option selected> lastwechsel und bremsgewicht </option>
-                                        <option value="1">Leer</option>
-                                        <option value="2">Teilbeladen</option>
-                                        <option value="3">beladen</option>
-                                        <option value="3">Automatisch</option>
+                                <label for="lastwechselundbremsgewicht">lastwechsel und bremsgewicht</label>
+                                    <select class="form-control" name="lastwechselundbremsgewicht" id="lastwechselundbremsgewicht">
+                                        
+                                        <option value="Leer">Leer</option>
+                                        <option value="Teilbeladen">Teilbeladen</option>
+                                        <option value="beladen">beladen</option>
+                                        <option value="Automatisch">Automatisch</option>
 
                                     </select>
                                     <div class="validate"></div>
                                 </div>
                                 <div class="col-lg-5 col-md-6">
-
-                                    <select class="form-control">
-                                        <option selected>bremsstellung </option>
-                                        <option value="1">AUS</option>
-                                        <option value="2">R</option>
-                                        <option value="3">P</option>
-                                        <option value="3">G</option>
+                                <label for="bremsstellung">bremsstellung </label>
+                                    <select class="form-control" name="bremsstellung" id="bremsstellung">
+                                        
+                                        <option value="AUS">AUS</option>
+                                        <option value="R">R</option>
+                                        <option value="P">P</option>
+                                        <option value="G">G</option>
 
                                     </select>
                                     <div class="validate"></div>
                                 </div>
                                 <div class="col-lg-5 col-md-6">
+                                <label for="hinweisezureibungsbremse">hinweise zu reibungsbremse </label>
 
-                                    <select class="form-control">
-                                        <option selected>hinweise zu reibungsbremse </option>
-                                        <option value="1">keine</option>
-                                        <option value="2">K</option>
-                                        <option value="3">L</option>
-                                        <option value="3">LL</option>
+                                    <select class="form-control" name="hinweisezureibungsbremse" id="hinweisezureibungsbremse">
+                                        
+                                        <option value="keine">keine</option>
+                                        <option value="K">K</option>
+                                        <option value="L">L</option>
+                                        <option value="LL">LL</option>
                                     </select>
                                     <div class="validate"></div>
                                 </div>
                                 <div class="col-lg-5 col-md-6">
-
-                                    <select class="form-control">
-                                        <option selected>bemerkungen zur feststellbremse</option>
-                                        <option value="1">Keine</option>
-                                        <option value="2">bühnenbedienbar</option>
-                                        <option value="3">bodenbedienbar</option>
+                                <label for="bemerkungenzurfeststellbremse">bemerkungen zur feststellbremse </label>
+                                    <select class="form-control" name="bemerkungenzurfeststellbremse" id="bemerkungenzurfeststellbremse">
+                                      
+                                        <option value="Keine">Keine</option>
+                                        <option value="bühnenbedienbar">bühnenbedienbar</option>
+                                        <option value="bodenbedienbar">bodenbedienbar</option>
                                     </select>
                                     <div class="validate"></div>
                                 </div>
                                 <div class="col-lg-5 col-md-6">
-
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-                                        <label class="form-check-label" for="inlineCheckbox1"> lademaßüberschreitung</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-                                        <label class="form-check-label" for="inlineCheckbox2">außergewöhnliche sendung</label>
-                                    </div>
+                                    <fieldset id="bemerkung" name="bemerkung" class="form-check">
+                                        <input type="radio" value="lademaßüberschreitung" name="bemerkung"> lademaßüberschreitung <br>
+                                        <input type="radio" value="außergewöhnliche sendung" name="bemerkung"> außergewöhnliche sendung <br>
+                                        <input type="radio" value="windgefährdete ladung" name="bemerkung"> windgefährdete ladung
+                                    </fieldset>
 
 
+
+                                </div>
+
+                                <div class="col-lg-9 col-md-6">
+                                <label for="bemerkungenzurfeststellbremse">Schadwagen</label>
+                                    <select class="form-control" name="Schadwagen" id="Schadwagen">
+                                        
+                                        <option value="Muster M">Muster M</option>
+                                        <option value="Muster K">Muster K</option>
+                                        <option value="Muster K + R1">Muster K + R1</option>
+                                        <option value="Muster V">Muster V</option>
+                                    </select>
                                 </div>
                                 <div class="col-lg-5 col-md-6">
 
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">
-                                        <label class="form-check-label" for="inlineCheckbox3">schadwagen</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">
-                                        <label class="form-check-label" for="inlineCheckbox3">windgefährdete ladung</label>
-                                    </div>
-
-                                </div>
-                                <div class="col-lg-5 col-md-6">
-
-                                <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">
+                                        <input class="form-check-input" type="checkbox" value="yes" name="Beladenmitgefahrgut" id="Beladenmitgefahrgut">
                                         <label class="form-check-label" for="inlineCheckbox3">Beladen mit gefahrgut </label>
                                     </div>
                                     <div class="validate"></div>
                                 </div>
                                 <div class="col-lg-5 col-md-6">
-                                <input type="email" class="form-control" name="email" id="email" placeholder="UN-Nummer" data-rule="email" data-msg="Please enter a valid email">
+                                    <input type="text" class="form-control" name="UNNummer" id="UNNummer" placeholder="UN-Nummer" data-rule="email" data-msg="Please enter a valid email">
                                     <div class="validate"></div>
-                                    <div class="validate"></div>
+
                                 </div>
+                                <input type="text" id="zugid" name ="zugid" value="{{$zug->id}}" hidden>
+                                <input type="text" id="zugdatum" name ="zugdatum" value="{{$zug->datum}}" hidden>
+                                <input type="text" id="zugbestimmungsbanhof" name ="zugbestimmungsbanhof" value="{{$zug->bestimmungsbanhof}}" hidden>
+                                <input type="text" id="zugversandbanhof" name ="zugversandbanhof" value="{{$zug->versandbanhof}}" hidden>
                             </div>
 
-                            <div class="mb-3">
-                                <div class="loading">Loading</div>
-                                <div class="error-message"></div>
-                                <div class="sent-message">Your booking request was sent. We will call back or send an Email to confirm your reservation. Thank you!</div>
-                            </div>
+
                             <div class=""><button type="submit">wagen speichern</button></div>
                         </form>
                     </div><!-- End Reservation Form -->
@@ -213,7 +213,7 @@
     <!-- ======= Footer ======= -->
     <footer id="footer" class="footer">
 
-     
+
 
         <div class="container">
             <div class="copyright">

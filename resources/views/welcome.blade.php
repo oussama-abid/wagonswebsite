@@ -49,7 +49,7 @@
                 </ul>
             </nav><!-- .navbar -->
 
-            <a class="btn-book-a-table" href="/WagenHinzufügen">Wagen Hinzufügen</a>
+            <a class="btn-book-a-table" href="/list">Wagen List</a>
             <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
             <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
 
@@ -60,71 +60,123 @@
 
 
     <main id="main">
+        <div class="container" data-aos="fade-up">
 
-        <!-- ======= Book A Table Section ======= -->
-        <section id="book-a-table" class="book-a-table">
-            <div class="container" data-aos="fade-up">
+            <br><br><br> <br><br><br>
 
-       
-                <div class="row g-0">
 
-                    <div class="col-lg-4 reservation-img" style="background-image: url(https://assets.deutschlandfunk.de/FILE_58a6ddb9ebc583a688290f44d813140f/1280xauto.jpg?t=1597541533052);" data-aos="zoom-out" data-aos-delay="200"></div>
+            <div class="row">
+                <div class="section-header">
+                    <h1>Zug list</h1>
+                </div>
+                <br><br><br>
 
-                    <div class="col-lg-8 d-flex align-items-center reservation-form-bg">
-                        <form role="form" class="php-email-form" data-aos="fade-up" data-aos-delay="100" action="/addzug" method="post">
-                        @csrf   
-                        <div class="row gy-4">
-                                <div class="col-lg-5 col-md-6">
-                                    <label for="inputName4">Name</label>
-                                    <input type="text" class="form-control" id="name" name="name"  placeholder="Name">
-                                    <div class="validate"></div>
-                                </div>
-                                <div class="col-lg-5 col-md-6">
-                                    <label for="inputNachname4">Nachname</label>
-                                    <input type="text" class="form-control" id="nachname" name="nachname" placeholder="Nachname">
-                                    <div class="validate"></div>
-                                </div>
-                                <div class="col-lg-5 col-md-6">
-                                    <label for="inputversandbahnhof4">Versandbahnhof</label>
-                                    <input type="text" class="form-control" id="versandbanhof" name="versandbanhof" placeholder="versandbahnhof">
-                                    <div class="validate"></div>
-                                </div>
-                                <div class="col-lg-5 col-md-6">
-                                    <label for="inputBestimmungsbahnhof4">Bestimmungsbahnhof</label>
-                                    <input type="text" class="form-control" id="bestimmungsbanhof" name="bestimmungsbanhof" placeholder="Bestimmungsbahnhof">
-                                    <div class="validate"></div>
-                                </div>
-                                <div class="col-lg-5 col-md-6">
-                                    <label for="inputDatum">Datum</label>
-                                    <input type="date" class="form-control" id="datum" name="datum">
-                                    <div class="validate"></div>
-                                </div>
-                                <div class="col-lg-5 col-md-6">
-                                    <label for="inputBestimmungsbahnhof4">Ref.-NR.</label>
-                                    <input type="text" class="form-control" id="ref" name="ref" placeholder="Ref.-NR.">
-                                    <div class="validate"></div>
-                                </div>
-                                <div class="col-lg-5 col-md-6">
-                                    <label for="inputZugnummer4">Zugnummer</label>
-                                    <input type="text" class="form-control" id="zugnummer" name="zugnummer" placeholder="Zugnummer">
-                                    <div class="validate"></div>
-                                </div>
-                                <div class="col-lg-5 col-md-6">
-                                    <label for="inputmindestbremshunderstel4">Mindestbremshunderstel</label>
-                                    <input type="text" class="form-control" id="Mindestbremshunderstel" name="Mindestbremshunderstel" placeholder="mindestbremshunderstel">
-                                    <div class="validate"></div>
-                                </div>
-                                
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Zugnummer</th>
+                            <th scope="col">Datum</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">NachName</th>
+                            <th scope="col">Versandbahnhof</th>
+                            <th scope="col">Bestimmungsbahnhof</th>
+                            <th scope="col">Ref_NR</th>
+                            <th scope="col">Mindestbremshunderstel</th>
+                            <th scope="col">neues_wagen</th>
 
-                         
-                            <div ><button type="submit">Weiter</button></div>
-                        </form>
-                    </div><!-- End Reservation Form -->
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($zugs as $key => $zug)
+                        <tr>
+                            <th scope="row">{{ $key+1 }}</th>
+                            <td>{{ $zug->zugnummer }}</td>
+                            <td >{{ $zug->datum }}</td>
+                            <td>{{ $zug->name }}</td>
+                            <td>{{ $zug->nachname }}</td>
+                            <td>{{ $zug->versandbanhof }}</td>
+                            <td>{{ $zug->bestimmungsbanhof }}</td>
+                            <td>{{ $zug->ref }}</td>
+                            <td>{{ $zug->Mindestbremshunderstel }}</td>
+                            <td>
+                                <a href="{{ route('addwagon', ['zug' => $zug->id]) }}">wagen Hinzufügen </a>
+                            </td>
+                        </tr>
+
+                        @endforeach
+
+
+                    </tbody>
+                </table>
+            </div> <!-- ======= Book A Table Section ======= -->
+            <section id="book-a-table" class="book-a-table">
+                <div class="container" data-aos="fade-up">
+                    <div class="section-header">
+                        <h2>Zug Hinzufügen</h2>
+                        <p>Neues <span>Zug</span> Hinzufügen</p>
+                    </div>
+
+                    <div class="row g-0">
+
+                        <div class="col-lg-4 reservation-img" style="background-image: url(https://assets.deutschlandfunk.de/FILE_58a6ddb9ebc583a688290f44d813140f/1280xauto.jpg?t=1597541533052);" data-aos="zoom-out" data-aos-delay="200"></div>
+
+                        <div class="col-lg-8 d-flex align-items-center reservation-form-bg">
+                            <form role="form" class="php-email-form" data-aos="fade-up" data-aos-delay="100" action="/addzug" method="post">
+                                @csrf
+                                <div class="row gy-4">
+                                    <div class="col-lg-5 col-md-6">
+                                        <label for="inputName4">Name</label>
+                                        <input type="text" class="form-control" id="name" name="name" placeholder="Name">
+                                        <div class="validate"></div>
+                                    </div>
+                                    <div class="col-lg-5 col-md-6">
+                                        <label for="inputNachname4">Nachname</label>
+                                        <input type="text" class="form-control" id="nachname" name="nachname" placeholder="Nachname">
+                                        <div class="validate"></div>
+                                    </div>
+                                    <div class="col-lg-5 col-md-6">
+                                        <label for="inputversandbahnhof4">Versandbahnhof</label>
+                                        <input type="text" class="form-control" id="versandbanhof" name="versandbanhof" placeholder="versandbahnhof">
+                                        <div class="validate"></div>
+                                    </div>
+                                    <div class="col-lg-5 col-md-6">
+                                        <label for="inputBestimmungsbahnhof4">Bestimmungsbahnhof</label>
+                                        <input type="text" class="form-control" id="bestimmungsbanhof" name="bestimmungsbanhof" placeholder="Bestimmungsbahnhof">
+                                        <div class="validate"></div>
+                                    </div>
+                                    <div class="col-lg-5 col-md-6">
+                                        <label for="inputDatum">Datum</label>
+                                        <input type="date" class="form-control" id="datum" name="datum">
+                                        <div class="validate"></div>
+                                    </div>
+                                    <div class="col-lg-5 col-md-6">
+                                        <label for="inputBestimmungsbahnhof4">Ref.-NR.</label>
+                                        <input type="text" class="form-control" id="ref" name="ref" placeholder="Ref.-NR.">
+                                        <div class="validate"></div>
+                                    </div>
+                                    <div class="col-lg-5 col-md-6">
+                                        <label for="inputZugnummer4">Zugnummer</label>
+                                        <input type="text" class="form-control" id="zugnummer" name="zugnummer" placeholder="Zugnummer">
+                                        <div class="validate"></div>
+                                    </div>
+                                    <div class="col-lg-5 col-md-6">
+                                        <label for="inputmindestbremshunderstel4">Mindestbremshunderstel</label>
+                                        <input type="text" class="form-control" id="Mindestbremshunderstel" name="Mindestbremshunderstel" placeholder="mindestbremshunderstel">
+                                        <div class="validate"></div>
+                                    </div>
+
+
+
+                                    <div><button type="submit">Weiter</button></div>
+                            </form>
+                        </div><!-- End Reservation Form -->
+
+                    </div>
 
                 </div>
-
-            </div>
-        </section><!-- End Book A Table Section -->
+            </section><!-- End Book A Table Section -->
 
 
 

@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 
 class ZugController extends Controller
 {
+    public function show (){
+        $data = Zug::all();
+        return view('welcome',['zugs'=>$data]);
+    }
     public function store(Request $request)
     {
         $zug = new Zug;
@@ -20,5 +24,11 @@ class ZugController extends Controller
         $zug->zugnummer = $request['zugnummer'];
         $zug->Mindestbremshunderstel = $request['Mindestbremshunderstel'];  
         $zug->save();
+    }
+    public function create(Zug $zug)
+    {
+        
+        return view('add',['zug'=>$zug]);
+
     }
 }

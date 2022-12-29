@@ -15,25 +15,24 @@ class CreateWagonsTable extends Migration
     {
         Schema::create('wagons', function (Blueprint $table) {
             $table->id();
-            $table->integer('wagennummer');
+            $table->string('wagennummer');
             $table->string('gattungsbuchstabe');
-            $table->float('längeüberpuffer');
-            $table->integer('eigenmasse');
-            $table->integer('Anzahl der Acshen');
-            $table->integer('Gewicht der Ladung');
-            $table->integer('Bremsgewicht');
-            $table->string('lastwechsel und bremsgewicht');
-            $table->string('hinweise zu reibungsbremse');
-            $table->string('bemerkungen zur feststellbremse');
-            $table->string('lademaßüberschreitung');
-            $table->string('außergewöhnliche sendung');
-            $table->string('schadwagen');
-            $table->string('windgefährdete ladung');
-            $table->string('Beladen mit gefahrgut');
-            $table->integer('UN-Nummer');
-            $table->string('versandbanhof');
-            $table->string('bestimmungsbanhof');
-            $table->date('datum');
+            $table->string('längeüberpuffer');
+            $table->string('eigenmasse');
+            $table->string('AnzahlderAcshen');
+            $table->string('GewichtderLadung');
+            $table->string('Bremsgewicht');
+            $table->string('lastwechselundbremsgewicht');
+            $table->string('hinweisezureibungsbremse');
+            $table->string('bremsstellung');
+            $table->string('bemerkungenzurfeststellbremse');
+            $table->string('bemerkung');
+            $table->string('Schadwagen');
+            $table->string('Beladenmitgefahrgut');
+            $table->string('UNNummer');
+            $table->string('versandbanhof')->nullable();
+            $table->string('bestimmungsbanhof')->nullable();
+            $table->string('datum')->nullable();
 
 
 

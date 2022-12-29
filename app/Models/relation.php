@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class relation extends Model
 {
     use HasFactory;
+    protected $fillable =['wagon_id','zug_id'];
 }
