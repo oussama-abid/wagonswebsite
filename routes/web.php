@@ -37,8 +37,8 @@ Route::post('/addzug', function () {
     ]);
     return redirect('/');
 });
-Route::get('/list', 'HomeController@list')->name('list');
 Route::get('/list2', 'HomeController@list2')->name('list2');
+Route::get('/list', 'WagonController@list')->name('list');
 
 Route::post('/addwagen', function () {
     $wagon = new Wagon;

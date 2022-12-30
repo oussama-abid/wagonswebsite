@@ -24,7 +24,8 @@
   <link href="{{url('vendor/aos/aos.css')}}" rel="stylesheet">
   <link href="{{url('vendor/glightbox/css/glightbox.min.css')}}" rel="stylesheet">
   <link href="{{url('vendor/swiper/swiper-bundle.min.css')}}" rel="stylesheet">
-
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <!-- Template Main CSS File -->
   <link rel="stylesheet" href="{{url('css/main.css')}}">
 
@@ -59,7 +60,11 @@
 
 
 
+    <script>
 
+        console.log(<?= json_encode($list); ?>);
+
+    </script>
 
 
 
@@ -74,30 +79,35 @@
           <div class="col-md-6">
 
             <div class="row">
-              <div class="col-md-4"> <label for="zugnummer">Zugnummer:</label></div>
-              <div class="col"> <input type="text" class="form-control" id="zugnummer"></div>
+              <div class="col-md-6"> <label for="zugnummer">Zugnummer:</label></div>
+              <div class="col"> <input type="text" class="form-control" onkeyup="myFunction1()" id="zugnummer"></div>
             </div><br>
-            <div class="row">
-              <div class="col-md-4"> <label for="Datum">Datum:</label></div>
-              <div class="col"> <input type="text" class="form-control" id="Datum"></div>
-            </div><br>
-            <div class="row">
-              <div class="col-md-4"> <label for="Versandbahnof">Versandbahnof:</label></div>
-              <div class="col"> <input type="text" class="form-control" id="Versandbahnof"></div>
-            </div><br>
-            <div class="row">
-              <div class="col-md-4"> <label for="Bestimmungsbahnhof">Bestimmungsbahnhof:</label></div>
-              <div class="col"> <input type="text" class="form-control" id="Bestimmungsbahnhof"></div>
-            </div><br>
-            <div class="row">
-              <div class="col-md-4"> <label for="Ref.-Nr">Ref.-Nr:</label></div>
-              <div class="col"> <input type="text" class="form-control" id="Ref.-Nr"></div>
-            </div>
 
+          
+            <div class="row">
+              <div class="col-md-6"> <label for="Datum">Datum:</label></div>
+              <div class="col"> <input type="text" class="form-control" id="Datum" onkeyup="myFunction()"></div>
+            </div><br>
+          
+            <div class="row">
+              <div class="col-md-6"> <label for="Versandbahnof">Versandbahnof:</label></div>
+              <div class="col"> <input type="text" class="form-control" onkeyup="myFunction2()" id="versandbahnof"></div>
+            </div><br>
+          
+            <div class="row">
+              <div class="col-md-6"> <label for="Bestimmungsbahnhof">Bestimmungsbahnhof:</label></div>
+              <div class="col"> <input type="text" class="form-control" onkeyup="myFunction3()" id="bestimmungsbahnhof"></div>
+            </div><br>
+           
+            <div class="row">
+              <div class="col-md-6"> <label for="Ref.-Nr">Ref.-Nr:</label></div>
+              <div class="col"> <input type="text" class="form-control" onkeyup="myFunction4()" id="ref"></div>
+            </div>
+          
 
 
           </div>
-          <div class="col-md-6">
+          <div class="col-md-6" >
             <button class="btn btn-primary" style="width:160px;float: right;">Wagen erfassen</button><br><br>
             <button class="btn btn-primary" style="width:160px;float: right;">Auftragsdaten</button><br><br>
             <button class="btn btn-primary" style="width:160px;float: right;">Wagenliste erstellen</button>
@@ -106,91 +116,47 @@
         </div>
         <br><br><br>
 
-        <table class="table">
+        <table class="table" id ="table">
           <thead class="thead-dark">
             <tr>
-              <th scope="col">Kennung</th>
+              <th scope="col">Datum</th>
+              <th scope="col" hidden>zugnummer</th>
+              <th scope="col" hidden>Versandbahnof</th>
+              <th scope="col" hidden>Bestimmungsbahnhof</th>
+              <th scope="col" hidden>Ref.-Nr</th>
+
               <th scope="col">Wagennummer</th>
               <th scope="col">Gattung</th>
               <th scope="col">LüP</th>
               <th scope="col">Gewicht</th>
               <th scope="col">Bremsstellung</th>
               <th scope="col">Handlung</th>
+              
             </tr>
           </thead>
-          <tbody>
+          <tbody >
+            @foreach ($list as $li)
             <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
+                <td> {{ $li->datum}}</td>
+                <td hidden> {{ $li->zugnummer}}</td>
+                <td hidden> {{ $li->versandbanhof}}</td>
+                <td hidden> {{ $li->bestimmungsbanhof}}</td>
+                <td hidden> {{ $li->ref}}</td>
+
+                <td> {{ $li->datum}}</td>
+                <td> {{ $li->datum}}</td>
+                <td> {{ $li->wagennummer}}  </td>
+                <td> {{ $li->gattungsbuchstabe}}  </td>
+                <td> {{ $li->längeüberpuffer}}</td>
+                <td> {{ $li->GewichtderLadung}}  </td>
+                <td> {{ $li->bremsstellung}}</td>
+                <td> <a class="btn btn-warning" href=""> edit</a></td>
+                
+              </tr>
+@endforeach
+      
+          
+       
 
           </tbody>
         </table>
@@ -264,5 +230,120 @@
   <script src="{{url('js/main.js')}}"></script>
 
 </body>
+<script>
+    function myFunction() {
 
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("Datum");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("table");
+      tr = table.getElementsByTagName("tr");
+
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } 
+          else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+    </script>
+    <script>
+    function myFunction1() {
+
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("zugnummer");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("table");
+      tr = table.getElementsByTagName("tr");
+
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[1];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } 
+          else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+    </script>
+    <script>
+    function myFunction2() {
+
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("versandbahnof");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("table");
+      tr = table.getElementsByTagName("tr");
+
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[2];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } 
+          else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+    </script>
+
+    <script>
+    function myFunction3() {
+
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("bestimmungsbahnhof");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("table");
+      tr = table.getElementsByTagName("tr");
+
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[3];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } 
+          else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+    </script>
+    <script>
+    function myFunction4() {
+
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("ref");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("table");
+      tr = table.getElementsByTagName("tr");
+
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[4];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } 
+          else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+    </script>
 </html>
