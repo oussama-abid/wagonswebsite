@@ -124,7 +124,7 @@
               <th scope="col" hidden>zugnummer</th>
               <th scope="col" hidden>Versandbahnof</th>
               <th scope="col" hidden>Bestimmungsbahnhof</th>
-              <th scope="col" hidden>Ref.-Nr</th>
+              <th scope="col" >Ref.-Nr</th>
 
               <th scope="col">Wagennummer</th>
               <th scope="col">Gattung</th>
@@ -142,7 +142,7 @@
                 <td hidden> {{ $li->zugnummer}}</td>
                 <td hidden> {{ $li->versandbanhof}}</td>
                 <td hidden> {{ $li->bestimmungsbanhof}}</td>
-                <td hidden> {{ $li->ref}}</td>
+                <td > {{ $li->ref}}</td>
 
                 <td> {{ $li->datum}}</td>
                 <td> {{ $li->datum}}</td>
