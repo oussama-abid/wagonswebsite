@@ -66,44 +66,18 @@
     <!-- ======= Book A Table Section ======= -->
     <section id="book-a-table" class="book-a-table" style="margin-top: 50PX;">
       <div class="container" data-aos="fade-up">
-
-        <div class="section-header">
-          <p> <span>Wagen</span> list</p>
-        </div>
-        <div class="row">
-          <div class="col-md-6">
-
-            <div class="row">
-              <div class="col-md-4"> <label for="zugnummer">Zugnummer:</label></div>
-              <div class="col"> <input type="text" class="form-control" id="zugnummer"></div>
-            </div><br>
-            <div class="row">
-              <div class="col-md-4"> <label for="Datum">Datum:</label></div>
-              <div class="col"> <input type="text" class="form-control" id="Datum"></div>
-            </div><br>
-            <div class="row">
-              <div class="col-md-4"> <label for="Versandbahnof">Versandbahnof:</label></div>
-              <div class="col"> <input type="text" class="form-control" id="Versandbahnof"></div>
-            </div><br>
-            <div class="row">
-              <div class="col-md-4"> <label for="Bestimmungsbahnhof">Bestimmungsbahnhof:</label></div>
-              <div class="col"> <input type="text" class="form-control" id="Bestimmungsbahnhof"></div>
-            </div><br>
-            <div class="row">
-              <div class="col-md-4"> <label for="Ref.-Nr">Ref.-Nr:</label></div>
-              <div class="col"> <input type="text" class="form-control" id="Ref.-Nr"></div>
-            </div>
-
-
-
-          </div>
-          <div class="col-md-6">
-            <button class="btn btn-primary" style="width:160px;float: right;">Wagen erfassen</button><br><br>
-            <button class="btn btn-primary" style="width:160px;float: right;">Auftragsdaten</button><br><br>
-            <button class="btn btn-primary" style="width:160px;float: right;">Wagenliste erstellen</button>
-          </div>
-
-        </div>
+      <div class="card" style="width: 18rem;">
+  <div class="card-body">
+  @foreach ($zug as $key => $zugs)
+    <h5 class="card-title">Datum : {{ $zugs->datum }}</h5>
+    <h5 class="card-title">Zugnummer : {{ $zugs->zugnummer }}</h5>
+    <h5 class="card-title">Name : {{ $zugs->name }}</h5>
+    <h5 class="card-title">Nachname : {{ $zugs->nachname }}</h5>
+    @endforeach
+  </div>
+</div>
+<br>
+      <h1> wagen list</h1>
         <br><br><br>
 
         <table class="table">

@@ -18,4 +18,8 @@ class HomeController extends Controller
     {
         return view('List');
     }
+    public function list2()
+    {
+        return view('List2');
+    }
 }

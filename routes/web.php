@@ -6,7 +6,7 @@ use App\Http\Controllers\ZugController;
 use App\Models\Zug;
 use App\Models\Wagon;
 use App\Models\relation;
-
+use Illuminate\Support\Facades\DB;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -38,6 +38,7 @@ Route::post('/addzug', function () {
     return redirect('/');
 });
 Route::get('/list', 'HomeController@list')->name('list');
+Route::get('/list2', 'HomeController@list2')->name('list2');
 
 Route::post('/addwagen', function () {
     $wagon = new Wagon;
@@ -60,10 +61,13 @@ Route::post('/addwagen', function () {
     $wagon->bestimmungsbanhof = request('zugbestimmungsbanhof');
     $wagon->datum = request('zugdatum');
     $wagon->save();
-
     relation::create([
         'zug_id' => request('zugid'),
         'wagon_id' => $wagon->id
     ]);
-    return redirect('/list');
+    $zug =DB::table('zugs')
+    ->where('id',request('zugid'))
+    ->get();
+    
+    return view('/list2', ['zug' => $zug]);
 });
