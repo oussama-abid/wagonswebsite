@@ -143,8 +143,6 @@
                 <td hidden> {{ $li->bestimmungsbanhof}}</td>
                 <td hidden> {{ $li->ref}}</td>
 
-                <td> {{ $li->datum}}</td>
-                <td> {{ $li->datum}}</td>
                 <td> {{ $li->wagennummer}}  </td>
                 <td> {{ $li->gattungsbuchstabe}}  </td>
                 <td> {{ $li->längeüberpuffer}}</td>

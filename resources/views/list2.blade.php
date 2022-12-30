@@ -66,108 +66,54 @@
     <!-- ======= Book A Table Section ======= -->
     <section id="book-a-table" class="book-a-table" style="margin-top: 50PX;">
       <div class="container" data-aos="fade-up">
-      <div class="card" style="width: 18rem;">
-  <div class="card-body">
-  @foreach ($zug as $key => $zugs)
-    <h5 class="card-title">Datum : {{ $zugs->datum }}</h5>
-    <h5 class="card-title">Zugnummer : {{ $zugs->zugnummer }}</h5>
-    <h5 class="card-title">Name : {{ $zugs->name }}</h5>
-    <h5 class="card-title">Nachname : {{ $zugs->nachname }}</h5>
-    @endforeach
-  </div>
-</div>
-<br>
-      <h1> wagen list</h1>
+        <div class="card" style="width: 18rem;">
+          <div class="card-body">
+            @foreach ($zug as $key => $zugs)
+            <h5 class="card-title">Datum : {{ $zugs->datum }}</h5>
+            <h5 class="card-title">Zugnummer : {{ $zugs->zugnummer }}</h5>
+            <h5 class="card-title">Name : {{ $zugs->name }}</h5>
+            <h5 class="card-title">Nachname : {{ $zugs->nachname }}</h5>
+            <h5 class="card-title">Ref.-Nr : {{ $zugs->ref }}</h5>
+            @endforeach
+          </div>
+        </div>
+        <br>
+        <h1> wagen list</h1>
         <br><br><br>
-
-        <table class="table">
+        <table class="table" id="table">
           <thead class="thead-dark">
             <tr>
-              <th scope="col">Kennung</th>
+
+
               <th scope="col">Wagennummer</th>
               <th scope="col">Gattung</th>
               <th scope="col">LüP</th>
               <th scope="col">Gewicht</th>
               <th scope="col">Bremsstellung</th>
               <th scope="col">Handlung</th>
+
             </tr>
           </thead>
           <tbody>
+            @foreach ($wagon as $wagons)
             <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
+
+              <td> {{ $wagons->wagennummer}} </td>
+              <td> {{ $wagons->gattungsbuchstabe}} </td>
+              <td> {{ $wagons->längeüberpuffer}}</td>
+              <td> {{ $wagons->GewichtderLadung}} </td>
+              <td> {{ $wagons->bremsstellung}}</td>
+              <td> <a class="btn btn-warning" href=""> edit</a></td>
+
             </tr>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
+            @endforeach
+
+
+
 
           </tbody>
         </table>
+
 
 
 
