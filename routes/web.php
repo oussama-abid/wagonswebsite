@@ -3,10 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ZugController;
+use App\Http\Controllers\WagonController;
+
 use App\Models\Zug;
 use App\Models\Wagon;
 use App\Models\relation;
-
+use Illuminate\Support\Facades\DB;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,9 +21,13 @@ use App\Models\relation;
 */
 
 Route::resource('zugs', 'ZugController');
+Route::resource('wagons', 'WagonController');
+
 Route::get('/WagenHinzufügen', 'HomeController@add')->name('add');
 Route::get('/', 'ZugController@show')->name('home');
 Route::get('/addwagon/{zug}', 'ZugController@create')->name('addwagon');
+
+Route::post('/wagons/{zug}', 'WagonController@store')->name('wagons');
 
 Route::post('/addzug', function () {
     Zug::create([
@@ -37,33 +43,9 @@ Route::post('/addzug', function () {
     ]);
     return redirect('/');
 });
-Route::get('/list', 'WagonController@list')->name('list');
+Route::get('/list2', 'HomeController@list2')->name('list2');
+Route::get('/wagons', 'WagonController@index')->name('list');
+Route::get('/listwagon', 'WagonController@wagonszug')->name('listwagon');
 
-Route::post('/addwagen', function () {
-    $wagon = new Wagon;
-    $wagon->wagennummer = request('wagennummer');
-    $wagon->gattungsbuchstabe = request('gattungsbuchstabe');
-    $wagon->längeüberpuffer = request('längeüberpuffer');
-    $wagon->eigenmasse = request('eigenmasse');
-    $wagon->AnzahlderAcshen = request('AnzahlderAcshen');
-    $wagon->GewichtderLadung = request('GewichtderLadung');
-    $wagon->Bremsgewicht = request('Bremsgewicht');
-    $wagon->lastwechselundbremsgewicht = request('lastwechselundbremsgewicht');
-    $wagon->bremsstellung = request('bremsstellung');
-    $wagon->hinweisezureibungsbremse = request('hinweisezureibungsbremse');
-    $wagon->bemerkungenzurfeststellbremse = request('bemerkungenzurfeststellbremse');
-    $wagon->bemerkung = request('bemerkung');
-    $wagon->Schadwagen = request('Schadwagen');
-    $wagon->Beladenmitgefahrgut = request('Beladenmitgefahrgut');
-    $wagon->UNNummer = request('UNNummer');
-    $wagon->versandbanhof = request('zugversandbanhof');
-    $wagon->bestimmungsbanhof = request('zugbestimmungsbanhof');
-    $wagon->datum = request('zugdatum');
-    $wagon->save();
 
-    relation::create([
-        'zug_id' => request('zugid'),
-        'wagon_id' => $wagon->id
-    ]);
-    return redirect('/list');
-});
+

@@ -49,7 +49,7 @@
                 </ul>
             </nav><!-- .navbar -->
 
-            <a class="btn-book-a-table" href="/list">Wagen List</a>
+            <a class="btn-book-a-table" href="/wagons">Wagen List</a>
             <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
             <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
 
@@ -73,7 +73,7 @@
 
                 <table class="table">
                     <thead class="thead-dark">
-                        <tr>
+                        <tr style="text-align: center;">
                             <th scope="col">#</th>
                             <th scope="col">Zugnummer</th>
                             <th scope="col">Datum</th>
@@ -83,14 +83,14 @@
                             <th scope="col">Bestimmungsbahnhof</th>
                             <th scope="col">Ref_NR</th>
                             <th scope="col">Mindestbremshunderstel</th>
-                            <th scope="col">neues_wagen</th>
+                            <th scope="col">wagen</th>
 
 
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($zugs as $key => $zug)
-                        <tr>
+                        <tr style="text-align: center;">
                             <th scope="row">{{ $key+1 }}</th>
                             <td>{{ $zug->zugnummer }}</td>
                             <td >{{ $zug->datum }}</td>
@@ -102,6 +102,7 @@
                             <td>{{ $zug->Mindestbremshunderstel }}</td>
                             <td>
                                 <a href="{{ route('addwagon', ['zug' => $zug->id]) }}">wagen Hinzufügen </a>
+                                <a href="{{ route('wagons.show', [$zug->id]) }}" style="color: blue;"> wagen list </a>
                             </td>
                         </tr>
 

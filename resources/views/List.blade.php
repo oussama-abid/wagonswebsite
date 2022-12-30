@@ -73,8 +73,7 @@
       <div class="container" data-aos="fade-up">
 
         <div class="section-header">
-          <h2>Wagen Hinzufügen</h2>
-          <p>Neues <span>Wagen</span> Hinzufügen</p>
+          <p> <span>Wagen</span> list</p>
         </div>
         <div class="row">
           <div class="col-md-6">
@@ -144,8 +143,6 @@
                 <td hidden> {{ $li->bestimmungsbanhof}}</td>
                 <td > {{ $li->ref}}</td>
 
-                <td> {{ $li->datum}}</td>
-                <td> {{ $li->datum}}</td>
                 <td> {{ $li->wagennummer}}  </td>
                 <td> {{ $li->gattungsbuchstabe}}  </td>
                 <td> {{ $li->längeüberpuffer}}</td>

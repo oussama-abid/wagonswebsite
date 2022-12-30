@@ -79,7 +79,7 @@
                     <div class="col-lg-4 reservation-img" style="background-image: url(https://media.istockphoto.com/id/1337377361/photo/deutsche-bahn-train-arriving-at-greifswald-central-station.jpg?b=1&s=170667a&w=0&k=20&c=_AKnl_sYJtATWDiPGsm3lE1wks50UuUOeXe1bREwnpU=);" data-aos="zoom-out" data-aos-delay="200"></div>
 
                     <div class="col-lg-8 d-flex align-items-center reservation-form-bg">
-                        <form role="form" class="php-email-form" data-aos="fade-up" data-aos-delay="100" action="/addwagen" method="post">
+                        <form role="form" class="php-email-form" data-aos="fade-up" data-aos-delay="100" action= "{{route('wagons', ['zug' => $zug->id]) }} " method="post">
                             @csrf
                             <div class="row gy-4">
                                 <div class="col-lg-9 col-md-6">
