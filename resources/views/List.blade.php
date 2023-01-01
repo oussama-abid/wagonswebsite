@@ -119,6 +119,7 @@
         <table class="table" id ="table">
           <thead class="thead-dark">
             <tr>
+            <th scope="col">Reihung</th>
               <th scope="col">Datum</th>
               <th scope="col" hidden>zugnummer</th>
               <th scope="col" hidden>Versandbahnof</th>
@@ -135,8 +136,9 @@
             </tr>
           </thead>
           <tbody >
-            @foreach ($list as $li)
+            @foreach ($list as$key => $li)
             <tr>
+            <th scope="row">{{ $key+1 }}</th>
                 <td> {{ $li->datum}}</td>
                 <td hidden> {{ $li->zugnummer}}</td>
                 <td hidden> {{ $li->versandbanhof}}</td>
