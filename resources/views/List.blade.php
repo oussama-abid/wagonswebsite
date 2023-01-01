@@ -148,7 +148,7 @@
                 <td> {{ $li->längeüberpuffer}}</td>
                 <td> {{ $li->GewichtderLadung}}  </td>
                 <td> {{ $li->bremsstellung}}</td>
-                <td> <a class="btn btn-warning" href=""> edit</a></td>
+                <td> <a class="btn btn-warning" href="{{route('edit-wagon', ['id' => $li->wagon_id])}}"> <i class="bi bi-pencil"></i> edit</a></td>
                 
               </tr>
 @endforeach
@@ -233,6 +233,8 @@
 
       var input, filter, table, tr, td, i, txtValue;
       input = document.getElementById("Datum");
+            input = document.getElementById("zugnummer");
+
       filter = input.value.toUpperCase();
       table = document.getElementById("table");
       tr = table.getElementsByTagName("tr");
@@ -250,8 +252,7 @@
         }
       }
     }
-    </script>
-    <script>
+   
     function myFunction1() {
 
       var input, filter, table, tr, td, i, txtValue;
@@ -273,8 +274,8 @@
         }
       }
     }
-    </script>
-    <script>
+    
+  
     function myFunction2() {
 
       var input, filter, table, tr, td, i, txtValue;
@@ -296,9 +297,7 @@
         }
       }
     }
-    </script>
-
-    <script>
+ 
     function myFunction3() {
 
       var input, filter, table, tr, td, i, txtValue;
@@ -320,8 +319,7 @@
         }
       }
     }
-    </script>
-    <script>
+  
     function myFunction4() {
 
       var input, filter, table, tr, td, i, txtValue;

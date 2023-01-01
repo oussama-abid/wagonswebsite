@@ -67,4 +67,51 @@ class WagonController extends Controller
      
       
     }
+
+     /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        // Validation for required fields (and using some regex to validate our numeric value)
+      
+        $wagon = Wagon::find($id);
+        // Getting values from the blade template form
+        $wagon->wagennummer = $request->get('wagennummer');
+        $wagon->gattungsbuchstabe = $request->get('gattungsbuchstabe');
+        $wagon->längeüberpuffer = $request->get('längeüberpuffer');
+        $wagon->eigenmasse = $request->get('eigenmasse');
+        $wagon->AnzahlderAcshen = $request->get('AnzahlderAcshen');
+        $wagon->GewichtderLadung = $request->get('GewichtderLadung');
+        $wagon->Bremsgewicht = $request->get('Bremsgewicht');
+        $wagon->lastwechselundbremsgewicht = $request->get('lastwechselundbremsgewicht');
+        $wagon->bremsstellung = $request->get('bremsstellung');
+        $wagon->hinweisezureibungsbremse = $request->get('hinweisezureibungsbremse');
+        $wagon->bemerkungenzurfeststellbremse = $request->get('bemerkungenzurfeststellbremse');
+        $wagon->bemerkung = $request->get('bemerkung');
+        $wagon->Schadwagen = $request->get('Schadwagen');
+        $wagon->Beladenmitgefahrgut = $request->get('Beladenmitgefahrgut');
+        $wagon->UNNummer = $request->get('UNNummer');
+        $wagon->versandbanhof = $request->get('zugversandbanhof');
+        $wagon->bestimmungsbanhof = $request->get('zugbestimmungsbanhof');
+        $wagon->datum = $request->get('zugdatum');
+        $wagon->save();
+ 
+        $list = Wagon::join('relations', 'wagons.id', '=', 'relations.wagon_id')
+      ->join('zugs', 'zugs.id', '=', 'relations.zug_id')->get();
+    //  var_dump(compact('list'));
+      return view('List',compact('list'));
+    }
+    public function show1(Request $request)
+    {
+      $wagon =Wagon::
+      where('id',$request->id)
+      ->get();
+      return view('edit',compact('wagon'));
+
+    }
 }
