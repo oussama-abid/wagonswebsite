@@ -84,7 +84,7 @@
           <thead class="thead-dark">
             <tr>
 
-
+            <th scope="col">Reihung</th>
               <th scope="col">Wagennummer</th>
               <th scope="col">Gattung</th>
               <th scope="col">LüP</th>
@@ -95,9 +95,9 @@
             </tr>
           </thead>
           <tbody>
-            @foreach ($wagon as $wagons)
+            @foreach ($wagon as  $key => $wagons)
             <tr>
-
+            <th scope="row">{{ $key+1 }}</th>
               <td> {{ $wagons->wagennummer}} </td>
               <td> {{ $wagons->gattungsbuchstabe}} </td>
               <td> {{ $wagons->längeüberpuffer}}</td>

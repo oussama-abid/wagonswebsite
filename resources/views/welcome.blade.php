@@ -74,7 +74,7 @@
                 <table class="table">
                     <thead class="thead-dark">
                         <tr style="text-align: center;">
-                            <th scope="col">#</th>
+                            <th scope="col">Reihung</th>
                             <th scope="col">Zugnummer</th>
                             <th scope="col">Datum</th>
                             <th scope="col">Name</th>
