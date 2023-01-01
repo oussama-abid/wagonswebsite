@@ -114,4 +114,57 @@ class WagonController extends Controller
       return view('edit',compact('wagon'));
 
     }
+        public function search(Request $request){
+       
+
+          $list = Wagon::join('relations', 'wagons.id', '=', 'relations.wagon_id')
+          ->join('zugs', 'zugs.id', '=', 'relations.zug_id')->get();
+
+
+          if ($request->one != "") {
+            for ($i=0; $i <count($list) ; $i++) { 
+if ($list[$i]->zugnummer != $request->one) {
+unset($list[$i]);
+
+}}}
+
+if ($request->tow != "") {
+  for ($i=0; $i <count($list) ; $i++) { 
+if ($list[$i]->datum != $request->one) {
+unset($list[$i]);
+
+}}}
+if ($request->three != "") {
+  for ($i=0; $i <count($list) ; $i++) { 
+if ($list[$i]->versandbanhof != $request->one) {
+unset($list[$i]);
+
+}}}
+if ($request->four != "") {
+  for ($i=0; $i <count($list) ; $i++) { 
+if ($list[$i]->bestimmungsbanhof != $request->one) {
+unset($list[$i]);
+
+}}}
+       if ($request->five != "") {
+            for ($i=0; $i <count($list) ; $i++) { 
+if ($list[$i]->ref != $request->one) {
+unset($list[$i]);
+
+}}}
+
+
+            
+        
+          
+       
+          return view('List',compact('list'));
+        }
+
+
+
+
+
+
+
 }

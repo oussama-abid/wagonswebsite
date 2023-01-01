@@ -23,6 +23,8 @@ use Illuminate\Support\Facades\DB;
 Route::resource('zugs', 'ZugController');
 Route::resource('wagons', 'WagonController');
 Route::get('/edit-wagon', 'WagonController@show1')->name('edit-wagon');
+Route::post('/search', 'WagonController@search')->name('wagons.search');
+
 
 Route::get('/WagenHinzufügen', 'HomeController@add')->name('add');
 Route::get('/', 'ZugController@show')->name('home');

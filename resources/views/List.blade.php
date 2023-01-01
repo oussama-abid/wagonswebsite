@@ -71,39 +71,41 @@
     <!-- ======= Book A Table Section ======= -->
     <section id="book-a-table" class="book-a-table" style="margin-top: 50PX;">
       <div class="container" data-aos="fade-up">
-
         <div class="section-header">
           <p> <span>Wagen</span> list</p>
         </div>
         <div class="row">
           <div class="col-md-6">
-
+            <form action="/search" method="POST">
+              @method('POST') 
+            @csrf
             <div class="row">
               <div class="col-md-6"> <label for="zugnummer">Zugnummer:</label></div>
-              <div class="col"> <input type="text" class="form-control" onkeyup="myFunction1()" id="zugnummer"></div>
+              <div class="col"> <input  name="one" type="text" class="form-control" onkeyup="myFunction1()" id="zugnummer"></div>
             </div><br>
 
           
             <div class="row">
               <div class="col-md-6"> <label for="Datum">Datum:</label></div>
-              <div class="col"> <input type="text" class="form-control" id="Datum" onkeyup="myFunction()"></div>
+              <div class="col"> <input  name="tow" type="text" class="form-control" id="Datum" onkeyup="myFunction()"></div>
             </div><br>
           
             <div class="row">
               <div class="col-md-6"> <label for="Versandbahnof">Versandbahnof:</label></div>
-              <div class="col"> <input type="text" class="form-control" onkeyup="myFunction2()" id="versandbahnof"></div>
+              <div class="col"> <input  name="three" type="text" class="form-control" onkeyup="myFunction2()" id="versandbahnof"></div>
             </div><br>
           
             <div class="row">
               <div class="col-md-6"> <label for="Bestimmungsbahnhof">Bestimmungsbahnhof:</label></div>
-              <div class="col"> <input type="text" class="form-control" onkeyup="myFunction3()" id="bestimmungsbahnhof"></div>
+              <div class="col"> <input name="four" type="text" class="form-control" onkeyup="myFunction3()" id="bestimmungsbahnhof"></div>
             </div><br>
            
             <div class="row">
               <div class="col-md-6"> <label for="Ref.-Nr">Ref.-Nr:</label></div>
-              <div class="col"> <input type="text" class="form-control" onkeyup="myFunction4()" id="ref"></div>
+              <div class="col"> <input name="five" type="text" class="form-control" onkeyup="myFunction4()" id="ref"></div>
             </div>
-          
+            <button type="submit">go</button>
+          </form>
 
 
           </div>
