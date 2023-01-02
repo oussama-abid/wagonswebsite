@@ -7,10 +7,22 @@ use Illuminate\Http\Request;
 use App\Models\Wagon;
 use App\Models\relation;
 use App\Models\Zug;
-
+use Barryvdh\DomPDF\Facade\Pdf;
 class WagonController extends Controller
 {
-
+public function pdf(int $zug){
+  $zugs =DB::table('zugs')
+      ->where('id',$zug)
+      ->get();
+      
+      $wagons = Wagon::join('relations', 'wagons.id', '=', 'relations.wagon_id')
+        ->join('zugs', 'zugs.id', '=', 'relations.zug_id')
+        ->where('zugs.id',$zug)
+        ->get();
+      
+  $pdf = Pdf::loadView('pdf',['zug' => $zugs],['wagon' => $wagons]);
+  return $pdf->stream('wagonslist.pdf');
+}
   public function index(  )
     {
       $list = Wagon::join('relations', 'wagons.id', '=', 'relations.wagon_id')

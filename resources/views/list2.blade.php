@@ -74,6 +74,7 @@
             <h5 class="card-title">Name : {{ $zugs->name }}</h5>
             <h5 class="card-title">Nachname : {{ $zugs->nachname }}</h5>
             <h5 class="card-title">Ref.-Nr : {{ $zugs->ref }}</h5>
+            <a href="{{ route('pdf',[$zugs->id]) }}">Download pdf</a>
             @endforeach
           </div>
         </div>
