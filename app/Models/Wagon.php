@@ -26,6 +26,7 @@ class Wagon extends Model
         'UNNummer',
         'versandbanhof',
         'bestimmungsbanhof',
-        'datum'
+        'datum',
+        'a','b','d','e','k','l','h','sh','bm','fir','sec','thir','four','five','ge'
     ];
 }

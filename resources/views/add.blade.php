@@ -143,6 +143,7 @@
                                         <option value="K">K</option>
                                         <option value="L">L</option>
                                         <option value="LL">LL</option>
+                                        <option value="D">D</option>
                                     </select>
                                     <div class="validate"></div>
                                 </div>

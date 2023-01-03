@@ -1065,11 +1065,12 @@
     -->
     </style>
 
-    <body link='blue' vlink='purple' class='container' style="margin-left: -70px;">
+    <body link='blue' vlink='purple' class='container' style="margin-left: -60px;">
 
 <table border='0' cellpadding='0' cellspacing='0' width='885' style='border-collapse: 
  collapse;table-layout:fixed;width:663pt' >
  @foreach ($zug as $key => $zugs)
+ 
  <col class='x24' width='30' style='mso-width-source:userset;background:none;width:22.5pt'>
  <col class='x24' width='26' span='2' style='mso-width-source:userset;background:none;width:19.5pt'>
  <col class='x24' width='29' span='2' style='mso-width-source:userset;background:none;width:21.75pt'>
@@ -1201,56 +1202,33 @@
 <td class='x57'>t</td>
 <td colspan='4' class='x24' style='mso-ignore:colspan;'></td>
  </tr>
+ @foreach ($wagon as  $key => $wagons)
  <tr height='22' style='mso-height-source:userset;height:17.1pt'>
-<td height='21' class='x46' style='height:16.35pt;'>1</td>
-<td class='x59'>12</td>
-<td class='x59'>12</td>
-<td class='x59'>4567</td>
-<td class='x59'>456</td>
-<td class='x59'>4</td>
-<td class='x59'></td>
-<td class='x59'></td>
-<td class='x59'></td>
-<td colspan='2' class='x35'></td>
-<td class='x59'></td>
-<td class='x59'></td>
-<td class='x59'></td>
-<td class='x59'></td>
-<td class='x59'></td>
-<td class='x59' colspan='2'></td>
-<td class='x59' colspan='2' ></td>
-<td class='x59' ></td>
-<td class='x59' ></td>
-<td class='x59'></td>
-<td class='x59'></td>
-<td class='x60' colspan='2'> UN-Nr: 1099</td>
+<td height='21' class='x46' style='height:16.35pt;'>{{ $key+1 }}</td>
+<td class='x59'>{{ $wagons->fir}}</td>
+<td class='x59'>{{ $wagons->sec}}</td>
+<td class='x59'>{{ $wagons->thir}}</td>
+<td class='x59'>{{ $wagons->four}}</td>
+<td class='x59'>{{ $wagons->five}}</td>
+<td class='x59'>{{ $wagons->gattungsbuchstabe}}</td>
+<td class='x59'>{{ $wagons->a}}</td>
+<td class='x59'>{{ $wagons->b}}</td>
+<td colspan='2' class='x35'>{{ $wagons->längeüberpuffer}}</td>
+<td class='x59'>{{ $wagons->eigenmasse}}</td>
+<td class='x59'>{{ $wagons->GewichtderLadung}}</td>
+<td class='x59'>{{ $wagons->ge}}</td>
+<td class='x59'>{{ $wagons->d}}</td>
+<td class='x59'>{{ $wagons->e}}</td>
+<td class='x59' colspan='2'>{{ $zugs->versandbanhof}}</td>
+<td class='x59' colspan='2' >{{ $zugs->bestimmungsbanhof}}</td>
+<td class='x59' >{{ $wagons->k}}</td>
+<td class='x59' >{{ $wagons->l}}</td>
+<td class='x59'>{{ $wagons->sh}}</td>
+<td class='x59'>{{ $wagons->h}}</td>
+<td class='x60' colspan='2'>{{ $wagons->bm}}</td>
 <td colspan='4' class='x24' style='mso-ignore:colspan;'></td>
  </tr>
- <tr height='22' style='mso-height-source:userset;height:17.1pt'>
-<td height='21' class='x46' style='height:16.35pt;'>2</td>
-<td class='x59'>12</td>
-<td class='x59'>12</td>
-<td class='x59'>4567</td>
-<td class='x59'>456</td>
-<td class='x59'>4</td>
-<td class='x59'></td>
-<td class='x59'></td>
-<td class='x59'></td>
-<td colspan='2' class='x35'></td>
-<td class='x59'></td>
-<td class='x59'></td>
-<td class='x59'></td>
-<td class='x59'></td>
-<td class='x59'></td>
-<td class='x59' colspan='2'></td>
-<td class='x59' colspan='2' ></td>
-<td class='x59' ></td>
-<td class='x59' ></td>
-<td class='x59'></td>
-<td class='x59'></td>
-<td class='x60' colspan='2'> UN-Nr: 1099</td>
-<td colspan='4' class='x24' style='mso-ignore:colspan;'></td>
- </tr>
+ @endforeach
  
  <tr height='22' style='mso-height-source:userset;height:17.1pt'>
 <td colspan='7' height='21' class='x61' style='height:16.35pt;'></td>

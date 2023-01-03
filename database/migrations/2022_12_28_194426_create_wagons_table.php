@@ -28,11 +28,30 @@ class CreateWagonsTable extends Migration
             $table->string('bemerkungenzurfeststellbremse');
             $table->string('bemerkung');
             $table->string('Schadwagen');
-            $table->string('Beladenmitgefahrgut');
-            $table->string('UNNummer');
-            $table->string('versandbanhof')->nullable();
-            $table->string('bestimmungsbanhof')->nullable();
-            $table->string('datum')->nullable();
+            $table->string('Beladenmitgefahrgut')->nullable();
+            $table->string('UNNummer')->nullable();
+            $table->string('versandbanhof');
+            $table->string('bestimmungsbanhof');
+            $table->string('datum');
+            $table->string('a')->nullable();
+            $table->string('b')->nullable();
+            $table->string('d')->nullable();
+            $table->string('e')->nullable();
+            $table->string('k')->nullable();
+            $table->string('l')->nullable();
+            $table->string('h')->nullable();
+            $table->string('sh')->nullable();
+            $table->string('bm')->nullable();
+            $table->string('fir')->nullable();
+            $table->string('sec')->nullable();
+            $table->string('thir')->nullable();
+            $table->string('four')->nullable();
+            $table->string('five')->nullable();
+            $table->string('ge')->nullable();
+
+            
+
+
 
 
 

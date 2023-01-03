@@ -20,8 +20,8 @@ class CreateZugsTable extends Migration
             $table->string('versandbanhof');
             $table->string('bestimmungsbanhof');
             $table->date('datum');
-            $table->integer('zugnummer');
-            $table->integer('ref');
+            $table->string('zugnummer');
+            $table->string('ref');
             $table->string('Mindestbremshunderstel');
             $table->timestamps();
         });
