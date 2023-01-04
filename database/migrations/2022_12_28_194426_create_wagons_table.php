@@ -48,6 +48,7 @@ class CreateWagonsTable extends Migration
             $table->string('four')->nullable();
             $table->string('five')->nullable();
             $table->string('ge')->nullable();
+            
 
             
 
