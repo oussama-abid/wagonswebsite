@@ -68,8 +68,8 @@
             <div class="container" data-aos="fade-up">
 
                 <div class="section-header">
-                    <h2>Wagen Hinzufügen</h2>
-                    <p>Neues <span>Wagen</span> Hinzufügen</p><br>
+                    
+                    <p><span>Daten </span> bearbeiten</p><br>
                     
                     
                 </div>
@@ -85,33 +85,45 @@
             @csrf
                             <div class="row gy-4">
                                 <div class="col-lg-9 col-md-6">
-                                    <input type="text" id="wagennummer"value="{{$wagon[0]->wagennummer}}" name="wagennummer" class="form-control" id="name" placeholder="Wagen Nummer : Z.B 33 80 51 6470 564-6" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
+                                    <input type="text" required minlength="12" maxlength="12" id="wagennummer"value="{{$wagon[0]->wagennummer}}" name="wagennummer" class="form-control" id="name" placeholder="Wagen Nummer : Z.B 33 80 51 6470 564-6" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
+                                    <div id="error-message" style="display:none; color:red;">
+                                        Bitte geben Sie eine gültige 12-stellige wagennummer ein.
+                                    </div>
+                                </div>
+                                <div class="col-lg-5 col-md-6">
+                                    <input type="text" required id="gattungsbuchstabe" value="{{$wagon[0]->gattungsbuchstabe}}" name="gattungsbuchstabe" class="form-control" placeholder="Gattungsbuchstabe" data-rule="email" data-msg="Please enter a valid email">
                                     <div class="validate"></div>
                                 </div>
                                 <div class="col-lg-5 col-md-6">
-                                    <input type="text" id="gattungsbuchstabe" value="{{$wagon[0]->gattungsbuchstabe}}" name="gattungsbuchstabe" class="form-control" placeholder="Gattungsbuchstabe" data-rule="email" data-msg="Please enter a valid email">
-                                    <div class="validate"></div>
-                                </div>
-                                <div class="col-lg-5 col-md-6">
-                                    <input type="text" class="form-control"  value="{{$wagon[0]->längeüberpuffer}}" name="längeüberpuffer" id="längeüberpuffer" placeholder="Länge über puffer (LüP)" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
-                                    <div class="validate"></div>
+                                    <input type="text" required class="form-control"  value="{{$wagon[0]->längeüberpuffer}}" name="längeüberpuffer" id="längeüberpuffer" placeholder="Länge über puffer (LüP)" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
+                                    <div id="längeüberpuffererror" style="display:none; color:red;">
+                                    Bitte geben Sie gültige lüp ein.
+                                    </div>
                                 </div>
                                 <div class="col-lg-5 col-md-6">
                                     
-                                    <input type="text"name="eigenmasse" value="{{$wagon[0]->eigenmasse}}" id="eigenmasse" class="form-control" placeholder="Eigenmasse (T)" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
-                                    <div class="validate"></div>
+                                    <input type="text" required name="eigenmasse" value="{{$wagon[0]->eigenmasse}}" id="eigenmasse" class="form-control" placeholder="Eigenmasse (T)" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
+                                    <div id="eigenmasseerror" style="display:none; color:red;">
+                                    Bitte geben Sie gültige Eigenmasse ein.
+                                    </div>
                                 </div>
                                 <div class="col-lg-5 col-md-6">
-                                    <input type="text" class="form-control" value="{{$wagon[0]->AnzahlderAcshen}}" name="AnzahlderAcshen" id="AnzahlderAcshen" placeholder="Anzahl der Acshen" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
-                                    <div class="validate"></div>
+                                    <input type="text" required class="form-control" value="{{$wagon[0]->AnzahlderAcshen}}" name="AnzahlderAcshen" id="AnzahlderAcshen" placeholder="Anzahl der Acshen" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
+                                    <div id="AnzahlderAcshenerror" style="display:none; color:red;">
+                                    Bitte geben Sie gültige Anzahl der Acshen ein.
+                                    </div>
                                 </div>
                                 <div class="col-lg-5 col-md-6">
-                                    <input type="text" class="form-control" value="{{$wagon[0]->GewichtderLadung}}" name="GewichtderLadung" id="GewichtderLadung" placeholder="Gewicht der Ladung" data-rule="minlen:1" data-msg="Please enter at least 1 chars">
-                                    <div class="validate"></div>
+                                    <input type="text" required class="form-control" value="{{$wagon[0]->GewichtderLadung}}" name="GewichtderLadung" id="GewichtderLadung" placeholder="Gewicht der Ladung" data-rule="minlen:1" data-msg="Please enter at least 1 chars">
+                                    <div id="GewichtderLadungerror" style="display:none; color:red;">
+                                    Bitte geben Sie gültige Gewicht der Ladung ein.
+                                    </div>
                                 </div>
                                 <div class="col-lg-5 col-md-6">
-                                    <input type="text" class="form-control"value="{{$wagon[0]->Bremsgewicht}}" name="Bremsgewicht" id="Bremsgewicht" placeholder=" Bremsgewicht" data-rule="minlen:1" data-msg="Please enter at least 1 chars">
-                                    <div class="validate"></div>
+                                    <input type="text" required class="form-control"value="{{$wagon[0]->Bremsgewicht}}" name="Bremsgewicht" id="Bremsgewicht" placeholder=" Bremsgewicht" data-rule="minlen:1" data-msg="Please enter at least 1 chars">
+                                    <div id="Bremsgewichterror" style="display:none; color:red;">
+                                    Bitte geben Sie gültige Bremsgewicht ein.
+                                    </div>
                                 </div>
                                 <div class="col-lg-5 col-md-6">
                                 <label for="lastwechselundbremsgewicht">lastwechsel und bremsgewicht</label>
@@ -175,9 +187,10 @@
                                 </div>
 
                                 <div class="col-lg-9 col-md-6">
-                                <label for="bemerkungenzurfeststellbremse">Schadwagen</label>
+                                <label for="checkbox">Schadwagen</label> <input type="checkbox" id="checkbox1"> <br>
                                     <select class="form-control" name="Schadwagen" id="Schadwagen">
-                                        <option value="{{$wagon[0]->Schadwagen}}">{{$wagon[0]->Schadwagen}}</option>
+                                    <option value="" ></option>
+                                        <option value="{{$wagon[0]->Schadwagen}}" selected>{{$wagon[0]->Schadwagen}}</option>
 
                                         <option value="Muster M">Muster M</option>
                                         <option value="Muster K">Muster K</option>
@@ -189,8 +202,7 @@
                                 <div class="col-lg-5 col-md-6">
 
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" value="yes" name="Beladenmitgefahrgut"  id="Beladenmitgefahrgut">
-                                        <label class="form-check-label" for="inlineCheckbox3">Beladen mit gefahrgut </label>
+                                    <label class="form-check-label" for="inlineCheckbox3">Beladen mit gefahrgut </label> <input  type="checkbox"  name="Beladenmitgefahrgut" id="checkbox2">
                                     </div>
                                     <div class="validate"></div>
                                 </div>
@@ -199,10 +211,7 @@
                                     <div class="validate"></div>
 
                                 </div>
-                              {{---  <input type="text" id="zugid" name ="zugid" value="{{$zug->id}}" hidden>
-                                <input type="text" id="zugdatum" name ="zugdatum" value="{{$zug->datum}}" hidden>
-                                <input type="text" id="zugbestimmungsbanhof" name ="zugbestimmungsbanhof" value="{{$zug->bestimmungsbanhof}}" hidden>
-                                <input type="text" id="zugversandbanhof" name ="zugversandbanhof" value="{{$zug->versandbanhof}}" hidden>---}} 
+                 
                             </div>
 
 
@@ -237,7 +246,72 @@
     <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
     <div id="preloader"></div>
+    <script>
+        var input2 = document.getElementById("wagennummer");
+        var errorMessage = document.getElementById("error-message");
+        input2.addEventListener("input", function() {
+            if (input2.value.length !== 12 || isNaN(input.value)) {
+                errorMessage.style.display = "block";
+            } else {
+                errorMessage.style.display = "none";
+            }
+        });
+        var fields = ["längeüberpuffer", "eigenmasse", "AnzahlderAcshen", "GewichtderLadung", "Bremsgewicht"];
+        for (var i = 0; i < fields.length; i++) {
+            var input = document.getElementById(fields[i]);
+            var error = document.getElementById(fields[i] + "error");
+            input.addEventListener("input", function(event) {
+                if (isNaN(event.target.value)) {
+                    event.target.nextElementSibling.style.display = "block";
+                } else {
+                    event.target.nextElementSibling.style.display = "none";
+                }
+            });
+        }
 
+        var form = document.getElementsByTagName("form")[0];
+        form.addEventListener("submit", function(event) {
+            var hasError = false;
+            for (var i = 0; i < fields.length; i++) {
+                var input = document.getElementById(fields[i]);
+                var error = document.getElementById(fields[i] + "error");
+                if (isNaN(input.value)) {
+                    error.style.display = "block";
+                    hasError = true;
+                }
+            }
+            var input2 = document.getElementById("wagennummer");
+            var errorMessage = document.getElementById("error-message");
+            if (isNaN(input2.value)) {
+                errorMessage.style.display = "block";
+                hasError = true;
+            }
+            if (hasError) {
+                event.preventDefault();
+            }
+        });
+        const checkbox = document.getElementById("checkbox1");
+        const select = document.getElementById("Schadwagen");
+        const checkbox2 = document.getElementById("checkbox2");
+        const select2 = document.getElementById("UNNummer");
+        
+        checkbox.addEventListener("change", function() {
+            if (this.checked) {
+                select.disabled = false;
+            } else {
+                select.disabled = true;
+                select.selectedIndex = 0; 
+            }
+        });
+        checkbox2.addEventListener("change", function() {
+            if (this.checked) {
+                select2.disabled = false;
+            } else {
+                select2.disabled = true;
+                select2.value="";
+            }
+        });
+    </script>
     <!-- Vendor JS Files -->
     <script src="{{url('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
     <script src="{{url('vendor/aos/aos.js')}}"></script>

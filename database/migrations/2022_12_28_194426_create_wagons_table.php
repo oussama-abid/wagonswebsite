@@ -26,8 +26,8 @@ class CreateWagonsTable extends Migration
             $table->string('hinweisezureibungsbremse');
             $table->string('bremsstellung');
             $table->string('bemerkungenzurfeststellbremse');
-            $table->string('bemerkung');
-            $table->string('Schadwagen');
+            $table->string('bemerkung')->nullable();
+            $table->string('Schadwagen')->nullable();
             $table->string('Beladenmitgefahrgut')->nullable();
             $table->string('UNNummer')->nullable();
             $table->string('versandbanhof');

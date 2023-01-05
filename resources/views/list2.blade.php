@@ -104,7 +104,7 @@
               <td> {{ $wagons->längeüberpuffer}}</td>
               <td> {{ $wagons->GewichtderLadung}} </td>
               <td> {{ $wagons->bremsstellung}}</td>
-              <td> <a class="btn btn-warning" href=""> edit</a></td>
+              <td> <a class="btn btn-warning" href="{{route('edit-wagon', ['id' => $wagons->wagon_id])}}"> <i class="bi bi-pencil"></i> edit</a></td>
 
             </tr>
             @endforeach

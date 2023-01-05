@@ -151,15 +151,14 @@ class WagonController extends Controller
     $wagon->Schadwagen = $request->get('Schadwagen');
     $wagon->Beladenmitgefahrgut = $request->get('Beladenmitgefahrgut');
     $wagon->UNNummer = $request->get('UNNummer');
-    $wagon->versandbanhof = $request->get('zugversandbanhof');
-    $wagon->bestimmungsbanhof = $request->get('zugbestimmungsbanhof');
-    $wagon->datum = $request->get('zugdatum');
+ 
     $wagon->save();
 
     $list = Wagon::join('relations', 'wagons.id', '=', 'relations.wagon_id')
       ->join('zugs', 'zugs.id', '=', 'relations.zug_id')->get();
     //  var_dump(compact('list'));
-    return view('List', compact('list'));
+    $data = Zug::all();
+        return view('welcome',['zugs'=>$data]);
   }
   public function show1(Request $request)
   {
