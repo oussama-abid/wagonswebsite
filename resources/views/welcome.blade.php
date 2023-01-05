@@ -129,42 +129,42 @@
                                 <div class="row gy-4">
                                     <div class="col-lg-5 col-md-6">
                                         <label for="inputName4">Name</label>
-                                        <input type="text" class="form-control" id="name" name="name" placeholder="Name">
+                                        <input required type="text" class="form-control" id="name" name="name" placeholder="Name">
                                         <div class="validate"></div>
                                     </div>
                                     <div class="col-lg-5 col-md-6">
                                         <label for="inputNachname4">Nachname</label>
-                                        <input type="text" class="form-control" id="nachname" name="nachname" placeholder="Nachname">
+                                        <input required type="text" class="form-control" id="nachname" name="nachname" placeholder="Nachname">
                                         <div class="validate"></div>
                                     </div>
                                     <div class="col-lg-5 col-md-6">
                                         <label for="inputversandbahnhof4">Versandbahnhof</label>
-                                        <input type="text" class="form-control" id="versandbanhof" name="versandbanhof" placeholder="versandbahnhof">
+                                        <input required type="text" class="form-control" id="versandbanhof" name="versandbanhof" placeholder="versandbahnhof">
                                         <div class="validate"></div>
                                     </div>
                                     <div class="col-lg-5 col-md-6">
                                         <label for="inputBestimmungsbahnhof4">Bestimmungsbahnhof</label>
-                                        <input type="text" class="form-control" id="bestimmungsbanhof" name="bestimmungsbanhof" placeholder="Bestimmungsbahnhof">
+                                        <input required type="text" class="form-control" id="bestimmungsbanhof" name="bestimmungsbanhof" placeholder="Bestimmungsbahnhof">
                                         <div class="validate"></div>
                                     </div>
                                     <div class="col-lg-5 col-md-6">
                                         <label for="inputDatum">Datum</label>
-                                        <input type="date" class="form-control" id="datum" name="datum">
+                                        <input required type="date" class="form-control" id="datum" name="datum">
                                         <div class="validate"></div>
                                     </div>
                                     <div class="col-lg-5 col-md-6">
                                         <label for="inputBestimmungsbahnhof4">Ref.-NR.</label>
-                                        <input type="text" class="form-control" id="ref" name="ref" placeholder="Ref.-NR.">
+                                        <input required type="text" class="form-control" id="ref" name="ref" placeholder="Ref.-NR.">
                                         <div class="validate"></div>
                                     </div>
                                     <div class="col-lg-5 col-md-6">
                                         <label for="inputZugnummer4">Zugnummer</label>
-                                        <input type="text" class="form-control" id="zugnummer" name="zugnummer" placeholder="Zugnummer">
+                                        <input required type="text" class="form-control" id="zugnummer" name="zugnummer" placeholder="Zugnummer">
                                         <div class="validate"></div>
                                     </div>
                                     <div class="col-lg-5 col-md-6">
                                         <label for="inputmindestbremshunderstel4">Mindestbremshunderstel</label>
-                                        <input type="text" class="form-control" id="Mindestbremshunderstel" name="Mindestbremshunderstel" placeholder="mindestbremshunderstel">
+                                        <input required type="text" class="form-control" id="Mindestbremshunderstel" name="Mindestbremshunderstel" placeholder="mindestbremshunderstel">
                                         <div class="validate"></div>
                                     </div>
 
