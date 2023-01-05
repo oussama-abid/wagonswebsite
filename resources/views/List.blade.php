@@ -104,7 +104,7 @@
               <div class="col-md-6"> <label for="Ref.-Nr">Ref.-Nr:</label></div>
               <div class="col"> <input name="five" type="text" class="form-control" onkeyup="myFunction4()" id="ref"></div>
             </div>
-            <button type="submit">go</button>
+            <button class="btn btn-warning bg" type="submit">Suchen</button>
           </form>
 
 

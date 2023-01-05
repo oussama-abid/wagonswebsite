@@ -174,46 +174,55 @@ class WagonController extends Controller
     $list = Wagon::join('relations', 'wagons.id', '=', 'relations.wagon_id')
       ->join('zugs', 'zugs.id', '=', 'relations.zug_id')->get();
 
-
+      $true1="1";
+      $true2="1";
+      $true3="1";
+      $true4="1";
+      $true5="1";
     if ($request->one != "") {
       for ($i = 0; $i < count($list); $i++) {
         if ($list[$i]->zugnummer != $request->one) {
           unset($list[$i]);
         }
       }
+      $true1="ok";
     }
 
     if ($request->tow != "") {
       for ($i = 0; $i < count($list); $i++) {
-        if ($list[$i]->datum != $request->one) {
+        if ($list[$i]->datum != $request->tow) {
           unset($list[$i]);
         }
       }
+      $true2="ok";
     }
     if ($request->three != "") {
       for ($i = 0; $i < count($list); $i++) {
-        if ($list[$i]->versandbanhof != $request->one) {
+        if ($list[$i]->versandbanhof != $request->three) {
           unset($list[$i]);
         }
       }
+      $true3="ok";
     }
     if ($request->four != "") {
       for ($i = 0; $i < count($list); $i++) {
-        if ($list[$i]->bestimmungsbanhof != $request->one) {
+        if ($list[$i]->bestimmungsbanhof != $request->four) {
           unset($list[$i]);
         }
       }
+      $true4="ok";
     }
     if ($request->five != "") {
       for ($i = 0; $i < count($list); $i++) {
-        if ($list[$i]->ref != $request->one) {
+        if ($list[$i]->ref != $request->five) {
           unset($list[$i]);
         }
       }
+      $true5="ok";
     }
 
 
-
+   // echo $true1;echo $true2;echo $true3;echo $true4;echo $true5;
 
 
 
