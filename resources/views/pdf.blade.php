@@ -3,13 +3,24 @@
 
 <html>
 <style>
-  
   {
     mso-displayed-decimal-separator: "\.";
     mso-displayed-thousand-separator: "\,";
   }
 
+  table.custom {
+    border: 0;
+    cellpadding: 0;
+    cellspacing: 0;
+    width: 885px;
+    margin-left: -13.7px;
+    border-collapse: collapse;
+    table-layout: fixed;
+    width: 663pt;
+  }
+
   @page {
+    size: A4;
     mso-header-data: "";
     mso-footer-data: "";
     margin: 1in 0.75in 1in 0.75in;
@@ -1107,11 +1118,12 @@
     mso-diagonal-up: none;
     mso-protection: locked visible;
   }
-  
 </style>
 
 <body link='blue' vlink='purple' class='container' style="margin-left: -60px;">
-  
+  @php
+  $page_break = 0;
+  @endphp
   <table border='0' cellpadding='0' cellspacing='0' width='885' style='border-collapse: 
  collapse;table-layout:fixed;width:663pt'>
     @foreach ($zug as $key => $zugs)
@@ -1268,33 +1280,47 @@
       <td colspan='4' class='x24' style='mso-ignore:colspan;'></td>
     </tr>
     @foreach ($wagon as $key => $wagons)
-    <tr height='22' style='mso-height-source:userset;height:17.1pt'>
-      <td height='21' class='x46' style='height:16.35pt;'>{{ $key+1 }}</td>
-      <td class='x59'>{{ $wagons->fir}}</td>
-      <td class='x59'>{{ $wagons->sec}}</td>
-      <td class='x59'>{{ $wagons->thir}}</td>
-      <td class='x59'>{{ $wagons->four}}</td>
-      <td class='x59'>{{ $wagons->five}}</td>
-      <td class='x59'>{{ $wagons->gattungsbuchstabe}}</td>
-      <td class='x59'>{{ $wagons->a}}</td>
-      <td class='x59'>{{ $wagons->b}}</td>
-      <td colspan='2' class='x35'>{{ $wagons->längeüberpuffer}}</td>
-      <td class='x59'>{{ $wagons->eigenmasse}}</td>
-      <td class='x59'>{{ $wagons->GewichtderLadung}}</td>
-      <td class='x59'>{{ $wagons->ge}}</td>
-      <td class='x59'>{{ $wagons->d}}</td>
-      <td class='x59'>{{ $wagons->e}}</td>
-      <td class='x59' colspan='2'>{{ $zugs->versandbanhof}}</td>
-      <td class='x59' colspan='2'>{{ $zugs->bestimmungsbanhof}}</td>
-      <td class='x59'>{{ $wagons->k}}</td>
-      <td class='x59'>{{ $wagons->l}}</td>
-      <td class='x59'>{{ $wagons->sh}}</td>
-      <td class='x59'>{{ $wagons->h}}</td>
-      <td class='x60' colspan='2'>{{ $wagons->bm}}</td>
-      <td colspan='4' class='x24' style='mso-ignore:colspan;'></td>
+    <tr height='22' style='mso-height-source:userset;height:17.1pt;'>
+      <td height='21' class='x46' style='height:16.35pt; border-bottom: 1px solid black;'>{{ $key+1 }}</td>
+      <td class='x59' style="border-bottom: 1px solid black;">{{ $wagons->fir}}</td>
+      <td class='x59' style="border-bottom: 1px solid black;">{{ $wagons->sec}}</td>
+      <td class='x59' style="border-bottom: 1px solid black;">{{ $wagons->thir}}</td>
+      <td class='x59' style="border-bottom: 1px solid black;">{{ $wagons->four}}</td>
+      <td class='x59' style="border-bottom: 1px solid black;">{{ $wagons->five}}</td>
+      <td class='x59' style="border-bottom: 1px solid black;">{{ $wagons->gattungsbuchstabe}}</td>
+      <td class='x59' style="border-bottom: 1px solid black;">{{ $wagons->a}}</td>
+      <td class='x59' style="border-bottom: 1px solid black;">{{ $wagons->b}}</td>
+      <td colspan='2' class='x35' style="border-bottom: 1px solid black;">{{ $wagons->längeüberpuffer}}</td>
+      <td class='x59' style="border-bottom: 1px solid black;">{{ $wagons->eigenmasse}}</td>
+      <td class='x59' style="border-bottom: 1px solid black;">{{ $wagons->GewichtderLadung}}</td>
+      <td class='x59' style="border-bottom: 1px solid black;">{{ $wagons->ge}}</td>
+      <td class='x59' style="border-bottom: 1px solid black;">{{ $wagons->d}}</td>
+      <td class='x59' style="border-bottom: 1px solid black;">{{ $wagons->e}}</td>
+      <td class='x59' colspan='2' style="border-bottom: 1px solid black;">{{ $zugs->versandbanhof}}</td>
+      <td class='x59' style="border-bottom: 1px solid black;" colspan='2'>{{ $zugs->bestimmungsbanhof}}</td>
+      <td class='x59' style="border-bottom: 1px solid black;">{{ $wagons->k}}</td>
+      <td class='x59' style="border-bottom: 1px solid black;">{{ $wagons->l}}</td>
+      <td class='x59' style="border-bottom: 1px solid black;">{{ $wagons->sh}}</td>
+      <td class='x59' style="border-bottom: 1px solid black;">{{ $wagons->h}}</td>
+      <td class='x60' colspan='2' style='white-space: normal !important; border-bottom: 1px solid black; '>{{ $wagons->UNNummer }} {{ $wagons->Schadwagen }}</td>
+      <td colspan='4' class='x24' style='border: 0 !important; mso-ignore:colspan;'></td>
     </tr>
-    @endforeach
 
+
+    @php
+    $page_break++;
+    if ($page_break % 27 == 0) {
+    echo '
+  </table>
+  <div style="page-break-before: always;"></div>
+  <table class="custom">';
+    }
+    @endphp
+    @endforeach
+  </table>
+
+  <table border='0' cellpadding='0' cellspacing='0' width='885' style='margin-left: -10; border-collapse: 
+ collapse;table-layout:fixed;width:663pt'>
     <tr height='22' style='mso-height-source:userset;height:17.1pt'>
       <td colspan='7' height='21' class='x61' style='height:16.35pt;'></td>
       <td class='x59'>{{$wagons->sum('a')}}</td>
@@ -1320,29 +1346,27 @@
         if ($wagons->sum('längeüberpuffer') > 599) {
           if ($wagons->sum('längeüberpuffer') > 699) {
             $x = '-19%';
-          } 
-          else {$x = '-10%';}
+          } else {
+            $x = '-10%';
+          }
+        } else {
+          $x = '-5%';
         }
-        
-        else{ $x = '-5%'; }
-        
-      } 
-      else {
-        $x='0%';
+      } else {
+        $x = '0%';
       }
       ?>
-      
+
       <td class='x59'>{{$x}}</td>
-      
+
       <?php
-      
-      if ( $wagons->sum('ge') > 1200) {
-      $x='-25%';
-      } 
-      else {
-        $x='0%';
+
+      if ($wagons->sum('ge') > 1200) {
+        $x = '-25%';
+      } else {
+        $x = '0%';
       }
-      
+
       ?>
       <td class='x60'>{{ $x }}</td>
       <td colspan='6' class='x28' style='border-right:1px solid ;'>Zahl der Bremsen mit (D) {{$wagons->where('sh','x')->count()}}</td>
@@ -1354,39 +1378,39 @@
       if ($wagons->sum('längeüberpuffer') > 499) {
         if ($wagons->sum('längeüberpuffer') > 599) {
           if ($wagons->sum('längeüberpuffer') > 699) {
-            $x = round($wagons->sum('d')-($wagons->sum('d') *0.19)) ;
-          } 
-          else {$x = round($wagons->sum('d')-($wagons->sum('d') *0.10));}
+            $x = round($wagons->sum('d') - ($wagons->sum('d') * 0.19));
+          } else {
+            $x = round($wagons->sum('d') - ($wagons->sum('d') * 0.10));
+          }
+        } else {
+          $x = round($wagons->sum('d') - ($wagons->sum('d') * 0.05));
         }
-        
-        else{ $x = round($wagons->sum('d')-($wagons->sum('d') *0.05)); }
-        
-      } 
-      else {
-        $x = round($wagons->sum('d')-($wagons->sum('d') *0));
+      } else {
+        $x = round($wagons->sum('d') - ($wagons->sum('d') * 0));
       }
       ?>
-      <td class='x59' id="data2" >{{$x}}</td>
+      <td class='x59' id="data2">{{$x}}</td>
       <?php
-      
-      if ( $wagons->sum('ge') > 1200) {
-        $d = round($wagons->sum('e')-($wagons->sum('e') *0.25));
-      } 
-      else {
-        $d = round($wagons->sum('e')-($wagons->sum('e') *0));
+
+      if ($wagons->sum('ge') > 1200) {
+        $d = round($wagons->sum('e') - ($wagons->sum('e') * 0.25));
+      } else {
+        $d = round($wagons->sum('e') - ($wagons->sum('e') * 0));
       }
-      
+
       ?>
       <td class='x60' id="data1">{{$d}}</td>
       <td colspan='6' class='x28' style='border-right:1px solid ;'>Zahl der Bremsen mit (L) &amp; (LL) : {{$wagons->where('l','x')->count()}}</td>
       <td colspan='4' class='x24' style='mso-ignore:colspan;'></td>
     </tr>
     <tr height='22' style='mso-height-source:userset;height:17.1pt'>
-      <td colspan='2' class='x65' style='border-right:1px solid ;border-bottom:1px solid ;'> <br>{{$d + $x}}<p id ="rslt"></p></td>
+      <td colspan='2' class='x65' style='border-right:1px solid ;border-bottom:1px solid ;'> <br>{{$d + $x}}
+        <p id="rslt"></p>
+      </td>
       <td colspan='6' class='x66' style='border-right:1px solid ;border-bottom:1px solid ;'> Zahl der Bremsen mit (K) :{{$wagons->where('k','x')->count()}} </td>
       <td colspan='4' class='x24' style='mso-ignore:colspan;'></td>
-     
-      </tr>
+
+    </tr>
 
     <tr height='0' style='display:none'>
       <td width='30' style='width:22.5pt;'></td>
@@ -1475,7 +1499,6 @@
     mso-diagonal-up: none;
     mso-protection: locked visible;
   }
-  
 </style>
 
 

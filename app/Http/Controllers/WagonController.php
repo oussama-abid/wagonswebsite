@@ -27,8 +27,11 @@ class WagonController extends Controller
     
     //print value
     //$user_role['role_id'];
-    $pdf = Pdf::loadView('pdf', ['zug' => $zugs], ['wagon' => $wagons]);
-    return $pdf->stream('wagonslist.pdf');
+    return Pdf::loadView('pdf', ['zug' => $zugs], ['wagon' => $wagons])->setPaper('a4')
+    ->setOption('zoom', '200')
+    ->stream('document.pdf');
+    
+   
   }
   public function index()
   {
