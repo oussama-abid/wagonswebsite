@@ -72,7 +72,7 @@
     <section id="book-a-table" class="book-a-table" style="margin-top: 50PX;">
       <div class="container" data-aos="fade-up">
         <div class="section-header">
-          <p> <span>Wagen</span> list</p>
+          <p> Wagenliste</p>
         </div>
         <div class="row">
           <div class="col-md-6">
@@ -104,16 +104,12 @@
               <div class="col-md-6"> <label for="Ref.-Nr">Ref.-Nr:</label></div>
               <div class="col"> <input name="five" type="text" class="form-control" onkeyup="myFunction4()" id="ref"></div>
             </div>
-            <button class="btn btn-warning bg" type="submit">Suchen</button>
+            <button class="btn btn-warning bg" type="submit">Wagenliste erstellen</button>
           </form>
 
 
           </div>
-          <div class="col-md-6" >
-            <button class="btn btn-primary" style="width:160px;float: right;">Wagen erfassen</button><br><br>
-            <button class="btn btn-primary" style="width:160px;float: right;">Auftragsdaten</button><br><br>
-            <button class="btn btn-primary" style="width:160px;float: right;">Wagenliste erstellen</button>
-          </div>
+     
 
         </div>
         <br><br><br>

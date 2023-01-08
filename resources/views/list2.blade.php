@@ -79,7 +79,7 @@
           </div>
         </div>
         <br>
-        <h1> wagen list</h1>
+        <h1> wagenliste</h1>
         <br><br><br>
         <table class="table" id="table">
           <thead class="thead-dark">

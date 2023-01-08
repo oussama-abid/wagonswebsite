@@ -55,7 +55,7 @@
                 </ul>
             </nav><!-- .navbar -->
 
-            <a class="btn-book-a-table" href="/wagons">Wagen List</a>
+            <a class="btn-book-a-table" href="/wagons">WagenListe</a>
             <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
             <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
 
@@ -108,7 +108,7 @@
                             <td>{{ $zug->Mindestbremshunderstel }}</td>
                             <td>
                                 <a href="{{ route('addwagon', ['zug' => $zug->id]) }}">wagen Hinzufügen </a>
-                                <a href="{{ route('wagons.show', [$zug->id]) }}" style="color: blue;"> wagen list </a>
+                                <a href="{{ route('wagons.show', [$zug->id]) }}" style="color: blue;"> wagenliste </a>
                             </td>
                         </tr>
 

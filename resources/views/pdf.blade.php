@@ -1,13 +1,11 @@
+@php
+use Illuminate\Support\Facades\DB;
+@endphp
 <!DOCTYPE html>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
 <html>
 <style>
-  {
-    mso-displayed-decimal-separator: "\.";
-    mso-displayed-thousand-separator: "\,";
-  }
-
   table.custom {
     border: 0;
     cellpadding: 0;
@@ -1322,6 +1320,13 @@
   <table border='0' cellpadding='0' cellspacing='0' width='885' style='margin-left: -10; border-collapse: 
  collapse;table-layout:fixed;width:663pt'>
     <tr height='22' style='mso-height-source:userset;height:17.1pt'>
+      @php
+      $wagons = DB::table('wagons')
+      ->join('relations', 'wagons.id', '=', 'relations.wagon_id')
+      ->join('zugs', 'zugs.id', '=', 'relations.zug_id')
+      ->where('zugs.id',$zugs->id)
+      ->get();
+      @endphp
       <td colspan='7' height='21' class='x61' style='height:16.35pt;'></td>
       <td class='x59'>{{$wagons->sum('a')}}</td>
       <td class='x59'>{{$wagons->sum('b')}}</td>
@@ -1333,7 +1338,14 @@
       <td class='x59'>{{$wagons->sum('e')}}</td>
 
       <td colspan='4' rowspan='4' height='90' class='x35' style='height:67.65pt;'></td>
-      <td colspan='6' class='x63' style='border-right:1px solid ;border-bottom:1px solid ;'>Anzahl der Handbremsen : {{$wagons->where('h','x')->count()}}</td>
+      @php
+$count2 = DB::table('wagons')
+->join('relations', 'wagons.id', '=', 'relations.wagon_id')
+->join('zugs', 'zugs.id', '=', 'relations.zug_id')
+->where('zugs.id',$zugs->id)
+->where('h','x')->count();
+@endphp
+      <td colspan='6' class='x63' style='border-right:1px solid ;border-bottom:1px solid ;'>Anzahl der Handbremsen : {{$count2}}</td>
       <td colspan='4' class='x24' style='mso-ignore:colspan;'></td>
     </tr>
     <tr height='22' style='mso-height-source:userset;height:17.1pt'>
@@ -1367,9 +1379,17 @@
         $x = '0%';
       }
 
+
       ?>
       <td class='x60'>{{ $x }}</td>
-      <td colspan='6' class='x28' style='border-right:1px solid ;'>Zahl der Bremsen mit (D) {{$wagons->where('sh','x')->count()}}</td>
+      @php
+$count = DB::table('wagons')
+->join('relations', 'wagons.id', '=', 'relations.wagon_id')
+->join('zugs', 'zugs.id', '=', 'relations.zug_id')
+->where('zugs.id',$zugs->id)
+->where('sh','x')->count();
+@endphp
+      <td colspan='6' class='x28' style='border-right:1px solid ;'>Zahl der Bremsen mit (D) {{$count}}</td>
       <td colspan='4' class='x24' style='mso-ignore:colspan;'></td>
     </tr>
     <tr height='22' style='mso-height-source:userset;height:17.1pt'>
@@ -1400,14 +1420,28 @@
 
       ?>
       <td class='x60' id="data1">{{$d}}</td>
-      <td colspan='6' class='x28' style='border-right:1px solid ;'>Zahl der Bremsen mit (L) &amp; (LL) : {{$wagons->where('l','x')->count()}}</td>
+      @php
+$count3 = DB::table('wagons')
+->join('relations', 'wagons.id', '=', 'relations.wagon_id')
+->join('zugs', 'zugs.id', '=', 'relations.zug_id')
+->where('zugs.id',$zugs->id)
+->where('l','x')->count()
+@endphp
+      <td colspan='6' class='x28' style='border-right:1px solid ;'>Zahl der Bremsen mit (L) &amp; (LL) : {{$count3}}</td>
       <td colspan='4' class='x24' style='mso-ignore:colspan;'></td>
     </tr>
     <tr height='22' style='mso-height-source:userset;height:17.1pt'>
       <td colspan='2' class='x65' style='border-right:1px solid ;border-bottom:1px solid ;'> <br>{{$d + $x}}
         <p id="rslt"></p>
       </td>
-      <td colspan='6' class='x66' style='border-right:1px solid ;border-bottom:1px solid ;'> Zahl der Bremsen mit (K) :{{$wagons->where('k','x')->count()}} </td>
+      @php
+$count4 = DB::table('wagons')
+->join('relations', 'wagons.id', '=', 'relations.wagon_id')
+->join('zugs', 'zugs.id', '=', 'relations.zug_id')
+->where('zugs.id',$zugs->id)
+->where('k','x')->count()
+@endphp
+      <td colspan='6' class='x66' style='border-right:1px solid ;border-bottom:1px solid ;'> Zahl der Bremsen mit (K) :{{$count4}} </td>
       <td colspan='4' class='x24' style='mso-ignore:colspan;'></td>
 
     </tr>
