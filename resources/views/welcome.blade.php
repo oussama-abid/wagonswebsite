@@ -28,7 +28,13 @@
     <!-- Template Main CSS File -->
     <link rel="stylesheet" href="{{url('css/main.css')}}">
 
-
+<style>
+    .large{
+        width: 700px !important;
+        
+        white-space: nowrap;
+    }
+</style>
 </head>
 
 <body>
@@ -71,12 +77,12 @@
                 </div>
                 <br><br><br>
 
-                <table class="table">
+                <table class="table" >
                     <thead class="thead-dark">
                         <tr style="text-align: center;">
                             <th scope="col">Reihung</th>
                             <th scope="col">Zugnummer</th>
-                            <th scope="col">Datum</th>
+                            <th scope="col" class="large" >Datum</th>
                             <th scope="col">Name</th>
                             <th scope="col">NachName</th>
                             <th scope="col">Versandbahnhof</th>
@@ -93,7 +99,7 @@
                         <tr style="text-align: center;">
                             <th scope="row">{{ $key+1 }}</th>
                             <td>{{ $zug->zugnummer }}</td>
-                            <td >{{ $zug->datum }}</td>
+                            <td class="large">{{ $zug->datum }}</td>
                             <td>{{ $zug->name }}</td>
                             <td>{{ $zug->nachname }}</td>
                             <td>{{ $zug->versandbanhof }}</td>

@@ -171,63 +171,47 @@ class WagonController extends Controller
   }
   public function search(Request $request)
   {
-
-
-    $list = Wagon::join('relations', 'wagons.id', '=', 'relations.wagon_id')
-      ->join('zugs', 'zugs.id', '=', 'relations.zug_id')->get();
-
-      $true1="1";
-      $true2="1";
-      $true3="1";
-      $true4="1";
-      $true5="1";
-    if ($request->one != "") {
-      for ($i = 0; $i < count($list); $i++) {
-        if ($list[$i]->zugnummer != $request->one) {
-          unset($list[$i]);
-        }
+   
+ $zugnummer=$request->input('one'); 
+ $Datum=$request->input('tow');
+ $versandbahnof=$request->input('three');
+ $bestimmungsbahnhof=$request->input('four');
+ $ref=$request->input('five');
+ if (!$zugnummer && !$Datum && !$versandbahnof && !$bestimmungsbahnhof && !$ref) {
+  $list = DB::table('wagons')
+    ->join('relations', 'wagons.id', '=', 'relations.wagon_id')
+    ->join('zugs', 'zugs.id', '=', 'relations.zug_id')->get();
+    return view('List', compact('list'));
+} else {
+  $list = DB::table('wagons')
+    ->join('relations', 'wagons.id', '=', 'relations.wagon_id')
+    ->join('zugs', 'zugs.id', '=', 'relations.zug_id')
+    ->where(function ($query) use ($zugnummer,$Datum,$versandbahnof,$bestimmungsbahnhof,$ref) {
+      if ($zugnummer) {
+        $query->where('zugs.zugnummer',$zugnummer);
       }
-      $true1="ok";
-    }
-
-    if ($request->tow != "") {
-      for ($i = 0; $i < count($list); $i++) {
-        if ($list[$i]->datum != $request->tow) {
-          unset($list[$i]);
-        }
+      if ($Datum) {
+        $query->where('zugs.datum', 'like', "%{$Datum}%");
       }
-      $true2="ok";
-    }
-    if ($request->three != "") {
-      for ($i = 0; $i < count($list); $i++) {
-        if ($list[$i]->versandbanhof != $request->three) {
-          unset($list[$i]);
-        }
+      if ($versandbahnof) {
+        $query->where('zugs.versandbanhof', 'like', "%{$versandbahnof}%");
       }
-      $true3="ok";
-    }
-    if ($request->four != "") {
-      for ($i = 0; $i < count($list); $i++) {
-        if ($list[$i]->bestimmungsbanhof != $request->four) {
-          unset($list[$i]);
-        }
+      if ($bestimmungsbahnhof) {
+        $query->where('zugs.bestimmungsbanhof', 'like', "%{$bestimmungsbahnhof}%");
       }
-      $true4="ok";
-    }
-    if ($request->five != "") {
-      for ($i = 0; $i < count($list); $i++) {
-        if ($list[$i]->ref != $request->five) {
-          unset($list[$i]);
-        }
+      if ($ref) {
+        $query->where('zugs.ref', 'like', "%{$ref}%");
       }
-      $true5="ok";
-    }
-
+    })
+    ->get();
+    return view('List', compact('list'));
+}
+      
 
    // echo $true1;echo $true2;echo $true3;echo $true4;echo $true5;
 
 
 
-    return view('List', compact('list'));
+    
   }
 }
