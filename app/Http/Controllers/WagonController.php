@@ -12,6 +12,21 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class WagonController extends Controller
 {
+  public function deleteone(int $wagon){
+   
+    DB::table('relations')->where('wagon_id', $wagon)->delete();
+    DB::table('wagons')->where('id', $wagon)->delete();
+    return back();  
+  }
+  public function deleteall(int $zug){
+    $wagonsid=DB::table('relations')->where('zug_id', $zug)->pluck('wagon_id');
+    DB::table('relations')->where('zug_id', $zug)->delete();
+   for($i=0;$i<count($wagonsid);$i++){
+    DB::table('wagons')->where('id', $wagonsid[$i])->delete();
+   }
+   return back();    
+      
+  }
   public function pdf(int $zug)
   {
     $zugs = DB::table('zugs')

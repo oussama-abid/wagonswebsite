@@ -24,7 +24,8 @@ Route::resource('zugs', 'ZugController');
 Route::resource('wagons', 'WagonController');
 Route::get('/edit-wagon', 'WagonController@show1')->name('edit-wagon');
 Route::post('/search', 'WagonController@search')->name('wagons.search');
-
+Route::post('/deleteall/{zug}', 'WagonController@deleteall');
+Route::post('/deletewagon/{wagon}', 'WagonController@deleteone');
 Route::get('/pdf/{zug}', 'WagonController@pdf')->name('pdf');
 Route::get('/WagenHinzufügen', 'HomeController@add')->name('add');
 Route::get('/', 'ZugController@show')->name('home');

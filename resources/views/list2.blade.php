@@ -12,12 +12,15 @@
   <!-- Favicons -->
   <link href="{{url('img/favicon.png')}}" rel="icon">
   <link href="{{url('img/apple-touch-icon.png')}}" rel="apple-touch-icon">
+  <style>
 
+  </style>
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Amatic+SC:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
-
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.js"></script>
   <!-- Vendor CSS Files -->
   <link href="{{url('vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
   <link href="{{url('vendor/bootstrap-icons/bootstrap-icons.css')}}" rel="stylesheet">
@@ -74,18 +77,26 @@
             <h5 class="card-title">Name : {{ $zugs->name }}</h5>
             <h5 class="card-title">Nachname : {{ $zugs->nachname }}</h5>
             <h5 class="card-title">Ref.-Nr : {{ $zugs->ref }}</h5>
-            <a href="{{ route('pdf',[$zugs->id]) }}">Download pdf</a>
+            <a class="btn btn-secondary" href="{{ route('pdf',[$zugs->id]) }}"><i class="bi bi-file-earmark"></i>PDF </a> <br>
+
             @endforeach
           </div>
         </div>
         <br>
         <h1> wagenliste</h1>
+        <form action="/deleteall/{{ $zugs->id }}" method="POST" id="deleteForm">
+          @csrf
+        </form>
+        <button onclick="return confirmDelete();" type="submit" class="btn btn-danger">
+          <i class="bi bi-trash3"></i> Löschen
+        </button>
         <br><br><br>
-        <table class="table" id="table">
+
+        <table class="table" id="table" style="text-align: center;">
           <thead class="thead-dark">
             <tr>
 
-            <th scope="col">Reihung</th>
+              <th scope="col">Reihung</th>
               <th scope="col">Wagennummer</th>
               <th scope="col">Gattung</th>
               <th scope="col">LüP</th>
@@ -96,15 +107,23 @@
             </tr>
           </thead>
           <tbody>
-            @foreach ($wagon as  $key => $wagons)
+            @foreach ($wagon as $key => $wagons)
             <tr>
-            <th scope="row">{{ $key+1 }}</th>
+              <th scope="row">{{ $key+1 }}</th>
               <td> {{ $wagons->wagennummer}} </td>
               <td> {{ $wagons->gattungsbuchstabe}} </td>
               <td> {{ $wagons->längeüberpuffer}}</td>
               <td> {{ $wagons->GewichtderLadung}} </td>
               <td> {{ $wagons->bremsstellung}}</td>
-              <td> <a class="btn btn-warning" href="{{route('edit-wagon', ['id' => $wagons->wagon_id])}}"> <i class="bi bi-pencil"></i> edit</a></td>
+              <td>
+                <a class="btn btn-warning" href="{{route('edit-wagon', ['id' => $wagons->wagon_id])}}"> <i class="bi bi-pencil"></i> edit</a>
+
+                
+                <button type="button" class="btn btn-danger" onclick="confirmDelete2('{{ $wagons->wagon_id  }}');"> <i class="bi bi-trash3"></i> Löschen </button>
+              </td>
+              <form action="/deletewagon/{{ $wagons->wagon_id }}" method="POST" id="deleteForm-{{ $wagons->wagon_id  }}">
+                  @csrf
+                </form>
 
             </tr>
             @endforeach
@@ -173,7 +192,55 @@
   <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <div id="preloader"></div>
+  <script>
+    function confirmDelete() {
 
+      Swal.fire({
+        title: 'Sind Sie sicher?',
+        text: 'Die Daten können nicht wiederhergestellt werden!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ja, löschen!',
+        cancelButtonText: 'Nein',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire(
+            'Gelöscht!',
+            'die Daten sind gelöscht.',
+            'success'
+          )
+          document.getElementById('deleteForm').submit();
+        }
+      })
+      return false;
+    }
+
+    function confirmDelete2(id) {
+
+      Swal.fire({
+        title: 'Sind Sie sicher?',
+        text: 'Die Daten können nicht wiederhergestellt werden!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ja, löschen!',
+        cancelButtonText: 'Nein',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire(
+            'Gelöscht!',
+            'die Daten sind gelöscht.',
+            'success'
+          )
+          document.getElementById('deleteForm-' + id).submit();
+        }
+      })
+      return false;
+    }
+  </script>
   <!-- Vendor JS Files -->
   <script src="{{url('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
   <script src="{{url('vendor/aos/aos.js')}}"></script>
