@@ -90,6 +90,7 @@
         <button onclick="return confirmDelete();" type="submit" class="btn btn-danger">
           <i class="bi bi-trash3"></i> Löschen
         </button>
+        <a class="btn btn-dark" href="{{ route('addwagon', ['zug' => $zugs->id]) }}">wagen Hinzufügen <i class="bi bi-plus-circle"></i></a>
         <br><br><br>
 
         <table class="table" id="table" style="text-align: center;">

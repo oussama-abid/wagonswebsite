@@ -171,7 +171,54 @@ class WagonController extends Controller
     $wagon->Schadwagen = $request->get('Schadwagen');
     $wagon->Beladenmitgefahrgut = $request->get('Beladenmitgefahrgut');
     $wagon->UNNummer = $request->get('UNNummer');
- 
+    $wagon->b=null;
+    $wagon->a=null;
+    $wagon->d=null;
+    $wagon->e=null;
+    $wagon->k=null;
+    $wagon->l=null;
+    $wagon->sh=null;
+    $wagon->h=null;
+    $wagon->bm=null;
+    
+    if (request('lastwechselundbremsgewicht') == "Leer") {
+      $wagon->b = request('AnzahlderAcshen');
+    }
+    if (request('lastwechselundbremsgewicht') != "Leer") {
+      $wagon->a = request('AnzahlderAcshen');
+    }
+    if (request('bremsstellung') == "P") {
+      $wagon->d = request('Bremsgewicht');
+    }
+    if (request('bremsstellung') == "G") {
+      $wagon->e = request('Bremsgewicht');
+    }
+    if (request('hinweisezureibungsbremse') == "K") {
+      $wagon->k = "X";
+    }
+    if (request('hinweisezureibungsbremse') == "L" || request('hinweisezureibungsbremse') == "LL") {
+      $wagon->l = "X";
+    }
+    if (request('hinweisezureibungsbremse') == "D") {
+      $wagon->sh = "X";
+    }
+    if (request('bemerkungenzurfeststellbremse') == "bühnenbedienbar" || request('bemerkungenzurfeststellbremse') == "bodenbedienbar") {
+      $wagon->h = "X";
+    }
+    if (request('UNNummer') == "") {
+      $wagon->bm = request('Schadwagen');
+    }
+    if (request('UNNummer') != "") {
+      $wagon->bm = request('UNNummer');
+    }
+    $wagon->fir = substr($wagon->wagennummer, 0, 2);
+    $wagon->sec = substr($wagon->wagennummer, 2, 2);
+    $wagon->thir = substr($wagon->wagennummer, 4, 4);
+    $theRest = substr($wagon->wagennummer, 8);
+    $wagon->four = substr($theRest, 0, 3);
+    $wagon->five = substr($theRest, 3, 3);
+
+    $wagon->ge = (int) $wagon->eigenmasse + (int)$wagon->GewichtderLadung;
     $wagon->save();
 
     $list = Wagon::join('relations', 'wagons.id', '=', 'relations.wagon_id')

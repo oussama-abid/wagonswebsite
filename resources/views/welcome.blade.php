@@ -120,7 +120,7 @@
                             <td>{{ $zug->ref }}</td>
                             <td>{{ $zug->Mindestbremshunderstel }}</td>
                             <td>
-                                <a href="{{ route('addwagon', ['zug' => $zug->id]) }}">wagen Hinzufügen </a>
+                                
                                 <a href="{{ route('wagons.show', [$zug->id]) }}" style="color: blue;"> wagenliste </a>
                             </td>
                             <td>
@@ -187,9 +187,9 @@
                                         <input required type="text" class="form-control" id="zugnummer" name="zugnummer" placeholder="Zugnummer">
                                         <div class="validate"></div>
                                     </div>
-                                    <div class="col-lg-5 col-md-6">
+                                    <div class="col-lg-5 col-md-6" hidden>
                                         <label for="inputmindestbremshunderstel4">Mindestbremshunderstel</label>
-                                        <input required type="text" class="form-control" id="Mindestbremshunderstel" name="Mindestbremshunderstel" placeholder="mindestbremshunderstel">
+                                        <input value="old" type="text" class="form-control" id="Mindestbremshunderstel" name="Mindestbremshunderstel" placeholder="mindestbremshunderstel">
                                         <div class="validate"></div>
                                     </div>
 
