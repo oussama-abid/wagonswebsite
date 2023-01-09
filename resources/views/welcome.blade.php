@@ -8,7 +8,8 @@
     <title>Startseite</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.js"></script>
     <!-- Favicons -->
     <link href="{{url('img/favicon.png')}}" rel="icon">
     <link href="{{url('img/apple-touch-icon.png')}}" rel="apple-touch-icon">
@@ -28,13 +29,13 @@
     <!-- Template Main CSS File -->
     <link rel="stylesheet" href="{{url('css/main.css')}}">
 
-<style>
-    .large{
-        width: 700px !important;
-        
-        white-space: nowrap;
-    }
-</style>
+    <style>
+        .large {
+            width: 700px !important;
+
+            white-space: nowrap;
+        }
+    </style>
 </head>
 
 <body>
@@ -77,12 +78,12 @@
                 </div>
                 <br><br><br>
 
-                <table class="table" >
+                <table class="table" style="margin-left: -70px;">
                     <thead class="thead-dark">
                         <tr style="text-align: center;">
                             <th scope="col">Reihung</th>
                             <th scope="col">Zugnummer</th>
-                            <th scope="col" class="large" >Datum</th>
+                            <th scope="col" class="large">Datum</th>
                             <th scope="col">Name</th>
                             <th scope="col">NachName</th>
                             <th scope="col">Versandbahnhof</th>
@@ -90,6 +91,7 @@
                             <th scope="col">Ref_NR</th>
                             <th scope="col">Mindestbremshunderstel</th>
                             <th scope="col">wagen</th>
+                            <th scope="col">Handlung</th>
 
 
                         </tr>
@@ -110,6 +112,12 @@
                                 <a href="{{ route('addwagon', ['zug' => $zug->id]) }}">wagen Hinzufügen </a>
                                 <a href="{{ route('wagons.show', [$zug->id]) }}" style="color: blue;"> wagenliste </a>
                             </td>
+                            <td>
+                                <button type="button" class="btn btn-danger" style="height: 50px; font-size:small;" onclick="confirmDelete2('{{ $zug->id  }}');"> <i class="bi bi-trash3"></i> Löschen </button>
+                            </td>
+                            <form action="/deletezug/{{ $zug->id }}" method="POST" id="deleteForm-{{ $zug->id  }}">
+                                @csrf
+                            </form>
                         </tr>
 
                         @endforeach
@@ -208,7 +216,31 @@
     <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
     <div id="preloader"></div>
+    <script>
+        function confirmDelete2(id) {
 
+            Swal.fire({
+                title: 'Sind Sie sicher?',
+                text: 'Die Daten können nicht wiederhergestellt werden!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ja, löschen!',
+                cancelButtonText: 'Nein',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire(
+                        'Gelöscht!',
+                        'die Daten sind gelöscht.',
+                        'success'
+                    )
+                    document.getElementById('deleteForm-' + id).submit();
+                }
+            })
+            return false;
+        }
+    </script>
     <!-- Vendor JS Files -->
     <script src="{{url('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
     <script src="{{url('vendor/aos/aos.js')}}"></script>
