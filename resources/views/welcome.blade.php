@@ -10,10 +10,14 @@
     <meta content="" name="keywords">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <!-- Favicons -->
     <link href="{{url('img/favicon.png')}}" rel="icon">
     <link href="{{url('img/apple-touch-icon.png')}}" rel="apple-touch-icon">
-
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -32,8 +36,15 @@
     <style>
         .large {
             width: 700px !important;
-
             white-space: nowrap;
+        }
+
+        #datum {
+            background: url(https://icons.veryicon.com/png/o/miscellaneous/administration/calendar-335.png) no-repeat scroll 1px 1px;
+            background-size: 25px;
+            background-position: 220px 9px;
+            background-color: white;
+
         }
     </style>
 </head>
@@ -162,9 +173,9 @@
                                         <div class="validate"></div>
                                     </div>
                                     <div class="col-lg-5 col-md-6">
-                                        <label for="inputDatum">Datum</label>
-                                        <input required type="date" class="form-control" id="datum" name="datum">
-                                        <div class="validate"></div>
+                                        <label for="datum">Datum</label> <br>
+                                        <input required type="text" class="form-control" id="datum" name="datum" pattern="\d{2}.\d{2}.\d{4}" required  placeholder="DD.MM.YY">
+
                                     </div>
                                     <div class="col-lg-5 col-md-6">
                                         <label for="inputBestimmungsbahnhof4">Ref.-NR.</label>
@@ -239,6 +250,7 @@
                 }
             })
             return false;
+
         }
     </script>
     <!-- Vendor JS Files -->
@@ -250,6 +262,18 @@
 
     <!-- Template Main JS File -->
     <script src="{{url('js/main.js')}}"></script>
+
+
+    <script>
+        $(function() {
+            $("#datum").datepicker({
+                altFormat: "dd/mm/yy",
+                dateFormat: "dd.mm.yy",
+                changeMonth: true,
+                changeYear: true
+            });
+        });
+    </script>
 
 </body>
 
