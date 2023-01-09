@@ -175,11 +175,14 @@
                                     <div class="validate"></div>
                                 </div>
                                 <div class="col-lg-5 col-md-6">
-                                    <fieldset id="bemerkung" name="bemerkung" class="form-check">
-
-                                        <input type="radio" value="lademaßüberschreitung" id="lademaßüberschreitung" name="bemerkung"> lademaßüberschreitung <br>
-                                        <input type="radio" value="außergewöhnliche sendung" id="außergewöhnliche sendung" name="bemerkung"> außergewöhnliche sendung <br>
-                                        <input type="radio" value="windgefährdete ladung"  id="windgefährdete" name="bemerkung"> windgefährdete ladung
+                                <fieldset  class="form-check">
+                                    <input type="checkbox" name="lademaßüberschreitung" value="lademaßüberschreitung">
+                                    <label for="lademaßüberschreitung">lademaßüberschreitung</label> <br>
+                                    <input type="checkbox" name="außergewöhnlichesendung" value="außergewöhnliche sendung">
+                                    <label for="außergewöhnlichesendung">außergewöhnliche sendung </label> <br>
+                                    <input type="checkbox" name="windgefährdeteladung" value="windgefährdete ladung">
+                                    <label for="windgefährdeteladung">windgefährdete ladung</label> 
+                                        
                                     </fieldset>
 
 

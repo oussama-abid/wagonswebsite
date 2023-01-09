@@ -86,7 +86,8 @@ class WagonController extends Controller
     $wagon->bremsstellung = request('bremsstellung');
     $wagon->hinweisezureibungsbremse = request('hinweisezureibungsbremse');
     $wagon->bemerkungenzurfeststellbremse = request('bemerkungenzurfeststellbremse');
-    $wagon->bemerkung = request('bemerkung');
+
+    $wagon->bemerkung =request('lademaßüberschreitung') . "," .request('außergewöhnlichesendung'). ","  . request('windgefährdeteladung');
     $wagon->Schadwagen = request('Schadwagen');
     $wagon->Beladenmitgefahrgut = request('Beladenmitgefahrgut');
     $wagon->UNNummer = request('UNNummer');
@@ -165,7 +166,8 @@ class WagonController extends Controller
     $wagon->bremsstellung = $request->get('bremsstellung');
     $wagon->hinweisezureibungsbremse = $request->get('hinweisezureibungsbremse');
     $wagon->bemerkungenzurfeststellbremse = $request->get('bemerkungenzurfeststellbremse');
-    $wagon->bemerkung = $request->get('bemerkung');
+    $wagon->bemerkung =request('lademaßüberschreitung') . "," .request('außergewöhnlichesendung'). ","  . request('windgefährdeteladung');
+   
     $wagon->Schadwagen = $request->get('Schadwagen');
     $wagon->Beladenmitgefahrgut = $request->get('Beladenmitgefahrgut');
     $wagon->UNNummer = $request->get('UNNummer');
