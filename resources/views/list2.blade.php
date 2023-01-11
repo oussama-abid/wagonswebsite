@@ -77,7 +77,12 @@
             <h5 class="card-title">Name : {{ $zugs->name }}</h5>
             <h5 class="card-title">Nachname : {{ $zugs->nachname }}</h5>
             <h5 class="card-title">Ref.-Nr : {{ $zugs->ref }}</h5>
-            <a class="btn btn-secondary" href="{{ route('pdf',[$zugs->id]) }}"><i class="bi bi-file-earmark"></i>PDF </a> <br>
+            <div class="row">
+<div class="col">            <a class="btn btn-secondary" href="{{ route('pdf',[$zugs->id]) }}"><i class="bi bi-file-earmark"></i>PDF </a> <br>
+</div>
+<div class="col">            <a  class="btn btn-warning"    href="{{route('edit-zug', ['id' => $zugs->id])}}" > <i class="bi bi-pen"></i> ändern </a>
+</div>
+            </div>
 
             @endforeach
           </div>
