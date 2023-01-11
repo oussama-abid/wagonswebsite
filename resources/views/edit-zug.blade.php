@@ -8,7 +8,12 @@
     <title>Wagen Hinzufügen</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <!-- Favicons -->
     <link href="{{url('img/favicon.png')}}" rel="icon">
     <link href="{{url('img/apple-touch-icon.png')}}" rel="apple-touch-icon">
@@ -68,7 +73,6 @@
                         <form method="post"  class="php-email-form" data-aos="fade-up" data-aos-delay="100" action="{{route('zugs.update', $zug[0]->id)}}">
                             @method('PATCH') 
                             @csrf
-                            <input type="text" value="{{$zug[0]->id}}">
                             <div class="row gy-4">
                                 <div class="col-lg-5 col-md-6">
                                     <label for="inputName4">Name</label>
@@ -92,7 +96,7 @@
                                 </div>
                                 <div class="col-lg-5 col-md-6">
                                     <label for="datum">Datum</label> <br>
-                                    <input required type="text" class="form-control" id="datum"  value="{{date('Y-m-d', strtotime($zug[0]->datum))}}" name="datum" required  placeholder="DD.MM.YY">
+                                    <input required type="text" class="form-control" id="datum" value="{{$zug[0]->datum }}" name="datum" pattern="\d{2}.\d{2}.\d{4}" required placeholder="DD.MM.YY">
 
                                 </div>
                                 <div class="col-lg-5 col-md-6">
@@ -155,6 +159,16 @@
     <div id="preloader"></div>
    
 </body>
+<script>
+        $(function() {
+            $("#datum").datepicker({
+                altFormat: "dd/mm/yy",
+                dateFormat: "dd.mm.yy",
+                changeMonth: true,
+                changeYear: true
+            });
+        });
+    </script>
 <script src="{{url('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <script src="{{url('vendor/aos/aos.js')}}"></script>
 <script src="{{url('vendor/glightbox/js/glightbox.min.js')}}"></script>

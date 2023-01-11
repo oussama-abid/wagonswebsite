@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Zug;
+use App\Models\Wagon;
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
@@ -35,7 +37,7 @@ class ZugController extends Controller
         $zug->nachname = $request['nachname'];
         $zug->versandbanhof = $request['versandbanhof'];
         $zug->bestimmungsbanhof = $request['bestimmungsbanhof'];
-        $zug->datum = date('Y-m-d', strtotime($request['datum'])) ;
+        $zug->datum = $request['datum'] ;
         $zug->ref = $request['ref'];
         $zug->zugnummer = $request['zugnummer'];
         $zug->Mindestbremshunderstel = $request['Mindestbremshunderstel'];  
@@ -61,7 +63,14 @@ class ZugController extends Controller
         $zug->zugnummer = $request['zugnummer'];
         $zug->Mindestbremshunderstel = $request['Mindestbremshunderstel'];  
         $zug->save();
-        $data = Zug::all();
-        return view('welcome',['zugs'=>$data]);
+        $zugs = DB::table('zugs')
+        ->where('id', $id)
+        ->get();
+  
+      $wagons = Wagon::join('relations', 'wagons.id', '=', 'relations.wagon_id')
+        ->join('zugs', 'zugs.id', '=', 'relations.zug_id')
+        ->where('zugs.id', $id)
+        ->get();
+      return view('/list2', ['zug' => $zugs], ['wagon' => $wagons]);
 }
 }

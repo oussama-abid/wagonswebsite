@@ -80,7 +80,7 @@
             <div class="row">
 <div class="col">            <a class="btn btn-secondary" href="{{ route('pdf',[$zugs->id]) }}"><i class="bi bi-file-earmark"></i>PDF </a> <br>
 </div>
-<div class="col">            <a  class="btn btn-warning"    href="{{route('edit-zug', ['id' => $zugs->id])}}" > <i class="bi bi-pen"></i> ändern </a>
+<div class="col">            <a  class="btn btn-warning"    href="{{route('edit-zug', ['id' => $zugs->id])}}" > <i class="bi bi-pen"></i> edit </a>
 </div>
             </div>
 
