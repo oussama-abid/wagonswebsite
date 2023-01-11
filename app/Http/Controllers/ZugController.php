@@ -22,6 +22,12 @@ class ZugController extends Controller
         $data = Zug::all();
         return view('welcome',['zugs'=>$data]);
     }
+    public function show1(Request $request)
+    {
+      $zug = Zug::where('id', $request->id)
+        ->get();
+      return view('edit-zug', compact('zug'));
+    }
     public function store(Request $request)
     {
         $zug = new Zug;
@@ -29,7 +35,7 @@ class ZugController extends Controller
         $zug->nachname = $request['nachname'];
         $zug->versandbanhof = $request['versandbanhof'];
         $zug->bestimmungsbanhof = $request['bestimmungsbanhof'];
-        $zug->datum = $request['datum'];
+        $zug->datum = date('Y-m-d', strtotime($request['datum'])) ;
         $zug->ref = $request['ref'];
         $zug->zugnummer = $request['zugnummer'];
         $zug->Mindestbremshunderstel = $request['Mindestbremshunderstel'];  
@@ -41,4 +47,21 @@ class ZugController extends Controller
         return view('add',['zug'=>$zug]);
 
     }
+
+
+    public function update(Request $request, $id)
+{
+   $zug = Zug::find($id);
+   $zug->name = $request['name'];
+        $zug->nachname = $request['nachname'];
+        $zug->versandbanhof = $request['versandbanhof'];
+        $zug->bestimmungsbanhof = $request['bestimmungsbanhof'];
+        $zug->datum = $request['datum'];
+        $zug->ref = $request['ref'];
+        $zug->zugnummer = $request['zugnummer'];
+        $zug->Mindestbremshunderstel = $request['Mindestbremshunderstel'];  
+        $zug->save();
+        $data = Zug::all();
+        return view('welcome',['zugs'=>$data]);
+}
 }

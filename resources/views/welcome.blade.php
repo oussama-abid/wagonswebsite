@@ -29,7 +29,27 @@
     <link href="{{url('vendor/aos/aos.css')}}" rel="stylesheet">
     <link href="{{url('vendor/glightbox/css/glightbox.min.css')}}" rel="stylesheet">
     <link href="{{url('vendor/swiper/swiper-bundle.min.css')}}" rel="stylesheet">
+    <script src="{{url('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{url('vendor/aos/aos.js')}}"></script>
+    <script src="{{url('vendor/glightbox/js/glightbox.min.js')}}"></script>
+    <script src="{{url('vendor/purecounter/purecounter_vanilla.js')}}"></script>
+    <script src="{{url('vendor/swiper/swiper-bundle.min.js')}}"></script>
 
+    <!-- Template Main JS File -->
+    <script src="{{url('js/main.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+
+    <script>
+        $(function() {
+            $("#datum").datepicker({
+                altFormat: "dd/mm/yy",
+                dateFormat: "dd.mm.yy",
+                changeMonth: true,
+                changeYear: true
+            });
+        });
+    </script>
     <!-- Template Main CSS File -->
     <link rel="stylesheet" href="{{url('css/main.css')}}">
 
@@ -101,7 +121,7 @@
                             <th scope="col">Bestimmungsbahnhof</th>
                             <th scope="col">Ref_NR</th>
                             <th scope="col">wagen</th>
-                            <th scope="col">Handlung</th>
+                            <th scope="col" colspan="2">Handlung</th>
 
 
                         </tr>
@@ -123,6 +143,13 @@
                             </td>
                             <td class="large">
                                 <button type="button" class="btn btn-danger"  onclick="confirmDelete2('{{ $zug->id  }}');"> <i class="bi bi-trash3"></i> Löschen </button>
+                            <td>{{ $zug->Mindestbremshunderstel }}</td>
+                            <td><a href="{{ route('wagons.show', [$zug->id]) }}" style="color: blue;"> wagenliste </a></td>
+                            <td><button type="button" class="btn btn-danger" style="height: 50px; font-size:small;" onclick="confirmDelete2('{{ $zug->id  }}');"> <i class="bi bi-trash3"></i> Löschen </button>
+                            </td>
+                            <td> 
+                                
+                                <a type="button" class="btn btn-warning" style="height: 50px; font-size:small;"    href="{{route('edit-zug', ['id' => $zug->id])}}" > <i class="bi bi-pen"></i> ändern </a>
                             </td>
                             <form action="/deletezug/{{ $zug->id }}" method="POST" id="deleteForm-{{ $zug->id  }}">
                                 @csrf
@@ -135,6 +162,9 @@
                     </tbody>
                 </table>
             </div> <!-- ======= Book A Table Section ======= -->
+        
+              
+           
             <section id="book-a-table" class="book-a-table">
                 <div class="container" data-aos="fade-up">
                     <div class="section-header">
@@ -200,6 +230,8 @@
                     </div>
 
                 </div>
+
+
             </section><!-- End Book A Table Section -->
 
 
@@ -252,27 +284,8 @@
         }
     </script>
     <!-- Vendor JS Files -->
-    <script src="{{url('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-    <script src="{{url('vendor/aos/aos.js')}}"></script>
-    <script src="{{url('vendor/glightbox/js/glightbox.min.js')}}"></script>
-    <script src="{{url('vendor/purecounter/purecounter_vanilla.js')}}"></script>
-    <script src="{{url('vendor/swiper/swiper-bundle.min.js')}}"></script>
-
-    <!-- Template Main JS File -->
-    <script src="{{url('js/main.js')}}"></script>
-
-
-    <script>
-        $(function() {
-            $("#datum").datepicker({
-                altFormat: "dd/mm/yy",
-                dateFormat: "dd.mm.yy",
-                changeMonth: true,
-                changeYear: true
-            });
-        });
-    </script>
-
+ 
+    
 </body>
 
 </html>
