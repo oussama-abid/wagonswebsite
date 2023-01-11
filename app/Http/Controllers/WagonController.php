@@ -152,7 +152,10 @@ class WagonController extends Controller
   public function update(Request $request, $id)
   {
     // Validation for required fields (and using some regex to validate our numeric value)
-
+    $zugid = Wagon::join('relations', 'wagons.id', '=', 'relations.wagon_id')
+    ->join('zugs', 'zugs.id', '=', 'relations.zug_id')
+    ->where('wagons.id', $id)
+    ->pluck('zug_id');
     $wagon = Wagon::find($id);
     // Getting values from the blade template form
     $wagon->wagennummer = $request->get('wagennummer');
@@ -221,11 +224,8 @@ class WagonController extends Controller
     $wagon->ge = (int) $wagon->eigenmasse + (int)$wagon->GewichtderLadung;
     $wagon->save();
 
-    $list = Wagon::join('relations', 'wagons.id', '=', 'relations.wagon_id')
-      ->join('zugs', 'zugs.id', '=', 'relations.zug_id')->get();
-    //  var_dump(compact('list'));
-    $data = Zug::all();
-        return view('welcome',['zugs'=>$data]);
+   
+    return redirect()->route('wagons.show', $zugid[0]);
   }
   public function show1(Request $request)
   {

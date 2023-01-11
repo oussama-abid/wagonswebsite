@@ -89,7 +89,7 @@
                 </div>
                 <br><br><br>
 
-                <table class="table" style="margin-left: -70px;">
+                <table class="table" >
                     <thead class="thead-dark">
                         <tr style="text-align: center;">
                             <th scope="col">Reihung</th>
@@ -100,7 +100,6 @@
                             <th scope="col">Versandbahnhof</th>
                             <th scope="col">Bestimmungsbahnhof</th>
                             <th scope="col">Ref_NR</th>
-                            <th scope="col">Mindestbremshunderstel</th>
                             <th scope="col">wagen</th>
                             <th scope="col">Handlung</th>
 
@@ -118,13 +117,12 @@
                             <td>{{ $zug->versandbanhof }}</td>
                             <td>{{ $zug->bestimmungsbanhof }}</td>
                             <td>{{ $zug->ref }}</td>
-                            <td>{{ $zug->Mindestbremshunderstel }}</td>
                             <td>
                                 
                                 <a href="{{ route('wagons.show', [$zug->id]) }}" style="color: blue;"> wagenliste </a>
                             </td>
-                            <td>
-                                <button type="button" class="btn btn-danger" style="height: 50px; font-size:small;" onclick="confirmDelete2('{{ $zug->id  }}');"> <i class="bi bi-trash3"></i> Löschen </button>
+                            <td class="large">
+                                <button type="button" class="btn btn-danger"  onclick="confirmDelete2('{{ $zug->id  }}');"> <i class="bi bi-trash3"></i> Löschen </button>
                             </td>
                             <form action="/deletezug/{{ $zug->id }}" method="POST" id="deleteForm-{{ $zug->id  }}">
                                 @csrf
