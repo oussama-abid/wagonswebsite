@@ -1,3 +1,6 @@
+@php
+use Illuminate\Support\Facades\Auth;
+@endphp
 <!DOCTYPE html>
 <html lang="en">
 
@@ -71,17 +74,47 @@
       <div class="container" data-aos="fade-up">
         <div class="card" style="width: 18rem;">
           <div class="card-body">
+
             @foreach ($zug as $key => $zugs)
+            <div style="margin: auto; width: 70%; padding: 1px; margin-bottom: 4px;margin-top: 4px;">
+              <img src="{{ asset('images/' . $zugs->logo) }}" style="border: 1px solid black;max-width: 250px; max-height: 90px;display: block;margin-left: auto;margin-right: auto;">
+            </div>
+            <?php
+
+
+            $user = Auth::user();
+            if ($user->type != "employee") {
+
+            ?>
+              <form action="{{ route('upload.image') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+
+                <input type="file" class="form-control form-control-sm" name="image">
+                <input type="text" hidden value="{{ $zugs->id }}" name="idzug">
+                <div style="margin: auto; width: 70%; padding: 1px; margin-bottom: 4px;margin-top: 4px;">
+                  <div class="row">
+                    <div class="col"><button type="submit" class="btn btn-danger btn-sm" style="margin-top: 8px;margin-bottom: 8px;margin-left: auto;margin-right: auto;display: block;">Edit logo</button></div>
+
+                  </div>
+                </div>
+
+              </form>
+            <?php
+            }
+            ?>
+
+
             <h5 class="card-title">Datum : {{ $zugs->datum }}</h5>
             <h5 class="card-title">Zugnummer : {{ $zugs->zugnummer }}</h5>
             <h5 class="card-title">Name : {{ $zugs->name }}</h5>
             <h5 class="card-title">Nachname : {{ $zugs->nachname }}</h5>
             <h5 class="card-title">Ref.-Nr : {{ $zugs->ref }}</h5>
             <div class="row">
-<div class="col">            <a class="btn btn-secondary" href="{{ route('pdf',[$zugs->id]) }}"><i class="bi bi-file-earmark"></i>PDF </a> <br>
-</div>
-<div class="col">            <a  class="btn btn-warning"    href="{{route('edit-zug', ['id' => $zugs->id])}}" > <i class="bi bi-pen"></i> edit </a>
-</div>
+              <div class="col"> <a class="btn btn-secondary" href="{{ route('pdf',[$zugs->id]) }}"><i class="bi bi-file-earmark"></i>PDF </a> <br>
+           
+            </div>
+              <div class="col"> <a class="btn btn-warning" href="{{route('edit-zug', ['id' => $zugs->id])}}"> <i class="bi bi-pen"></i> edit </a>
+              </div>
             </div>
 
             @endforeach
@@ -107,29 +140,59 @@
               <th scope="col">Gattung</th>
               <th scope="col">LüP</th>
               <th scope="col">Gewicht</th>
-              <th scope="col">Bremsstellung</th>
+              <th scope="col" class="hide-on-small">Bremsstellung</th>
               <th scope="col">Handlung</th>
 
             </tr>
           </thead>
           <tbody>
+            @php
+            function formatNumber($value) {
+            $input = preg_replace('/\D/', '', $value); // Remove non-numeric characters
+            $formattedNumber = '';
+
+            // Add spaces
+            if (strlen($input) > 2) {
+            $formattedNumber .= substr($input, 0, 2) . ' ';
+            $input = substr($input, 2);
+            }
+            if (strlen($input) > 2) {
+            $formattedNumber .= substr($input, 0, 2) . ' ';
+            $input = substr($input, 2);
+            }
+
+            if (strlen($input) > 4) {
+            $formattedNumber .= substr($input, 0, 4) . ' ';
+            $input = substr($input, 4);
+            }
+            if (strlen($input) > 3) {
+            $formattedNumber .= substr($input, 0, 3) . '-';
+            $input = substr($input, 3);
+            }
+
+            $formattedNumber .= $input;
+
+            return substr($formattedNumber, 0, 16);
+            }
+
+            @endphp
             @foreach ($wagon as $key => $wagons)
             <tr>
               <th scope="row">{{ $key+1 }}</th>
-              <td> {{ $wagons->wagennummer}} </td>
+              <td> {{formatNumber($wagons->wagennummer)}} </td>
               <td> {{ $wagons->gattungsbuchstabe}} </td>
               <td> {{ $wagons->längeüberpuffer}}</td>
               <td> {{ $wagons->GewichtderLadung}} </td>
-              <td> {{ $wagons->bremsstellung}}</td>
+              <td class="hide-on-small"> {{ $wagons->bremsstellung}}</td>
               <td>
-                <a class="btn btn-warning" href="{{route('edit-wagon', ['id' => $wagons->wagon_id])}}"> <i class="bi bi-pencil"></i> edit</a>
+                <a class="btn btn-warning" href="{{route('edit-wagon', ['id' => $wagons->wagon_id])}}"> <i class="bi bi-pencil"></i> <span class="hide-on-small">edit</span> </a>
 
-                
-                <button type="button" class="btn btn-danger" onclick="confirmDelete2('{{ $wagons->wagon_id  }}');"> <i class="bi bi-trash3"></i> Löschen </button>
+
+                <button type="button" class="btn btn-danger" onclick="confirmDelete2('{{ $wagons->wagon_id  }}');"> <i class="bi bi-trash3"></i> <span class="hide-on-small"> Löschen </span> </button>
               </td>
               <form action="/deletewagon/{{ $wagons->wagon_id }}" method="POST" id="deleteForm-{{ $wagons->wagon_id  }}">
-                  @csrf
-                </form>
+                @csrf
+              </form>
 
             </tr>
             @endforeach

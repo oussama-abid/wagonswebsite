@@ -67,7 +67,7 @@
 
                 <div class="row g-0">
 
-                    <div class="col-lg-4 reservation-img" style="background-image: url(https://assets.deutschlandfunk.de/FILE_58a6ddb9ebc583a688290f44d813140f/1280xauto.jpg?t=1597541533052);" data-aos="zoom-out" data-aos-delay="200"></div>
+                    <div class="col-lg-4 reservation-img" style="background-image: url('img/img.webp');" data-aos="zoom-out" data-aos-delay="200"></div>
 
                     <div class="col-lg-8 d-flex align-items-center reservation-form-bg">
                         <form method="post"  class="php-email-form" data-aos="fade-up" data-aos-delay="100" action="{{route('zugs.update', $zug[0]->id)}}">
@@ -75,13 +75,13 @@
                             @csrf
                             <div class="row gy-4">
                                 <div class="col-lg-5 col-md-6">
-                                    <label for="inputName4">Name</label>
-                                    <input required type="text" class="form-control"  value="{{$zug[0]->name}}" id="name" name="name" placeholder="Name">
+                                    <label for="inputName4">Vor-Nachname (Wgm)</label>
+                                    <input required type="text" class="form-control" readonly="readonly"  value="{{$zug[0]->name}}" id="name" name="name" placeholder="Name">
                                     <div class="validate"></div>
                                 </div>
                                 <div class="col-lg-5 col-md-6">
-                                    <label for="inputNachname4">Nachname</label>
-                                    <input required type="text" class="form-control" id="nachname" value="{{$zug[0]->nachname}}" name="nachname" placeholder="Nachname">
+                                    <label for="inputNachname4">Vor-Nachname (Tf)</label>
+                                    <input  type="text" class="form-control" id="nachname" value="{{$zug[0]->nachname}}" name="nachname" placeholder="Nachname">
                                     <div class="validate"></div>
                                 </div>
                                 <div class="col-lg-5 col-md-6">
@@ -101,7 +101,7 @@
                                 </div>
                                 <div class="col-lg-5 col-md-6">
                                     <label for="inputBestimmungsbahnhof4">Ref.-NR.</label>
-                                    <input required type="text" class="form-control" id="ref"  value="{{$zug[0]->ref}}" name="ref" placeholder="Ref.-NR.">
+                                    <input type="text" class="form-control" id="ref"  value="{{$zug[0]->ref}}" name="ref" placeholder="Ref.-NR.">
                                     <div class="validate"></div>
                                 </div>
                                 <div class="col-lg-5 col-md-6">
@@ -109,6 +109,32 @@
                                     <input required type="text" class="form-control" id="zugnummer"  value="{{$zug[0]->zugnummer}}" name="zugnummer" placeholder="Zugnummer">
                                     <div class="validate"></div>
                                 </div>
+                                <div class="col-lg-5 col-md-6">
+                                        <label for="inputZugnummer4">Zugnummer 2 (falls vorhanden)</label>
+                                        <input  type="text" class="form-control"  name="seczugnummer" placeholder="" value="{{$zug[0]->seczugnummer}}">
+                                        <div class="validate"></div>
+                                    </div>
+                                    <div class="col-lg-5 col-md-6">
+                                        <label for="inputZugnummer4">Ab Betriebsstelle</label>
+                                        <input required type="text" class="form-control"  name="betriebsstelle" placeholder="" value="{{$zug[0]->betriebsstelle}}">
+                                        <div class="validate"></div>
+                                    </div>
+                                    <div class="col-lg-5 col-md-6">
+                                        <label for="inputZugnummer4" style="white-space: nowrap;">Ab Betriebsstelle 2 (falls vorhanden)</label>
+                                        <input  type="text" class="form-control"  name="secbetriebsstelle" placeholder="" value="{{$zug[0]->secbetriebsstelle}}">
+                                        <div class="validate"></div>
+                                    </div>
+                                    <div class="col-lg-5 col-md-6">
+                                        <label for="inputZugnummer4" style="white-space: nowrap;">EVU</label>
+                                        <input  type="text" class="form-control"  name="evu" placeholder="" value="{{$zug[0]->evu}}">
+                                        <div class="validate"></div>
+                                    </div>
+                                    <div class="col-lg-5 col-md-6" hidden>
+                                        <label for="inputmindestbremshunderstel4">Mindestbremshunderstel</label>
+                                        <input value="old" type="text" class="form-control" id="Mindestbremshunderstel" name="Mindestbremshunderstel" placeholder="mindestbremshunderstel">
+                                        <div class="validate"></div>
+                                    </div>
+
                                 <div class="col-lg-5 col-md-6" hidden>
                                     <label for="inputmindestbremshunderstel4">Mindestbremshunderstel</label>
                                     <input value="old" type="text" class="form-control" id="Mindestbremshunderstel"  value="{{$zug[0]->Mindestbremshunderstel}}" name="Mindestbremshunderstel" placeholder="mindestbremshunderstel">
@@ -117,7 +143,7 @@
 
 
 
-                                <div><button type="submit">Weiter</button></div>
+                                <div><button type="submit">Speichern</button></div>
                         </form>
                     </div><!-- End Reservation Form -->
 
@@ -146,7 +172,7 @@
 
         <div class="container">
             <div class="copyright">
-                &copy; Copyright <strong><span></span></strong>. All Rights Reserved
+                &copy; Copyright by Wali-Bahn<strong><span></span></strong>. Alle Rechte vorbehalten. Kontakt an kontakt@wali-bahn.de
             </div>
 
         </div>

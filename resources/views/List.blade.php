@@ -61,9 +61,7 @@
 
 
     <script>
-
-        console.log(<?= json_encode($list); ?>);
-
+      console.log(<?= json_encode($list); ?>);
     </script>
 
 
@@ -74,55 +72,30 @@
         <div class="section-header">
           <p> Wagenliste</p>
         </div>
-        <div class="row">
+        <div class="row" style="margin: auto;  padding: 10px;">
           <div class="col-md-6">
-            <form action="/search" method="POST">
-              @method('POST') 
-            @csrf
-            <div class="row">
-              <div class="col-md-6"> <label for="zugnummer">Zugnummer:</label></div>
-              <div class="col"> <input  name="one" type="text" class="form-control" onkeyup="myFunction1()" id="zugnummer"></div>
+
+            <div class="row" >
+              <div class="col-md-6"> <input name="wagennummer" type="text" placeholder="Wagennummer" class="form-control" onkeyup="myFunction1()" id="wagennummer"></div>
             </div><br>
 
-          
-            <div class="row">
-              <div class="col-md-6"> <label for="Datum">Datum:</label></div>
-              <div class="col"> <input  name="tow" type="text" class="form-control" id="Datum" onkeyup="myFunction()"></div>
-            </div><br>
-          
-            <div class="row">
-              <div class="col-md-6"> <label for="Versandbahnof">Versandbahnof:</label></div>
-              <div class="col"> <input  name="three" type="text" class="form-control" onkeyup="myFunction2()" id="versandbahnof"></div>
-            </div><br>
-          
-            <div class="row">
-              <div class="col-md-6"> <label for="Bestimmungsbahnhof">Bestimmungsbahnhof:</label></div>
-              <div class="col"> <input name="four" type="text" class="form-control" onkeyup="myFunction3()" id="bestimmungsbahnhof"></div>
-            </div><br>
-           
-            <div class="row">
-              <div class="col-md-6"> <label for="Ref.-Nr">Ref.-Nr:</label></div>
-              <div class="col"> <input name="five" type="text" class="form-control" onkeyup="myFunction4()" id="ref"></div>
-            </div>
-            <button class="btn btn-warning bg" type="submit">Wagenliste erstellen</button>
-          </form>
 
 
           </div>
-     
+
 
         </div>
         <br><br><br>
 
-        <table class="table" id ="table">
+        <table class="table" id="table">
           <thead class="thead-dark">
             <tr>
-            <th scope="col">Reihung</th>
+              <th scope="col">Reihung</th>
               <th scope="col">Datum</th>
               <th scope="col" hidden>zugnummer</th>
               <th scope="col" hidden>Versandbahnof</th>
               <th scope="col" hidden>Bestimmungsbahnhof</th>
-              <th scope="col" >Ref.-Nr</th>
+              <th scope="col">Ref.-Nr</th>
 
               <th scope="col">Wagennummer</th>
               <th scope="col">Gattung</th>
@@ -130,31 +103,31 @@
               <th scope="col">Gewicht</th>
               <th scope="col">Bremsstellung</th>
               <th scope="col">Handlung</th>
-              
+
             </tr>
           </thead>
-          <tbody >
+          <tbody>
             @foreach ($list as$key => $li)
             <tr>
-            <th scope="row">{{ $key+1 }}</th>
-                <td> {{ $li->datum}}</td>
-                <td hidden> {{ $li->zugnummer}}</td>
-                <td hidden> {{ $li->versandbanhof}}</td>
-                <td hidden> {{ $li->bestimmungsbanhof}}</td>
-                <td > {{ $li->ref}}</td>
+              <th scope="row">{{ $key+1 }}</th>
+              <td> {{ $li->datum}}</td>
+              <td hidden> {{ $li->zugnummer}}</td>
+              <td hidden> {{ $li->versandbanhof}}</td>
+              <td hidden> {{ $li->bestimmungsbanhof}}</td>
+              <td> {{ $li->ref}}</td>
 
-                <td> {{ $li->wagennummer}}  </td>
-                <td> {{ $li->gattungsbuchstabe}}  </td>
-                <td> {{ $li->längeüberpuffer}}</td>
-                <td> {{ $li->GewichtderLadung}}  </td>
-                <td> {{ $li->bremsstellung}}</td>
-                <td> <a class="btn btn-warning" href="{{route('edit-wagon', ['id' => $li->wagon_id])}}"> <i class="bi bi-pencil"></i> edit</a></td>
-                
-              </tr>
-@endforeach
-      
-          
-       
+              <td> {{ $li->wagennummer}} </td>
+              <td> {{ $li->gattungsbuchstabe}} </td>
+              <td> {{ $li->längeüberpuffer}}</td>
+              <td> {{ $li->GewichtderLadung}} </td>
+              <td> {{ $li->bremsstellung}}</td>
+              <td> <a class="btn btn-warning" href="{{route('edit-wagon', ['id' => $li->wagon_id])}}"> <i class="bi bi-pencil"></i> edit</a></td>
+
+            </tr>
+            @endforeach
+
+
+
 
           </tbody>
         </table>
@@ -226,6 +199,26 @@
 
   <!-- Template Main JS File -->
   <script src="{{url('js/main.js')}}"></script>
-
+  <script>
+    function myFunction1() {
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("wagennummer");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("table");
+      tr = table.getElementsByTagName("tr");
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[5];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+  </script>
 </body>
+
 </html>

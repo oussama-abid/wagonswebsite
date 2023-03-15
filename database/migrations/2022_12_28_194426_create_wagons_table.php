@@ -48,10 +48,16 @@ class CreateWagonsTable extends Migration
             $table->string('four')->nullable();
             $table->string('five')->nullable();
             $table->string('ge')->nullable();
+            $table->string('arch')->default(0);
+            $table->string('idboss')->nullable();
+            $table->string('iduser')->nullable();
             
-
-            
-
+            $table->string('bremsgewichte')->nullable();
+            $table->string('revsdatum')->nullable();
+            $table->string('gultigkeit')->nullable();
+            $table->string('empty')->nullable();
+            $table->string('sonstigebemerkungen')->nullable();
+            $table->string('zugid');
 
 
 

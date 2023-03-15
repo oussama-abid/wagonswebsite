@@ -6,6 +6,24 @@ use Illuminate\Support\Facades\DB;
 
 <html>
 <style>
+    body{
+      margin-top: -85px;
+    margin-bottom: -90px;
+    margin-left: 4px;
+  }
+  tr:not(:last-of-type) {
+  border-bottom: 2px solid black;
+}
+
+tr:not(:last-of-type) td.nostyle {
+  border-bottom: none !important;
+}
+  .no-border {
+  border-bottom: none !important;
+}
+.my-row td:not(:last-child) {
+  border-bottom: 1px solid black;
+}
   table.custom {
     border: 0;
     cellpadding: 0;
@@ -65,14 +83,16 @@ use Illuminate\Support\Facades\DB;
   td {
     mso-style-parent: style0;
     mso-number-format: General;
-    text-align: general;
-    vertical-align: bottom;
+    text-align: center !important;
+        vertical-align: bottom;
     white-space: nowrap;
     background: auto;
     mso-pattern: auto;
     color: #000000;
-    font-size: 10pt;
+    height: 21.3px !important;
+    font-size: 9.4px!important;
     font-weight: 400;
+    
     font-style: normal;
     font-family: Arial, sans-serif;
     mso-protection: locked visible;
@@ -1119,9 +1139,7 @@ use Illuminate\Support\Facades\DB;
 </style>
 
 <body link='blue' vlink='purple' class='container' style="margin-left: -60px;">
-  @php
-  $page_break = 0;
-  @endphp
+
   <table border='0' cellpadding='0' cellspacing='0' width='885' style='border-collapse: 
  collapse;table-layout:fixed;width:663pt'>
     @foreach ($zug as $key => $zugs)
@@ -1139,7 +1157,7 @@ use Illuminate\Support\Facades\DB;
     <col class='x24' width='33' span='3' style='mso-width-source:userset;background:none;width:24.75pt'>
     <col class='x24' width='54' style='mso-width-source:userset;background:none;width:40.5pt'>
     <tr height='20' style='mso-height-source:userset;height:15pt'>
-      <td colspan='7' rowspan='2' height='39' class='x22' width='185' style='height:29.25pt;'></td>
+    <td colspan='7' rowspan='2' height='39' class='x22' width='185'style='padding: 4px;'><img src="{{ ('images/' . $zugs->logo) }}" style="max-width: 240px; max-height: 40px;"></td>
       <td colspan='16' class='x35' width='547' style='border-right:1px solid ;'>Wagenliste für Güterzüge</td>
       <td colspan='4' class='x24' width='153' style='mso-ignore:colspan;'></td>
     </tr>
@@ -1165,23 +1183,23 @@ use Illuminate\Support\Facades\DB;
     </tr>
     <tr height='20' style='mso-height-source:userset;height:15pt'>
       <td colspan='13' height='19' class='x35' style='height:14.25pt;'> {{ $zugs->zugnummer }}</td>
-      <td colspan='3' class='x35'>{{ $zugs->nachname }} {{ $zugs->name }}</td>
-      <td colspan='7' class='x36' style='border-right:1px solid ;'></td>
+      <td colspan='3' class='x35'>{{ $zugs->nachname }} </td>
+      <td colspan='7' class='x36' style='border-right:1px solid ;'>{{ $zugs->betriebsstelle }}</td>
       <td colspan='4' class='x24' style='mso-ignore:colspan;'></td>
     </tr>
     <tr height='20' style='mso-height-source:userset;height:15pt'>
-      <td colspan='13' height='19' class='x22' style='height:14.25pt;'></td>
+      <td colspan='13' height='19' class='x22' style='height:14.25pt;'>{{ $zugs->seczugnummer }}</td>
       <td colspan='3' class='x22'></td>
-      <td colspan='7' class='x37' style='border-right:1px solid ;'></td>
+      <td colspan='7' class='x37' style='border-right:1px solid ;'>{{ $zugs->secbetriebsstelle }}</td>
       <td colspan='4' class='x24' style='mso-ignore:colspan;'></td>
     </tr>
     <tr height='20' style='mso-height-source:userset;height:15pt'>
       <td colspan='3' height='18' class='x39' style='border-bottom:1px solid ;height:13.5pt;'>Ref. - Nr.</td>
       <td colspan='10' class='x35' style='border-bottom:1px solid ;'> {{ $zugs->ref }}</td>
       <td class='x41'>EVU</td>
-      <td colspan='2' class='x40' style='border-bottom:1px solid ;'></td>
-      <td class='x42'></td>
-      <td colspan='5' class='x40' style='border-bottom:1px solid ;'></td>
+      <td colspan='2' class='x40' style='border-bottom:1px solid ;'>{{ $zugs->evu }}</td>
+      <td colspan='2' class='x39'>Wagenmeister</td>
+      <td colspan='4' class='x35' style='border-bottom:1px solid ;'>{{ $zugs->name }}</td>
       <td class='x43'></td>
       <td colspan='4' class='x24' style='mso-ignore:colspan;'></td>
     </tr>
@@ -1190,7 +1208,12 @@ use Illuminate\Support\Facades\DB;
     </tr>
     @endforeach
   </table>
-  <table border='0' cellpadding='0' cellspacing='0' width='885' style='margin-left: -10; border-collapse: 
+  <?php
+  $page_break = 30;
+  $count = 0;   
+      ?>   
+
+<table border='0' cellpadding='0' cellspacing='0' width='885' style='margin-left: -10; border-collapse: 
  collapse;table-layout:fixed;width:663pt'>
     <tr height='22' style='mso-height-source:userset;height:17.1pt'>
       <td rowspan='5' height='121' class='x49' style='height:91.2pt;'>
@@ -1277,60 +1300,65 @@ use Illuminate\Support\Facades\DB;
       <td class='x57'>t</td>
       <td colspan='4' class='x24' style='mso-ignore:colspan;'></td>
     </tr>
-    @foreach ($wagon as $key => $wagons)
-    <tr height='22' style='mso-height-source:userset;height:17.1pt;'>
-      <td height='21' class='x46' style='height:16.35pt; border-bottom: 1px solid black;'>{{ $key+1 }}</td>
-      <td class='x59' style="border-bottom: 1px solid black;">{{ $wagons->fir}}</td>
-      <td class='x59' style="border-bottom: 1px solid black;">{{ $wagons->sec}}</td>
-      <td class='x59' style="border-bottom: 1px solid black;">{{ $wagons->thir}}</td>
-      <td class='x59' style="border-bottom: 1px solid black;">{{ $wagons->four}}</td>
-      <td class='x59' style="border-bottom: 1px solid black;">{{ $wagons->five}}</td>
-      <td class='x59' style="border-bottom: 1px solid black;">{{ $wagons->gattungsbuchstabe}}</td>
-      <td class='x59' style="border-bottom: 1px solid black;">{{ $wagons->a}}</td>
-      <td class='x59' style="border-bottom: 1px solid black;">{{ $wagons->b}}</td>
-      <td colspan='2' class='x35' style="border-bottom: 1px solid black;">{{ $wagons->längeüberpuffer}}</td>
-      <td class='x59' style="border-bottom: 1px solid black;">{{ $wagons->eigenmasse}}</td>
-      <td class='x59' style="border-bottom: 1px solid black;">{{ $wagons->GewichtderLadung}}</td>
-      <td class='x59' style="border-bottom: 1px solid black;">{{ $wagons->ge}}</td>
-      <td class='x59' style="border-bottom: 1px solid black;">{{ $wagons->d}}</td>
-      <td class='x59' style="border-bottom: 1px solid black;">{{ $wagons->e}}</td>
-      <td class='x59' colspan='2' style="border-bottom: 1px solid black;">{{ $zugs->versandbanhof}}</td>
-      <td class='x59' style="border-bottom: 1px solid black;" colspan='2'>{{ $zugs->bestimmungsbanhof}}</td>
-      <td class='x59' style="border-bottom: 1px solid black;">{{ $wagons->k}}</td>
-      <td class='x59' style="border-bottom: 1px solid black;">{{ $wagons->l}}</td>
-      <td class='x59' style="border-bottom: 1px solid black;">{{ $wagons->sh}}</td>
-      <td class='x59' style="border-bottom: 1px solid black;">{{ $wagons->h}}</td>
-      <td class='x60' colspan='2' style='white-space: normal !important; border-bottom: 1px solid black; '>{{ $wagons->UNNummer }} {{ $wagons->Schadwagen }}</td>
-      <td colspan='4' class='x24' style='border: 0 !important; mso-ignore:colspan;'></td>
-    </tr>
-
-
-    @php
-    $page_break++;
-    if ($page_break % 27 == 0) {
-    echo '
-  </table>
-  <div style="page-break-before: always;"></div>
-  <table class="custom">';
+    <?php   
+    foreach ($wagon as $key => $wagons) {
+    if ($count == $page_break) {
+      ?> 
+    </table>
+    <div style="page-break-before: always;"></div>
+    <table class="custom">
+    <?php 
+      $page_break = 40;     
+      $count =0;
     }
-    @endphp
-    @endforeach
-  </table>
+    ?>
+      <tr height='22' class="my-row" style='mso-height-source:userset;height:17.1pt;'>
+      <td height='21' class='x46' style='height:16.35pt; border-bottom: 1px solid black; {{ $key % 10 == 9 ? "border-bottom: 2.5px solid black;" : "" }}'>{{ $key+1 }}</td>
+      <td class='x59' style="border-bottom: 1px solid black; {{ $key % 10 == 9 ? "border-bottom: 2.5px solid black;" : "" }}">{{ $wagons->fir}}</td>
+      <td class='x59' style="border-bottom: 1px solid black; {{ $key % 10 == 9 ? "border-bottom: 2.5px solid black;" : "" }}">{{ $wagons->sec}}</td>
+      <td class='x59' style="border-bottom: 1px solid black; {{ $key % 10 == 9 ? "border-bottom: 2.5px solid black;" : "" }}">{{ $wagons->thir}}</td>
+      <td class='x59' style="border-bottom: 1px solid black; {{ $key % 10 == 9 ? "border-bottom: 2.5px solid black;" : "" }}">{{ $wagons->four}}</td>
+      <td class='x59' style="border-bottom: 1px solid black;{{ $key % 10 == 9 ? "border-bottom: 2.5px solid black;" : "" }}">{{ $wagons->five}}</td>
+      <td class='x59' style="border-bottom: 1px solid black;{{ $key % 10 == 9 ? "border-bottom: 2.5px solid black;" : "" }}">{{ $wagons->gattungsbuchstabe}}</td>
+      <td class='x59' style="border-bottom: 1px solid black;{{ $key % 10 == 9 ? "border-bottom: 2.5px solid black;" : "" }}">{{ $wagons->a}}</td>
+      <td class='x59' style="border-bottom: 1px solid black;{{ $key % 10 == 9 ? "border-bottom: 2.5px solid black;" : "" }}">{{ $wagons->b}}</td>
+      <td colspan='2' class='x35' style="border-bottom: 1px solid black;{{ $key % 10 == 9 ? "border-bottom: 2.5px solid black;" : "" }}">{{ $wagons->längeüberpuffer}}</td>
+      <td class='x59' style="border-bottom: 1px solid black;{{ $key % 10 == 9 ? "border-bottom: 2.5px solid black;" : "" }}">{{ $wagons->eigenmasse}}</td>
+      <td class='x59' style="border-bottom: 1px solid black;{{ $key % 10 == 9 ? "border-bottom: 2.5px solid black;" : "" }}">{{ $wagons->GewichtderLadung}}</td>
+      <td class='x59' style="border-bottom: 1px solid black;{{ $key % 10 == 9 ? "border-bottom: 2.5px solid black;" : "" }}">{{ $wagons->ge}}</td>
+      <td class='x59' style="border-bottom: 1px solid black;{{ $key % 10 == 9 ? "border-bottom: 2.5px solid black;" : "" }}">{{ $wagons->d}}</td>
+      <td class='x59' style="border-bottom: 1px solid black;{{ $key % 10 == 9 ? "border-bottom: 2.5px solid black;" : "" }}">{{ $wagons->e}}</td>
+      <td class='x59' colspan='2' style="border-bottom: 1px solid black;{{ $key % 10 == 9 ? "border-bottom: 2.5px solid black;" : "" }}">{{ $zugs->versandbanhof}}</td>
+      <td class='x59' style="border-bottom: 1px solid black;{{ $key % 10 == 9 ? "border-bottom: 2.5px solid black;" : "" }}" colspan='2'>{{ $zugs->bestimmungsbanhof}}</td>
+      <td class='x59' style="border-bottom: 1px solid black;{{ $key % 10 == 9 ? "border-bottom: 2.5px solid black;" : "" }}">{{ $wagons->k}}</td>
+      <td class='x59' style="border-bottom: 1px solid black;{{ $key % 10 == 9 ? "border-bottom: 2.5px solid black;" : "" }}">{{ $wagons->l}}</td>
+      <td class='x59' style="border-bottom: 1px solid black;{{ $key % 10 == 9 ? "border-bottom: 2.5px solid black;" : "" }}">{{ $wagons->sh}}</td>
+      <td class='x59' style="border-bottom: 1px solid black; border-right: 1px solid black;{{ $key % 10 == 9 ? "border-bottom: 2.5px solid black;" : "" }}">{{ $wagons->h}}</td>
+      <td class='x60' colspan='2' style='white-space: normal !important; border-bottom: 1px solid black;font-size: 9px!important; border-right: 1px solid black !important; {{ $key % 10 == 9 ? "border-bottom: 2.5px solid black;" : "" }} '>{{ $wagons->UNNummer }} {{ $wagons->Schadwagen }}</td>
+      <td colspan='4' class='x24' style='border: 0 !important; mso-ignore:colspan;'></td>
+
+    </tr>
+    <?php 
+    $count++;   
+    }
+    ?>
+     </table>
 
   <table border='0' cellpadding='0' cellspacing='0' width='885' style='margin-left: -10; border-collapse: 
- collapse;table-layout:fixed;width:663pt'>
+ collapse;table-layout:fixed;width:663pt;'>
     <tr height='22' style='mso-height-source:userset;height:17.1pt'>
       @php
       $wagons = DB::table('wagons')
       ->join('relations', 'wagons.id', '=', 'relations.wagon_id')
       ->join('zugs', 'zugs.id', '=', 'relations.zug_id')
       ->where('zugs.id',$zugs->id)
+      ->where('wagons.arch',0)
       ->get();
       @endphp
       <td colspan='7' height='21' class='x61' style='height:16.35pt;'></td>
       <td class='x59'>{{$wagons->sum('a')}}</td>
       <td class='x59'>{{$wagons->sum('b')}}</td>
-      <td colspan='2' class='x35'>{{round($wagons->sum('längeüberpuffer',0,PHP_ROUND_HALF_EVEN))}}</td>
+      <td colspan='2' class='x35'>{{$wagons->sum('längeüberpuffer')}}</td>
       <td class='x59'>{{$wagons->sum('eigenmasse')}}</td>
       <td class='x59'>{{$wagons->sum('GewichtderLadung')}}</td>
       <td class='x59'>{{$wagons->sum('ge')}}</td>
@@ -1343,6 +1371,7 @@ $count2 = DB::table('wagons')
 ->join('relations', 'wagons.id', '=', 'relations.wagon_id')
 ->join('zugs', 'zugs.id', '=', 'relations.zug_id')
 ->where('zugs.id',$zugs->id)
+->where('wagons.arch',0)
 ->where('h','x')->count();
 @endphp
       <td colspan='6' class='x63' style='border-right:1px solid ;border-bottom:1px solid ;'>Anzahl der Handbremsen : {{$count2}}</td>
@@ -1387,6 +1416,7 @@ $count = DB::table('wagons')
 ->join('relations', 'wagons.id', '=', 'relations.wagon_id')
 ->join('zugs', 'zugs.id', '=', 'relations.zug_id')
 ->where('zugs.id',$zugs->id)
+->where('wagons.arch',0)
 ->where('sh','x')->count();
 @endphp
       <td colspan='6' class='x28' style='border-right:1px solid ;'>Zahl der Bremsen mit (D) {{$count}}</td>
@@ -1425,20 +1455,21 @@ $count3 = DB::table('wagons')
 ->join('relations', 'wagons.id', '=', 'relations.wagon_id')
 ->join('zugs', 'zugs.id', '=', 'relations.zug_id')
 ->where('zugs.id',$zugs->id)
+->where('wagons.arch',0)
 ->where('l','x')->count()
 @endphp
       <td colspan='6' class='x28' style='border-right:1px solid ;'>Zahl der Bremsen mit (L) &amp; (LL) : {{$count3}}</td>
       <td colspan='4' class='x24' style='mso-ignore:colspan;'></td>
     </tr>
     <tr height='22' style='mso-height-source:userset;height:17.1pt'>
-      <td colspan='2' class='x65' style='border-right:1px solid ;border-bottom:1px solid ;'> <br>{{$d + $x}}
-        <p id="rslt"></p>
+      <td colspan='2' class='x65' style=' text-align: center;vertical-align: middle; border-right:1px solid ;border-bottom:1px solid ; '> {{$d + $x}}
       </td>
       @php
 $count4 = DB::table('wagons')
 ->join('relations', 'wagons.id', '=', 'relations.wagon_id')
 ->join('zugs', 'zugs.id', '=', 'relations.zug_id')
 ->where('zugs.id',$zugs->id)
+->where('wagons.arch',0)
 ->where('k','x')->count()
 @endphp
       <td colspan='6' class='x66' style='border-right:1px solid ;border-bottom:1px solid ;'> Zahl der Bremsen mit (K) :{{$count4}} </td>

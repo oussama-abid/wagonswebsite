@@ -59,14 +59,19 @@
 
                 <h1>Wali-Bahn<span>.</span></h1>
             </a>
-
             <nav id="navbar" class="navbar">
                 <ul>
-
+                <li> <a href="{{route('usersmanagment')}}">Userverwalten</a></li>
+               
                 </ul>
-            </nav><!-- .navbar -->
+            </nav><!--  <li> <a href="{{route('Archivverwalten')}}">Archivverwalten</a></li> .navbar -->
 
-          
+            <form method="post" action="{{ route('logout') }}">
+                @csrf
+                <button style="border: 0;" type="submit" class="btn-book-a-table">Abmelden</button>
+            </form>
+            <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
+            <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
 
         </div>
     </header><!-- End Header -->
@@ -82,23 +87,23 @@
 
             <div class="row">
                 <div class="section-header">
-                    <h1>Zug list</h1>
+                    <h1>Deine Züge</h1>
                 </div>
                 <br><br><br>
 
                 <table class="table">
                     <thead class="thead-dark">
                         <tr style="text-align: center;">
-                            <th scope="col">Reihung</th>
+                            <th scope="col"></th>
                             <th scope="col">Zugnummer</th>
                             <th scope="col" class="large">Datum</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">NachName</th>
-                            <th scope="col">Versandbahnhof</th>
-                            <th scope="col">Bestimmungsbahnhof</th>
+                            <th scope="col" class="hide-on-small">Name</th>
+                            <th scope="col" class="hide-on-small">Nachname</th>
+                            <th scope="col" class="hide-on-small">Startbahnhof</th>
+                            <th scope="col" class="hide-on-small">Zielbahnhof</th>
                             <th scope="col">Ref_NR</th>
-                            <th scope="col">wagen</th>
-                            <th scope="col">Handlung</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
 
 
                         </tr>
@@ -109,18 +114,18 @@
                             <th scope="row">{{ $key+1 }}</th>
                             <td>{{ $zug->zugnummer }}</td>
                             <td class="large">{{ $zug->datum }}</td>
-                            <td>{{ $zug->name }}</td>
-                            <td>{{ $zug->nachname }}</td>
-                            <td>{{ $zug->versandbanhof }}</td>
-                            <td>{{ $zug->bestimmungsbanhof }}</td>
+                            <td class="hide-on-small">{{ $zug->name }}</td>
+                            <td class="hide-on-small">{{ $zug->nachname }}</td>
+                            <td class="hide-on-small">{{ $zug->versandbanhof }}</td>
+                            <td class="hide-on-small">{{ $zug->bestimmungsbanhof }}</td>
                             <td>{{ $zug->ref }}</td>
                             <td>
 
-                                <a href="{{ route('wagons.show', [$zug->id]) }}" style="color: blue;"> wagenliste </a>
+                                <a href="{{ route('wagons.show', [$zug->id]) }}" style="color: blue;"> Zur Wagenliste </a>
                             </td>
-                            <td class="large">
-                                <button type="button" class="btn btn-danger" onclick="confirmDelete2('{{ $zug->id  }}');"> <i class="bi bi-trash3"></i> Löschen </button>
-                                <a type="button" class="btn btn-warning" href="{{route('edit-zug', ['id' => $zug->id])}}"> <i class="bi bi-pen"></i> edit </a>
+                            <td class="large ">
+                                <button type="button" class="btn btn-danger small-on-small" onclick="confirmDelete2('{{ $zug->id  }}');"> <i class="bi bi-trash3"></i> <span class="hide-on-small"></span> </button>
+                                <a type="button" class="btn btn-warning small-on-small" href="{{route('edit-zug', ['id' => $zug->id])}}"> <i class="bi bi-pen"></i>  <span class="hide-on-small"></span></a>
                             </td>
                             <form action="/deletezug/{{ $zug->id }}" method="POST" id="deleteForm-{{ $zug->id  }}">
                                 @csrf
@@ -136,36 +141,35 @@
             <section id="book-a-table" class="book-a-table">
                 <div class="container" data-aos="fade-up">
                     <div class="section-header">
-                        <h2>Zug Hinzufügen</h2>
-                        <p>Neues <span>Zug</span> Hinzufügen</p>
+                        <p>Neuen <span>Zug</span> Hinzufügen</p>
                     </div>
 
                     <div class="row g-0">
 
-                        <div class="col-lg-4 reservation-img" style="background-image: url(https://assets.deutschlandfunk.de/FILE_58a6ddb9ebc583a688290f44d813140f/1280xauto.jpg?t=1597541533052);" data-aos="zoom-out" data-aos-delay="200"></div>
+                        <div class="col-lg-4 reservation-img" style="background-image: url('img/img.webp');" data-aos="zoom-out" data-aos-delay="200"></div>
 
                         <div class="col-lg-8 d-flex align-items-center reservation-form-bg">
                             <form role="form" class="php-email-form" data-aos="fade-up" data-aos-delay="100" action="/addzug" method="post">
                                 @csrf
                                 <div class="row gy-4">
                                     <div class="col-lg-5 col-md-6">
-                                        <label for="inputName4">Name</label>
-                                        <input required type="text" class="form-control" id="name" name="name" placeholder="Name">
+                                        <label for="inputName4">Vor-Nachname (Wgm)</label>
+                                        <input required type="text" class="form-control" id="name" name="name" placeholder="Max" readonly="readonly" value="{{$nachname}}">
                                         <div class="validate"></div>
                                     </div>
                                     <div class="col-lg-5 col-md-6">
-                                        <label for="inputNachname4">Nachname</label>
-                                        <input required type="text" class="form-control" id="nachname" name="nachname" placeholder="Nachname">
+                                        <label for="inputNachname4">Vor-Nachname (Tf)</label>
+                                        <input  type="text" class="form-control" id="nachname" name="nachname" placeholder="Mustermann">
                                         <div class="validate"></div>
                                     </div>
                                     <div class="col-lg-5 col-md-6">
                                         <label for="inputversandbahnhof4">Versandbahnhof</label>
-                                        <input required type="text" class="form-control" id="versandbanhof" name="versandbanhof" placeholder="versandbahnhof">
+                                        <input required type="text" class="form-control" id="versandbanhof" name="versandbanhof" placeholder="z.B HWJP">
                                         <div class="validate"></div>
                                     </div>
                                     <div class="col-lg-5 col-md-6">
                                         <label for="inputBestimmungsbahnhof4">Bestimmungsbahnhof</label>
-                                        <input required type="text" class="form-control" id="bestimmungsbanhof" name="bestimmungsbanhof" placeholder="Bestimmungsbahnhof">
+                                        <input required type="text" class="form-control" id="bestimmungsbanhof" name="bestimmungsbanhof" placeholder="z.B AWHOD">
                                         <div class="validate"></div>
                                     </div>
                                     <div class="col-lg-5 col-md-6">
@@ -175,12 +179,32 @@
                                     </div>
                                     <div class="col-lg-5 col-md-6">
                                         <label for="inputBestimmungsbahnhof4">Ref.-NR.</label>
-                                        <input required type="text" class="form-control" id="ref" name="ref" placeholder="Ref.-NR.">
+                                        <input required type="text" class="form-control" id="ref" name="ref" placeholder="z.B RGL_KW3">
                                         <div class="validate"></div>
                                     </div>
                                     <div class="col-lg-5 col-md-6">
                                         <label for="inputZugnummer4">Zugnummer</label>
-                                        <input required type="text" class="form-control" id="zugnummer" name="zugnummer" placeholder="Zugnummer">
+                                        <input required type="text" class="form-control" id="zugnummer" name="zugnummer" placeholder="z.B 99635">
+                                        <div class="validate"></div>
+                                    </div>
+                                    <div class="col-lg-5 col-md-6">
+                                        <label for="inputZugnummer4">Zugnummer 2 (falls vorhanden)</label>
+                                        <input  type="text" class="form-control"  name="seczugnummer" placeholder="">
+                                        <div class="validate"></div>
+                                    </div>
+                                    <div class="col-lg-5 col-md-6">
+                                        <label for="inputZugnummer4">Ab Betriebsstelle</label>
+                                        <input required type="text" class="form-control"  name="betriebsstelle" placeholder="">
+                                        <div class="validate"></div>
+                                    </div>
+                                    <div class="col-lg-5 col-md-6">
+                                        <label for="inputZugnummer4" style="white-space: nowrap;">Ab Betriebsstelle 2 (falls vorhanden)</label>
+                                        <input  type="text" class="form-control"  name="secbetriebsstelle" placeholder="">
+                                        <div class="validate"></div>
+                                    </div>
+                                    <div class="col-lg-5 col-md-6">
+                                        <label for="inputZugnummer4" style="white-space: nowrap;">EVU</label>
+                                        <input  type="text" class="form-control"  name="evu" placeholder="">
                                         <div class="validate"></div>
                                     </div>
                                     <div class="col-lg-5 col-md-6" hidden>
@@ -191,7 +215,7 @@
 
 
 
-                                    <div><button type="submit">Weiter</button></div>
+                                    <div><button type="submit">Hinzufügen</button></div>
                             </form>
                         </div><!-- End Reservation Form -->
 
@@ -212,7 +236,7 @@
 
         <div class="container">
             <div class="copyright">
-                &copy; Copyright <strong><span></span></strong>. All Rights Reserved
+                &copy; Copyright by Wali-Bahn<strong><span></span></strong>. Alle Rechte vorbehalten. Kontakt an kontakt@wali-bahn.de
             </div>
 
         </div>

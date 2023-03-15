@@ -5,14 +5,40 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Wagen Hinzufügen</title>
+    <title>WaLi-Bahn - Wagen Hinzufügen</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <!-- Favicons -->
     <link href="{{url('img/favicon.png')}}" rel="icon">
     <link href="{{url('img/apple-touch-icon.png')}}" rel="apple-touch-icon">
+    <style>
+        table tr:not(:first-child) {
+            cursor: pointer;
+            transition: all .25s ease-in-out;
+        }
 
+        table tr:not(:first-child):hover {
+            background-color: #ddd;
+        }
+
+        #datum {
+            background: url(https://icons.veryicon.com/png/o/miscellaneous/administration/calendar-335.png) no-repeat scroll 1px 1px;
+            background-size: 25px;
+            background-position: 220px 9px;
+            background-color: white;
+
+        }
+    </style>
+    <style>
+        .s {
+            background-image: url('img/favicon.png');
+        }
+    </style>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,6 +53,13 @@
 
     <!-- Template Main CSS File -->
     <link rel="stylesheet" href="{{url('css/main.css')}}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/0.8.1/cropper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fengyuanchen/cropperjs@3.0.0/dist/cropper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@v2.0.0-beta.2"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropper/2.3.4/cropper.min.css" />
+    <link rel="stylesheet" href="{{url('css/image.css')}}">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
 
 </head>
@@ -45,7 +78,7 @@
             <nav id="navbar" class="navbar">
 
             </nav><!-- .navbar -->
-            <a class="btn-book-a-table" href="/">Startseite</a>
+            <a class="btn-book-a-table" href="/">Zurück</a>
 
 
 
@@ -68,79 +101,101 @@
             <div class="container" data-aos="fade-up">
 
                 <div class="section-header">
-                    <h2>Wagen Hinzufügen</h2>
-                    <p>Neues <span>Wagen</span> Hinzufügen</p><br>
+                    <p>Neuen <span>Wagen</span>Hinzufügen</p><br>
 
 
                 </div>
 
                 <div class="row g-0">
 
-                    <div class="col-lg-4 reservation-img" style="background-image: url(https://media.istockphoto.com/id/1337377361/photo/deutsche-bahn-train-arriving-at-greifswald-central-station.jpg?b=1&s=170667a&w=0&k=20&c=_AKnl_sYJtATWDiPGsm3lE1wks50UuUOeXe1bREwnpU=);" data-aos="zoom-out" data-aos-delay="200"></div>
+                    <div class="col-lg-4 reservation-img s" style="background-image: url('https://i.ibb.co/JtBcVfZ/img2.webp');" data-aos="zoom-out" data-aos-delay="200"></div>
 
                     <div class="col-lg-8 d-flex align-items-center reservation-form-bg">
                         <form role="form" class="php-email-form" data-aos="fade-up" data-aos-delay="100" action="{{route('wagons', ['zug' => $zug->id]) }} " method="post">
                             @csrf
                             <div class="row gy-4">
                                 <div class="col-lg-9 col-md-6">
-                                    <input type="text" minlength="12" maxlength="12" required id="wagennummer" name="wagennummer" class="form-control" id="name" placeholder="Wagen Nummer : Z.B 33 80 51 6470 564-6" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
-                                    <div id="error-message" style="display:none; color:red;">
-                                        Bitte geben Sie eine gültige 12-stellige wagennummer ein.
-                                    </div>
+                                    <a href="" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-box-arrow-in-down"></i></a>
+                                    <label for="wagennummer"> <--Suche oder Wagenummer eingeben</label>
+                                            <div class="input-container">
+                                                <a href="" data-bs-toggle="modal" data-bs-target="#exampleModa2" class="icon"><i class="bi bi-camera "></i></a>
+                                                <input type="text" minlength="16" maxlength="16" required id="input-rs" class="form-control input-field" placeholder="z.B 37 80 4950 360-0" data-rule="minlen:4" @error('wagennummer') value="{{  rtrim(old('wagennummer')) }}" @enderror>
+                                                <input type="text" hidden id="wagennummer" maxlength="11" name="wagennummer">
+                                            </div>
+
+                                            <div id="error-message" style="display:none; color:red;">
+                                                Freizeichen und Bindestriche werden Automatisch gesetzt.
+                                            </div>
+                                            @error('wagennummer')
+                                            <div style="color:red;">
+                                                {{ $message }}
+                                            </div>
+                                            @enderror
+
                                 </div>
                                 <div class="col-lg-5 col-md-6">
-                                    <input required type="text" id="gattungsbuchstabe" name="gattungsbuchstabe" class="form-control" placeholder="Gattungsbuchstabe" data-rule="email" data-msg="Please enter a valid email">
+                                    <label for="gattungsbuchstabe">Gattungsbuchstabe</label>
+                                    <input required @error('wagennummer') value="{{  old('gattungsbuchstabe') }}" @enderror type="text" id="gattungsbuchstabe" name="gattungsbuchstabe" class="form-control" placeholder="z.B S" data-rule="email" data-msg="Please enter a valid email">
                                     <div class="validate"></div>
+                                    <input type="text" value="0" hidden name="arch">
                                 </div>
                                 <div class="col-lg-5 col-md-6">
-                                    <input required type="text" class="form-control" name="längeüberpuffer" id="längeüberpuffer" placeholder="Länge über puffer (LüP)" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
+                                    <label for="längeüberpuffer">Länge über Puffer (LüP)</label>
+                                    <input required type="text" class="form-control" @error('wagennummer') value="{{  old('längeüberpuffer') }}" @enderror name="längeüberpuffer" id="längeüberpuffer" placeholder="z.B 29.6" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
                                     <div id="längeüberpuffererror" style="display:none; color:red;">
-                                    Bitte geben Sie gültige lüp ein.
+                                        Bitte mit Punkt trennen.
                                     </div>
                                 </div>
                                 <div class="col-lg-5 col-md-6">
-                                    <input required type="text" name="eigenmasse" id="eigenmasse" class="form-control" placeholder="Eigenmasse (T)" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
+                                    <label for="eigenmasse">Eigenmasse (t)</label>
+                                    <input required type="text" name="eigenmasse" @error('wagennummer') value="{{  old('eigenmasse') }}" @enderror id="eigenmasse" class="form-control" placeholder="z.B 30" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
                                     <div id="eigenmasseerror" style="display:none; color:red;">
-                                    Bitte geben Sie gültige Eigenmasse ein.
+                                        Bitte mit Punkt trennen.
                                     </div>
                                 </div>
                                 <div class="col-lg-5 col-md-6">
-                                    <input required type="text" class="form-control" name="AnzahlderAcshen" id="AnzahlderAcshen" placeholder="Anzahl der Acshen" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
+                                    <label for="AnzahlderAcshen">Anzahl der Achsen</label>
+                                    <input required type="text" class="form-control" @error('wagennummer') value="{{  old('AnzahlderAcshen') }}" @enderror name="AnzahlderAcshen" id="AnzahlderAcshen" placeholder="z.B 6" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
                                     <div id="AnzahlderAcshenerror" style="display:none; color:red;">
-                                    Bitte geben Sie gültige Anzahl der Acshen ein.
+                                        Bitte gültige Anzahl der Achsen eingeben.
                                     </div>
+
                                 </div>
                                 <div class="col-lg-5 col-md-6">
-                                    <input required type="text" class="form-control" name="GewichtderLadung" id="GewichtderLadung" placeholder="Gewicht der Ladung" data-rule="minlen:1" data-msg="Please enter at least 1 chars">
+                                    <label for="GewichtderLadung">Gewicht der Ladung (t)</label>
+                                    <input required type="text" class="form-control" @error('wagennummer') value="{{  old('GewichtderLadung') }}" @enderror name="GewichtderLadung" id="GewichtderLadung" placeholder="z.B 25" data-rule="minlen:1" data-msg="Please enter at least 1 chars">
                                     <div id="GewichtderLadungerror" style="display:none; color:red;">
-                                    Bitte geben Sie gültige Gewicht der Ladung ein.
+                                        Bitte mit Punkt trennen.
                                     </div>
                                 </div>
                                 <div class="col-lg-5 col-md-6">
-                                    <input required type="text" class="form-control" name="Bremsgewicht" id="Bremsgewicht" placeholder=" Bremsgewicht" data-rule="minlen:1" data-msg="Please enter at least 1 chars">
+                                    <label for="Bremsgewicht">Bremsgewicht (t)</label>
+                                    <input required type="text" class="form-control" @error('wagennummer') value="{{  old('Bremsgewicht') }}" @enderror name="Bremsgewicht" id="Bremsgewicht" placeholder="z.B 55" data-rule="minlen:1" data-msg="Please enter at least 1 chars">
                                     <div id="Bremsgewichterror" style="display:none; color:red;">
-                                    Bitte geben Sie gültige Bremsgewicht ein.
+                                        Bitte mit Punkt trennen.
 
                                     </div>
                                 </div>
                                 <div class="col-lg-5 col-md-6">
-                                    <label for="lastwechselundbremsgewicht">lastwechsel und bremsgewicht</label>
+                                    <label for="lastwechselundbremsgewicht">Lastwechsel</label>
                                     <select class="form-control" name="lastwechselundbremsgewicht" id="lastwechselundbremsgewicht">
-
+                                        @error('wagennummer')
+                                        <option value="{{  old('lastwechselundbremsgewicht') }}">{{old('lastwechselundbremsgewicht')}}</option>
+                                        @enderror
                                         <option value="Leer">Leer</option>
                                         <option value="Teilbeladen">Teilbeladen</option>
                                         <option value="beladen">beladen</option>
-                                        <option value="Automatisch">Automatisch</option>
 
                                     </select>
                                     <div class="validate"></div>
                                 </div>
                                 <div class="col-lg-5 col-md-6">
-                                    <label for="bremsstellung">bremsstellung </label>
+                                    <label for="bremsstellung">Bremsstellung</label>
                                     <select class="form-control" name="bremsstellung" id="bremsstellung">
-
+                                        @error('wagennummer')
+                                        <option value="{{  old('bremsstellung') }}">{{old('bremsstellung')}}</option>
+                                        @enderror
                                         <option value="AUS">AUS</option>
-                                        <option value="R">R</option>
                                         <option value="P">P</option>
                                         <option value="G">G</option>
 
@@ -148,10 +203,12 @@
                                     <div class="validate"></div>
                                 </div>
                                 <div class="col-lg-5 col-md-6">
-                                    <label for="hinweisezureibungsbremse">hinweise zu reibungsbremse </label>
+                                    <label for="hinweisezureibungsbremse">Hinweis zu Bremssohle</label>
 
                                     <select class="form-control" name="hinweisezureibungsbremse" id="hinweisezureibungsbremse">
-
+                                        @error('wagennummer')
+                                        <option value="{{  old('hinweisezureibungsbremse') }}">{{old('hinweisezureibungsbremse')}}</option>
+                                        @enderror
                                         <option value="keine">keine</option>
                                         <option value="K">K</option>
                                         <option value="L">L</option>
@@ -161,64 +218,94 @@
                                     <div class="validate"></div>
                                 </div>
                                 <div class="col-lg-5 col-md-6">
-                                    <label for="bemerkungenzurfeststellbremse">bemerkungen zur feststellbremse </label>
+                                    <label for="bemerkungenzurfeststellbremse">Bemerkungen zur Feststellbremse</label>
                                     <select class="form-control" name="bemerkungenzurfeststellbremse" id="bemerkungenzurfeststellbremse">
-
+                                        @error('wagennummer')
+                                        <option value="{{  old('bemerkungenzurfeststellbremse') }}">{{old('bemerkungenzurfeststellbremse')}}</option>
+                                        @enderror
                                         <option value="Keine">Keine</option>
-                                        <option value="bühnenbedienbar">bühnenbedienbar</option>
-                                        <option value="bodenbedienbar">bodenbedienbar</option>
+                                        <option value="bühnenbedienbar">Bühnenbedienbar</option>
+                                        <option value="bodenbedienbar">Bodenbedienbar</option>
                                     </select>
                                     <div class="validate"></div>
                                 </div>
+
                                 <div class="col-lg-5 col-md-6">
-                                    <fieldset  class="form-check">
-                                    <input type="checkbox" name="lademaßüberschreitung" value="lademaßüberschreitung">
-                                    <label for="lademaßüberschreitung">lademaßüberschreitung</label> <br>
-                                    <input type="checkbox" name="außergewöhnlichesendung" value="außergewöhnliche sendung">
-                                    <label for="außergewöhnlichesendung">außergewöhnliche sendung </label> <br>
-                                    <input type="checkbox" name="windgefährdeteladung" value="windgefährdete ladung">
-                                    <label for="windgefährdeteladung">windgefährdete ladung</label> 
-                                        
-                                    </fieldset>
-                                    
 
 
-                                </div>
-
-                                <div class="col-lg-9 col-md-6">
-
-
-                                    <label for="checkbox">Schadwagen</label> <input type="checkbox" id="checkbox1"> <br>
-                                    <select class="form-control" name="Schadwagen" id="Schadwagen" disabled>
-                                        <option value="" ></option>
-                                        <option value="Muster M">Muster M</option>
-                                        <option value="Muster K">Muster K</option>
-                                        <option value="Muster K + R1">Muster K + R1</option>
-                                        <option value="Muster V">Muster V</option>
-                                        <option value="Muster I">Muster I</option>
+                                    <label for="checkbox">Besonderheiten</label> <input type="checkbox" id="checkbox1"> <br>
+                                    <select class="form-control" style="height: 50px !important;" name="Schadwagen" id="Schadwagen" disabled>
+                                        @error('wagennummer')
+                                        <script>
+                                            document.getElementById('Schadwagen').disabled = false;
+                                        </script>
+                                        <option value="{{  old('Schadwagen') }}">{{old('Schadwagen')}}</option>
+                                        @enderror
+                                        <option value="Schad">Schad</option>
+                                        <option value="Lü">Lü</option>
+                                        <option value="Ausend">Ausend</option>
+                                        <option value="Schwer">Schwerwagen</option>
+                                        <option value="Aufz">Außergewöhliche Fahrzeuge</option>
+                                        <option value="LQ">Gefahrgut >8t je Ladeeinheit verpackt</option>
+                                        <option value="Chlor">Chlor</option>
+                                        <option value="ep">Elektropneumatische Bremse</option>
+                                        <option value="M">Matrossow</option>
+                                        <option value="Wind">Wind</option>
                                     </select>
                                 </div>
                                 <div class="col-lg-5 col-md-6">
 
                                     <div class="form-check form-check-inline">
-                                        
-                                        <label class="form-check-label" for="inlineCheckbox3">Beladen mit gefahrgut </label> <input  type="checkbox"  name="Beladenmitgefahrgut" id="checkbox2">
+
+                                        <label class="form-check-label" for="inlineCheckbox3">Bemerkungen</label> <input type="checkbox" name="Beladenmitgefahrgut" id="checkbox2">
                                     </div>
+                                    <input type="text" class="form-control" name="UNNummer" id="UNNummer" @error('wagennummer') value="{{  old('UNNummer') }}" @enderror placeholder="z.B UN3082/Gef9" data-rule="email" data-msg="Please enter a valid email" disabled>
+                                    @error('wagennummer')
+                                    <script>
+                                        document.getElementById('UNNummer').disabled = false;
+                                    </script>
+                                    @enderror
+                                    <div class="validate"></div>
                                     <div class="validate"></div>
                                 </div>
+									<label for="w">Zusätzliche Informationen:</label>
                                 <div class="col-lg-5 col-md-6">
-                                    <input type="text" class="form-control" name="UNNummer" id="UNNummer" placeholder="UN-Nummer" data-rule="email" data-msg="Please enter a valid email" disabled>
-                                    <div class="validate"></div>
+                                    <label for="eigenmasse">Bremsgewichte</label>
+                                    <input type="text" name="bremsgewichte" value="{{  old('bremsgewichte') }}" id="bremsgewichte" class="form-control" placeholder="z.B 28/44/52 oder max 108t" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
 
                                 </div>
+
+                                <div class="col-lg-3 col-md-4">
+                                    <label for="AnzahlderAcshen" style="white-space: nowrap;">Revisionsdatum</label>
+                                    <input type="text" class="form-control" value="{{  old('revsdatum') }}" id="datum" name="revsdatum" pattern="\d{2}.\d{2}.\d{4}" placeholder="TT.MM.JJ">
+
+
+                                </div>
+                                <div class="col-lg-2 col-md-4">
+                                    <label for="AnzahlderAcshen" style="white-space: nowrap;">Gültigkeit</label>
+                                    <input type="text" class="form-control" value="{{  old('gultigkeit') }}" name="gultigkeit" id="gultigkeit" placeholder="z.B 6" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
+
+                                </div>
+                                <div class="col-lg-2 col-md-4">
+                                    <label for="AnzahlderAcshen" style="font-size: small;white-space: nowrap;">Verlängert</label>
+                                    <input type="text" class="form-control" value="{{  old('empty') }}" name="empty" id="empty" placeholder="z.B +3M" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
+
+                                </div>
+                                <div class="col-lg-12 col-md-4">
+                                    <label for="AnzahlderAcshen" style="white-space: nowrap;">Sonstige Bemerkungen</label>
+                                    <input type="text" class="form-control" value="{{  old('sonstigebemerkungen') }}" name="sonstigebemerkungen" id="sonstigebemerkungen" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
+
+                                </div>
+
+
                                 <input type="text" id="zugid" name="zugid" value="{{$zug->id}}" hidden>
                                 <input type="text" id="zugdatum" name="zugdatum" value="{{$zug->datum}}" hidden>
                                 <input type="text" id="zugbestimmungsbanhof" name="zugbestimmungsbanhof" value="{{$zug->bestimmungsbanhof}}" hidden>
                                 <input type="text" id="zugversandbanhof" name="zugversandbanhof" value="{{$zug->versandbanhof}}" hidden>
                             </div>
+                            <br><br>
 
-
-                            <div class=""><button type="submit">wagen speichern</button></div>
+                            <div class=""><button type="submit">Wagen erstellen (alle Daten sind überprüft?)</button></div>
                         </form>
                     </div><!-- End Reservation Form -->
 
@@ -226,10 +313,174 @@
 
             </div>
         </section><!-- End Book A Table Section -->
+        <!-- Button trigger modal -->
 
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="col-md-6"> 
+                            <input name="wagennummerser" type="text" placeholder="Suche" class="form-control" onkeyup="myFunction1()" id="wagennummerser">
+                            
+                        </div>
+
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="cls"></button>
+                    </div>
+                    <script>
+                        console.log(<?= json_encode($list); ?>);
+                    </script>
+
+                    <div class="modal-body">
+                        <table class="table" id="table">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col" hidden>zugnummer</th>
+                                    <th scope="col" hidden>Versandbahnof</th>
+                                    <th scope="col" hidden>Bestimmungsbahnhof</th>
+                                    <th scope="col">Wagennummer</th>
+                                    <th scope="col">Gattung</th>
+                                    <th scope="col">LüP</th>
+                                    <th scope="col">Gewicht</th>
+                                    <th scope="col">Bremsstellung</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            @php
+            function formatNumber($value) {
+            $input = preg_replace('/\D/', '', $value); // Remove non-numeric characters
+            $formattedNumber = '';
+
+            // Add spaces
+            if (strlen($input) > 2) {
+            $formattedNumber .= substr($input, 0, 2) . ' ';
+            $input = substr($input, 2);
+            }
+            if (strlen($input) > 2) {
+            $formattedNumber .= substr($input, 0, 2) . ' ';
+            $input = substr($input, 2);
+            }
+
+            if (strlen($input) > 4) {
+            $formattedNumber .= substr($input, 0, 4) . ' ';
+            $input = substr($input, 4);
+            }
+            if (strlen($input) > 3) {
+            $formattedNumber .= substr($input, 0, 3) . '-';
+            $input = substr($input, 3);
+            }
+
+            $formattedNumber .= $input;
+
+            return substr($formattedNumber, 0, 16);
+            }
+
+            @endphp
+                                @foreach ($list as$key => $li)
+                                <tr>
+                                    <td hidden> {{ $li->zugnummer}}</td>
+                                    <td hidden> {{ $li->versandbanhof}}</td>
+                                    <td hidden> {{ $li->bestimmungsbanhof}}</td>
+
+                                    <td>{{formatNumber($li->wagennummer)}} </td>
+                                    <td> {{ $li->gattungsbuchstabe}} </td>
+                                    <td> {{ $li->längeüberpuffer}}</td>
+                                    <td hidden> {{ $li->eigenmasse}}</td>
+                                    <td hidden> {{ $li->AnzahlderAcshen}}</td>
+                                    <td> {{ $li->GewichtderLadung}} </td>
+                                    <td hidden> {{ $li->Bremsgewicht}}</td>
+                                    <td hidden> {{ $li->lastwechselundbremsgewicht}}</td>
+                                    <td> {{ $li->bremsstellung}}</td>
+                                    <td hidden> {{ $li->hinweisezureibungsbremse}}</td>
+                                    <td hidden> {{ $li->bemerkungenzurfeststellbremse}}</td>
+                                    <td hidden> {{ $li->Schadwagen}}</td>
+                                    <td hidden> {{ $li->UNNummer}}</td>
+
+                                    <td hidden> {{ $li->bremsgewichte}}</td>
+                                    <td hidden> {{ $li->revsdatum}}</td>
+                                    <td hidden> {{ $li->gultigkeit}}</td>
+                                    <td hidden> {{ $li->empty}}</td>
+                                    <td hidden> {{ $li->sonstigebemerkungen}}</td>
+                                    <td>
+                                        <?php
+                                        if ($li->arch == 1) { ?>
+                                            <i class="bi bi-archive"></i>
+
+                                        <?php
+                                        }
+                                        ?>
+                                    </td>
+
+
+
+                                </tr>
+                                @endforeach
+
+
+
+
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- Modal 2 -->
+        <div class="modal fade" id="exampleModa2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="cl"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="loading" style="display:none;">
+                            <div class="loading-spinner"></div>
+                        </div>
+                        <main class="page">
+                            <!-- input file -->
+                            <div class="box">
+                                <input type="file" id="file-input" accept="image/*" class="form-control" name="image" />
+                            </div>
+                            <!-- leftbox -->
+
+                            <div class="box-2">
+                                <div class="result"></div>
+                            </div>
+
+
+                            <!--rightbox-->
+                            <div class="box-2 img-result" hidden>
+                                <!-- result of crop -->
+                                <img class="cropped" src="" alt="" />
+                            </div>
+
+
+                            <!-- input file -->
+                            <div class="box">
+                                <div class="options hide" hidden>
+                                    <label> Width</label>
+                                    <input type="number" class="img-w" value="300" min="100" max="1200" />
+                                </div>
+                                <!-- save btn -->
+                                <button class="btn save hide">Save</button>
+                                <!-- download btn -->
+
+                            </div>
+
+                        </main>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal 2 -->
 
 
     </main><!-- End #main -->
+
 
     <!-- ======= Footer ======= -->
     <footer id="footer" class="footer">
@@ -238,7 +489,7 @@
 
         <div class="container">
             <div class="copyright">
-                &copy; Copyright <strong><span></span></strong>. All Rights Reserved
+                &copy; Copyright by WaLi-Bahn<strong><span></span></strong>. Alle Rechte vorbehalten. Kontakt an kontakt@wali-bahn.de
             </div>
 
         </div>
@@ -250,10 +501,213 @@
 
     <div id="preloader"></div>
     <script>
-        var input2 = document.getElementById("wagennummer");
+        const inputElement = document.getElementById('input-rs');
+        
+        const res = document.getElementById('wagennummer');
+
+        inputElement.addEventListener('input', formatNumber);
+        inputElement2.addEventListener('input', formatNumber);
+        formatNumber.call(inputElement); // Format initial value
+        formatNumber.call(inputElement2);
+        function formatNumber() {
+            let input = this.value.replace(/\D/g, ''); // Remove non-numeric characters
+            let formattedNumber = '';
+
+            // Add spaces
+            if (input.length > 2) {
+                formattedNumber += input.substring(0, 2) + ' ';
+                input = input.substring(2);
+            }
+            if (input.length > 2) {
+                formattedNumber += input.substring(0, 2) + ' ';
+                input = input.substring(2);
+
+            }
+
+            if (input.length > 4) {
+                formattedNumber += input.substring(0, 4) + ' ';
+                input = input.substring(4);
+
+            }
+            if (input.length > 3) {
+                formattedNumber += input.substring(0, 3) + '-';
+                input = input.substring(3);
+
+            }
+            console.log(input);
+            formattedNumber += input;
+
+            this.value = formattedNumber.substring(0, 16);
+            res.value = formattedNumber.replace(/\D/g, '').substring(0, 12);
+            // Limit to 15 characters
+
+        }
+    </script>
+ <script>
+        const inputElement2 = document.getElementById('wagennummerser');
+        const res2 = document.getElementById('wagennummerserrres');
+
+        inputElement2.addEventListener('input', formatNumber);
+        formatNumber2.call(inputElement2);
+        function formatNumber2() {
+            let input = this.value.replace(/\D/g, ''); // Remove non-numeric characters
+            let formattedNumber = '';
+
+            // Add spaces
+            if (input.length > 2) {
+                formattedNumber += input.substring(0, 2) + ' ';
+                input = input.substring(2);
+            }
+            if (input.length > 2) {
+                formattedNumber += input.substring(0, 2) + ' ';
+                input = input.substring(2);
+
+            }
+
+            if (input.length > 4) {
+                formattedNumber += input.substring(0, 4) + ' ';
+                input = input.substring(4);
+
+            }
+            if (input.length > 3) {
+                formattedNumber += input.substring(0, 3) + '-';
+                input = input.substring(3);
+
+            }
+            console.log(input);
+            formattedNumber += input;
+
+            this.value = formattedNumber.substring(0, 16);
+            res2.value = formattedNumber.replace(/\D/g, '').substring(0, 12);
+            // Limit to 15 characters
+
+        }
+    </script>
+
+    <script>
+        $(function() {
+            $("#datum").datepicker({
+                altFormat: "dd/mm/yy",
+                dateFormat: "dd.mm.yy",
+                changeMonth: true,
+                changeYear: true
+            });
+        });
+    </script>
+    <script>
+        window.onload = function() {
+            var rows = document.querySelectorAll('tr:not(.header)');
+
+            for (var i = 0; i < rows.length; i++) {
+                rows[i].style.display = 'none';
+            }
+        }
+
+        var table = document.getElementById('table');
+
+        for (var i = 1; i < table.rows.length; i++) {
+            table.rows[i].onclick = function() {
+                //rIndex = this.rowIndex;
+               
+                let input = String(this.cells[3].innerHTML.replace(/\D/g, '')); // Remove non-numeric characters
+                let formattedNumber = '';
+
+                // Add spaces
+                if (input.length > 2) {
+                    formattedNumber += input.substring(0, 2) + ' ';
+                    input = input.substring(2);
+                }
+                if (input.length > 2) {
+                    formattedNumber += input.substring(0, 2) + ' ';
+                    input = input.substring(2);
+
+                }
+
+                if (input.length > 4) {
+                    formattedNumber += input.substring(0, 4) + ' ';
+                    input = input.substring(4);
+
+                }
+                if (input.length > 3) {
+                    formattedNumber += input.substring(0, 3) + '-';
+                    input = input.substring(3);
+
+                }
+                console.log(input);
+                formattedNumber += input;
+                this.value = formattedNumber.substring(0, 16);
+                res.value = formattedNumber.replace(/\D/g, '').substring(0, 12);
+
+                document.getElementById("input-rs").value = formattedNumber;
+                document.getElementById("gattungsbuchstabe").value = this.cells[4].innerHTML.trim().replace(/&nbsp;/g, '');;
+                document.getElementById("längeüberpuffer").value = this.cells[5].innerHTML.trim().replace(/&nbsp;/g, '');;
+                document.getElementById("eigenmasse").value = this.cells[6].innerHTML.trim().replace(/&nbsp;/g, '');;
+                document.getElementById("AnzahlderAcshen").value = this.cells[7].innerHTML.trim().replace(/&nbsp;/g, '');;
+                document.getElementById('lastwechselundbremsgewicht').value = this.cells[10].innerHTML.trim().replace(/&nbsp;/g, '');
+                document.getElementById('bremsstellung').value = this.cells[11].innerHTML.trim().replace(/&nbsp;/g, '');
+                document.getElementById('hinweisezureibungsbremse').value = this.cells[12].innerHTML.trim().replace(/&nbsp;/g, '');
+                document.getElementById('bemerkungenzurfeststellbremse').value = this.cells[13].innerHTML.trim().replace(/&nbsp;/g, '');
+                document.getElementById('Schadwagen').value = this.cells[14].innerHTML.trim().replace(/&nbsp;/g, '');
+                document.getElementById('UNNummer').value = this.cells[15].innerHTML.trim().replace(/&nbsp;/g, '');
+
+                document.getElementById('bremsgewichte').value = this.cells[16].innerHTML.trim().replace(/&nbsp;/g, '');
+                console.log(String(this.cells[17].innerHTML.trim()));
+                document.getElementById('datum').value = String(this.cells[17].innerHTML.trim());
+                document.getElementById('gultigkeit').value = this.cells[18].innerHTML.trim().replace(/&nbsp;/g, '');
+                document.getElementById('empty').value = this.cells[19].innerHTML.trim().replace(/&nbsp;/g, '');
+                document.getElementById('sonstigebemerkungen').value = this.cells[20].innerHTML.trim();
+
+                document.getElementById('Schadwagen').disabled = false;
+                document.getElementById('UNNummer').disabled = false;
+                document.getElementById("cls").click();
+            };
+        }
+    </script>
+    <script>
+        function myFunction1() {
+            console.log;
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("wagennummerser");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("table");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[3];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+            var rows = document.querySelectorAll('tr:not(.header)');
+
+            if (input.value.length == 0) {
+                for (var i = 0; i < rows.length; i++) {
+                    rows[i].style.display = 'none';
+                }
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        var input2 = document.getElementById("input-rs");
         var errorMessage = document.getElementById("error-message");
         input2.addEventListener("input", function() {
-            if (input2.value.length !== 12 || isNaN(input.value)) {
+            if (input2.value.length !== 16) {
                 errorMessage.style.display = "block";
             } else {
                 errorMessage.style.display = "none";
@@ -285,7 +739,7 @@
             }
             var input2 = document.getElementById("wagennummer");
             var errorMessage = document.getElementById("error-message");
-            if (isNaN(input2.value)) {
+            if (input2.value.length !== 12 ) {
                 errorMessage.style.display = "block";
                 hasError = true;
             }
@@ -297,13 +751,13 @@
         const select = document.getElementById("Schadwagen");
         const checkbox2 = document.getElementById("checkbox2");
         const select2 = document.getElementById("UNNummer");
-        
+
         checkbox.addEventListener("change", function() {
             if (this.checked) {
                 select.disabled = false;
             } else {
                 select.disabled = true;
-                select.selectedIndex = 0; 
+                select.selectedIndex = 0;
             }
         });
         checkbox2.addEventListener("change", function() {
@@ -311,7 +765,7 @@
                 select2.disabled = false;
             } else {
                 select2.disabled = true;
-                select2.value="";
+                select2.value = "";
             }
         });
     </script>
@@ -324,7 +778,7 @@
 
     <!-- Template Main JS File -->
     <script src="{{url('js/main.js')}}"></script>
-
+    <script src="{{url('js/image.js')}}"></script>
 </body>
 
 </html>

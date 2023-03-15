@@ -16,13 +16,20 @@ class CreateZugsTable extends Migration
         Schema::create('zugs', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('nachname');
+            $table->string('nachname')->nullable();
             $table->string('versandbanhof');
             $table->string('bestimmungsbanhof');
             $table->string('datum');
             $table->string('zugnummer');
             $table->string('ref');
             $table->string('Mindestbremshunderstel');
+            $table->string('bossid');
+            $table->string('userid')->nullable();
+            $table->string('logo')->default('nologo.png');
+            $table->string('seczugnummer')->nullable();
+            $table->string('betriebsstelle');
+            $table->string('secbetriebsstelle')->nullable();
+            $table->string('evu')->nullable();
             $table->timestamps();
         });
     }
