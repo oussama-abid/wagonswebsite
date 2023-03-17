@@ -135,14 +135,19 @@
                                         Bitte gültige Anzahl der Achsen eingeben.
                                     </div>
                                 </div>
-                                <div class="col-lg-5 col-md-6">
+                                <div class="col-lg-3 col-md-6" hidden>
                                     <label for="GewichtderLadung">Gewicht der Ladung (t)</label>
                                     <input type="text" required class="form-control" value="{{$wagon[0]->GewichtderLadung}}" name="GewichtderLadung" id="GewichtderLadung" placeholder="z.B 25" data-rule="minlen:1" data-msg="Please enter at least 1 chars">
                                     <div id="GewichtderLadungerror" style="display:none; color:red;">
                                         Bitte mit Punkt trennen.
                                     </div>
                                 </div>
-                                <div class="col-lg-5 col-md-6">
+                                <div class="col-lg-2 col-md-6">
+                                    <label for="GewichtderLadung" style="font-size: 15px; white-space: nowrap;">max zuladung</label>
+                                    <input type="text" class="form-control" value="{{$wagon[0]->maxzuladung}}" name="maxzuladung" id="maxzuladung" placeholder="z.B 25" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
+                             
+                                </div>
+                                <div class="col-lg-5 col-md-6" hidden>
                                     <label for="Bremsgewicht">Bremsgewicht (t)</label>
                                     <input type="text" required class="form-control" value="{{$wagon[0]->Bremsgewicht}}" name="Bremsgewicht" id="Bremsgewicht" placeholder="z.B 55" data-rule="minlen:1" data-msg="Please enter at least 1 chars">
                                     <div id="Bremsgewichterror" style="display:none; color:red;">

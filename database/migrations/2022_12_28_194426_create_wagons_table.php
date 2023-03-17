@@ -58,9 +58,9 @@ class CreateWagonsTable extends Migration
             $table->string('empty')->nullable();
             $table->string('sonstigebemerkungen')->nullable();
             $table->string('zugid');
-
-
-
+            $table->string('maxzuladung')->nullable();
+            
+            $table->string('alertdate')->nullable();
 
             $table->timestamps();
         });

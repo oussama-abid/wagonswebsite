@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
   <title>Wagen Hinzufügen</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
-
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
   <!-- Favicons -->
   <link href="{{url('img/favicon.png')}}" rel="icon">
   <link href="{{url('img/apple-touch-icon.png')}}" rel="apple-touch-icon">
@@ -111,8 +111,8 @@ use Illuminate\Support\Facades\Auth;
             <h5 class="card-title">Ref.-Nr : {{ $zugs->ref }}</h5>
             <div class="row">
               <div class="col"> <a class="btn btn-secondary" href="{{ route('pdf',[$zugs->id]) }}"><i class="bi bi-file-earmark"></i>PDF </a> <br>
-           
-            </div>
+
+              </div>
               <div class="col"> <a class="btn btn-warning" href="{{route('edit-zug', ['id' => $zugs->id])}}"> <i class="bi bi-pen"></i> edit </a>
               </div>
             </div>
@@ -141,6 +141,7 @@ use Illuminate\Support\Facades\Auth;
               <th scope="col">LüP</th>
               <th scope="col">Gewicht</th>
               <th scope="col" class="hide-on-small">Bremsstellung</th>
+              <th scope="col">Warnugen</th>
               <th scope="col">Handlung</th>
 
             </tr>
@@ -184,6 +185,34 @@ use Illuminate\Support\Facades\Auth;
               <td> {{ $wagons->längeüberpuffer}}</td>
               <td> {{ $wagons->GewichtderLadung}} </td>
               <td class="hide-on-small"> {{ $wagons->bremsstellung}}</td>
+              <td>
+                <?php
+
+                if ($wagons->maxzuladung != null) {
+                  if ($wagons->GewichtderLadung > $wagons->maxzuladung) {
+
+                ?>
+                    <i class="fa fa-exclamation-triangle fa-fade" aria-hidden="true" style="color: red; font-size: 26px; "></i>
+
+                <?php
+                  }
+                }
+
+                ?>
+                <?php
+
+                if ( strtotime(date('Y-m-d')) >= strtotime($wagons->alertdate ) ) {
+
+                ?>
+                  <i class="fa fa-exclamation-triangle fa-fade" aria-hidden="true" style="color: #fcc404; font-size: 26px; "></i>
+
+                <?php
+                }
+
+
+                ?>
+
+              </td>
               <td>
                 <a class="btn btn-warning" href="{{route('edit-wagon', ['id' => $wagons->wagon_id])}}"> <i class="bi bi-pencil"></i> <span class="hide-on-small">edit</span> </a>
 

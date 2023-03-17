@@ -160,35 +160,40 @@
                                     </div>
 
                                 </div>
-                                <div class="col-lg-5 col-md-6">
+                                <div class="col-lg-3 col-md-6" hidden>
                                     <label for="GewichtderLadung">Gewicht der Ladung (t)</label>
-                                    <input required type="text" class="form-control" @error('wagennummer') value="{{  old('GewichtderLadung') }}" @enderror name="GewichtderLadung" id="GewichtderLadung" placeholder="z.B 25" data-rule="minlen:1" data-msg="Please enter at least 1 chars">
+                                    <input  type="text" class="form-control"  value="0"  name="GewichtderLadung" id="GewichtderLadung" placeholder="z.B 25" data-rule="minlen:1" data-msg="Please enter at least 1 chars">
                                     <div id="GewichtderLadungerror" style="display:none; color:red;">
                                         Bitte mit Punkt trennen.
                                     </div>
                                 </div>
-                                <div class="col-lg-5 col-md-6">
+                                <div class="col-lg-2 col-md-6">
+                                    <label for="GewichtderLadung" style="font-size: 15px; white-space: nowrap;">max zuladung</label>
+                                    <input type="text" class="form-control" value="{{  old('maxzuladung') }}" name="maxzuladung" id="maxzuladung" placeholder="z.B 25" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
+                             
+                                </div>
+                                <div class="col-lg-5 col-md-6" hidden>
                                     <label for="Bremsgewicht">Bremsgewicht (t)</label>
-                                    <input required type="text" class="form-control" @error('wagennummer') value="{{  old('Bremsgewicht') }}" @enderror name="Bremsgewicht" id="Bremsgewicht" placeholder="z.B 55" data-rule="minlen:1" data-msg="Please enter at least 1 chars">
+                                    <input  type="text" class="form-control" @error('wagennummer')  @enderror  value="0" name="Bremsgewicht" id="Bremsgewicht" placeholder="z.B 55" data-rule="minlen:1" data-msg="Please enter at least 1 chars">
                                     <div id="Bremsgewichterror" style="display:none; color:red;">
                                         Bitte mit Punkt trennen.
 
                                     </div>
                                 </div>
-                                <div class="col-lg-5 col-md-6">
+                                <div class="col-lg-5 col-md-6" hidden>
                                     <label for="lastwechselundbremsgewicht">Lastwechsel</label>
-                                    <select class="form-control" name="lastwechselundbremsgewicht" id="lastwechselundbremsgewicht">
+                                    <select  class="form-control" name="lastwechselundbremsgewicht" id="lastwechselundbremsgewicht">
                                         @error('wagennummer')
                                         <option value="{{  old('lastwechselundbremsgewicht') }}">{{old('lastwechselundbremsgewicht')}}</option>
                                         @enderror
-                                        <option value="Leer">Leer</option>
+                                        <option value="Leer" >Leer</option>
                                         <option value="Teilbeladen">Teilbeladen</option>
                                         <option value="beladen">beladen</option>
 
                                     </select>
                                     <div class="validate"></div>
                                 </div>
-                                <div class="col-lg-5 col-md-6">
+                                <div class="col-lg-5 col-md-6" hidden>
                                     <label for="bremsstellung">Bremsstellung</label>
                                     <select class="form-control" name="bremsstellung" id="bremsstellung">
                                         @error('wagennummer')
@@ -229,7 +234,7 @@
                                     <div class="validate"></div>
                                 </div>
 
-                                <div class="col-lg-5 col-md-6">
+                                <div class="col-lg-5 col-md-6" hidden>
 
 
                                     <label for="checkbox">Besonderheiten</label> <input type="checkbox" id="checkbox1"> <br>
@@ -252,7 +257,7 @@
                                         <option value="Wind">Wind</option>
                                     </select>
                                 </div>
-                                <div class="col-lg-5 col-md-6">
+                                <div class="col-lg-5 col-md-6" hidden>
 
                                     <div class="form-check form-check-inline">
 

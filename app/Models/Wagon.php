@@ -27,6 +27,6 @@ class Wagon extends Model
         'versandbanhof',
         'bestimmungsbanhof',
         'datum',
-        'a','b','d','e','k','l','h','sh','bm','fir','sec','thir','four','five','ge','arch','idboss','iduser','bremsgewichte','revsdatum','gultigkeit','empty','sonstigebemerkungen','zugid'
+        'a','b','d','e','k','l','h','sh','bm','fir','sec','thir','four','five','ge','arch','idboss','iduser','bremsgewichte','revsdatum','gultigkeit','empty','sonstigebemerkungen','zugid','maxzuladung','alertdate'
     ];
 }

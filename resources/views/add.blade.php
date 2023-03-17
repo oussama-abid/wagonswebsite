@@ -161,12 +161,17 @@
                                     </div>
 
                                 </div>
-                                <div class="col-lg-5 col-md-6">
-                                    <label for="GewichtderLadung">Gewicht der Ladung (t)</label>
+                                <div class="col-lg-3 col-md-6">
+                                    <label for="GewichtderLadung" style="font-size: 15px; white-space: nowrap; ">Gewicht der Ladung (t)</label>
                                     <input required type="text" class="form-control" @error('wagennummer') value="{{  old('GewichtderLadung') }}" @enderror name="GewichtderLadung" id="GewichtderLadung" placeholder="z.B 25" data-rule="minlen:1" data-msg="Please enter at least 1 chars">
                                     <div id="GewichtderLadungerror" style="display:none; color:red;">
                                         Bitte mit Punkt trennen.
                                     </div>
+                                </div>
+                                <div class="col-lg-2 col-md-6">
+                                    <label for="GewichtderLadung" style="font-size: 15px; white-space: nowrap;">max zuladung</label>
+                                    <input type="text" class="form-control" value="{{  old('maxzuladung') }}" name="maxzuladung" id="maxzuladung" placeholder="z.B 25" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
+
                                 </div>
                                 <div class="col-lg-5 col-md-6">
                                     <label for="Bremsgewicht">Bremsgewicht (t)</label>
@@ -268,7 +273,7 @@
                                     <div class="validate"></div>
                                     <div class="validate"></div>
                                 </div>
-									<label for="w">Zusätzliche Informationen:</label>
+                                <label for="w">Zusätzliche Informationen:</label>
                                 <div class="col-lg-5 col-md-6">
                                     <label for="eigenmasse">Bremsgewichte</label>
                                     <input type="text" name="bremsgewichte" value="{{  old('bremsgewichte') }}" id="bremsgewichte" class="form-control" placeholder="z.B 28/44/52 oder max 108t" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
@@ -277,18 +282,17 @@
 
                                 <div class="col-lg-3 col-md-4">
                                     <label for="AnzahlderAcshen" style="white-space: nowrap;">Revisionsdatum</label>
-                                    <input type="text" class="form-control" value="{{  old('revsdatum') }}" id="datum" name="revsdatum" pattern="\d{2}.\d{2}.\d{4}" placeholder="TT.MM.JJ">
-
+                                    <input type="date" class="form-control" value="{{  old('revsdatum') }}" name="revsdatum" id="date-input" oninput="calculateDate()">
 
                                 </div>
                                 <div class="col-lg-2 col-md-4">
                                     <label for="AnzahlderAcshen" style="white-space: nowrap;">Gültigkeit</label>
-                                    <input type="text" class="form-control" value="{{  old('gultigkeit') }}" name="gultigkeit" id="gultigkeit" placeholder="z.B 6" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
+                                    <input type="text" class="form-control" value="{{  old('gultigkeit') }}" name="gultigkeit" id="gultigkeit" placeholder="z.B 6" data-rule="minlen:4" data-msg="Please enter at least 4 chars" oninput="calculateDate()">
 
                                 </div>
                                 <div class="col-lg-2 col-md-4">
                                     <label for="AnzahlderAcshen" style="font-size: small;white-space: nowrap;">Verlängert</label>
-                                    <input type="text" class="form-control" value="{{  old('empty') }}" name="empty" id="empty" placeholder="z.B +3M" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
+                                    <input type="text" class="form-control" value="{{  old('empty') }}" name="empty" id="empty" placeholder="z.B +3M" data-rule="minlen:4" data-msg="Please enter at least 4 chars" oninput="calculateDate()">
 
                                 </div>
                                 <div class="col-lg-12 col-md-4">
@@ -297,6 +301,7 @@
 
                                 </div>
 
+                                <input type="date" id="new-date-input" readonly name="alertdate" hidden>
 
                                 <input type="text" id="zugid" name="zugid" value="{{$zug->id}}" hidden>
                                 <input type="text" id="zugdatum" name="zugdatum" value="{{$zug->datum}}" hidden>
@@ -321,9 +326,9 @@
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <div class="col-md-6"> 
+                        <div class="col-md-6">
                             <input name="wagennummerser" type="text" placeholder="Suche" class="form-control" onkeyup="myFunction1()" id="wagennummerser">
-                            
+
                         </div>
 
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="cls"></button>
@@ -348,36 +353,36 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            @php
-            function formatNumber($value) {
-            $input = preg_replace('/\D/', '', $value); // Remove non-numeric characters
-            $formattedNumber = '';
+                                @php
+                                function formatNumber($value) {
+                                $input = preg_replace('/\D/', '', $value); // Remove non-numeric characters
+                                $formattedNumber = '';
 
-            // Add spaces
-            if (strlen($input) > 2) {
-            $formattedNumber .= substr($input, 0, 2) . ' ';
-            $input = substr($input, 2);
-            }
-            if (strlen($input) > 2) {
-            $formattedNumber .= substr($input, 0, 2) . ' ';
-            $input = substr($input, 2);
-            }
+                                // Add spaces
+                                if (strlen($input) > 2) {
+                                $formattedNumber .= substr($input, 0, 2) . ' ';
+                                $input = substr($input, 2);
+                                }
+                                if (strlen($input) > 2) {
+                                $formattedNumber .= substr($input, 0, 2) . ' ';
+                                $input = substr($input, 2);
+                                }
 
-            if (strlen($input) > 4) {
-            $formattedNumber .= substr($input, 0, 4) . ' ';
-            $input = substr($input, 4);
-            }
-            if (strlen($input) > 3) {
-            $formattedNumber .= substr($input, 0, 3) . '-';
-            $input = substr($input, 3);
-            }
+                                if (strlen($input) > 4) {
+                                $formattedNumber .= substr($input, 0, 4) . ' ';
+                                $input = substr($input, 4);
+                                }
+                                if (strlen($input) > 3) {
+                                $formattedNumber .= substr($input, 0, 3) . '-';
+                                $input = substr($input, 3);
+                                }
 
-            $formattedNumber .= $input;
+                                $formattedNumber .= $input;
 
-            return substr($formattedNumber, 0, 16);
-            }
+                                return substr($formattedNumber, 0, 16);
+                                }
 
-            @endphp
+                                @endphp
                                 @foreach ($list as$key => $li)
                                 <tr>
                                     <td hidden> {{ $li->zugnummer}}</td>
@@ -403,6 +408,7 @@
                                     <td hidden> {{ $li->gultigkeit}}</td>
                                     <td hidden> {{ $li->empty}}</td>
                                     <td hidden> {{ $li->sonstigebemerkungen}}</td>
+                                    <td hidden> {{ $li->maxzuladung}}</td>
                                     <td>
                                         <?php
                                         if ($li->arch == 1) { ?>
@@ -502,13 +508,14 @@
     <div id="preloader"></div>
     <script>
         const inputElement = document.getElementById('input-rs');
-        
+
         const res = document.getElementById('wagennummer');
 
         inputElement.addEventListener('input', formatNumber);
         inputElement2.addEventListener('input', formatNumber);
         formatNumber.call(inputElement); // Format initial value
         formatNumber.call(inputElement2);
+
         function formatNumber() {
             let input = this.value.replace(/\D/g, ''); // Remove non-numeric characters
             let formattedNumber = '';
@@ -543,12 +550,13 @@
 
         }
     </script>
- <script>
+    <script>
         const inputElement2 = document.getElementById('wagennummerser');
         const res2 = document.getElementById('wagennummerserrres');
 
         inputElement2.addEventListener('input', formatNumber);
         formatNumber2.call(inputElement2);
+
         function formatNumber2() {
             let input = this.value.replace(/\D/g, ''); // Remove non-numeric characters
             let formattedNumber = '';
@@ -585,14 +593,7 @@
     </script>
 
     <script>
-        $(function() {
-            $("#datum").datepicker({
-                altFormat: "dd/mm/yy",
-                dateFormat: "dd.mm.yy",
-                changeMonth: true,
-                changeYear: true
-            });
-        });
+
     </script>
     <script>
         window.onload = function() {
@@ -608,7 +609,7 @@
         for (var i = 1; i < table.rows.length; i++) {
             table.rows[i].onclick = function() {
                 //rIndex = this.rowIndex;
-               
+
                 let input = String(this.cells[3].innerHTML.replace(/\D/g, '')); // Remove non-numeric characters
                 let formattedNumber = '';
 
@@ -643,6 +644,7 @@
                 document.getElementById("längeüberpuffer").value = this.cells[5].innerHTML.trim().replace(/&nbsp;/g, '');;
                 document.getElementById("eigenmasse").value = this.cells[6].innerHTML.trim().replace(/&nbsp;/g, '');;
                 document.getElementById("AnzahlderAcshen").value = this.cells[7].innerHTML.trim().replace(/&nbsp;/g, '');;
+
                 document.getElementById('lastwechselundbremsgewicht').value = this.cells[10].innerHTML.trim().replace(/&nbsp;/g, '');
                 document.getElementById('bremsstellung').value = this.cells[11].innerHTML.trim().replace(/&nbsp;/g, '');
                 document.getElementById('hinweisezureibungsbremse').value = this.cells[12].innerHTML.trim().replace(/&nbsp;/g, '');
@@ -652,18 +654,30 @@
 
                 document.getElementById('bremsgewichte').value = this.cells[16].innerHTML.trim().replace(/&nbsp;/g, '');
                 console.log(String(this.cells[17].innerHTML.trim()));
-                document.getElementById('datum').value = String(this.cells[17].innerHTML.trim());
+                const inputDate = this.cells[17].innerHTML.trim();
+                if (inputDate) {
+                    const [year, month, day] = inputDate.split("-");
+                    const paddedDay = day ? day.padStart(2, "0") : "";
+                    const paddedMonth = month ? month.padStart(2, "0") : "";
+                    const isoDate = `${year}-${paddedMonth}-${paddedDay}`;
+                    document.getElementById('date-input').value = isoDate;
+                }
+               
                 document.getElementById('gultigkeit').value = this.cells[18].innerHTML.trim().replace(/&nbsp;/g, '');
                 document.getElementById('empty').value = this.cells[19].innerHTML.trim().replace(/&nbsp;/g, '');
                 document.getElementById('sonstigebemerkungen').value = this.cells[20].innerHTML.trim();
-
+                document.getElementById("maxzuladung").value = this.cells[21].innerHTML.trim().replace(/&nbsp;/g, '');;
                 document.getElementById('Schadwagen').disabled = false;
                 document.getElementById('UNNummer').disabled = false;
                 document.getElementById("cls").click();
             };
         }
     </script>
+
     <script>
+        // Add event listener to "datum" input field
+
+
         function myFunction1() {
             console.log;
             var input, filter, table, tr, td, i, txtValue;
@@ -739,7 +753,7 @@
             }
             var input2 = document.getElementById("wagennummer");
             var errorMessage = document.getElementById("error-message");
-            if (input2.value.length !== 12 ) {
+            if (input2.value.length !== 12) {
                 errorMessage.style.display = "block";
                 hasError = true;
             }
@@ -768,6 +782,43 @@
                 select2.value = "";
             }
         });
+    </script>
+
+    <script>
+        function calculateDate() {
+            // Get user inputs
+            let dateStr = document.getElementById("date-input").value;
+            let yearInput = document.getElementById("gultigkeit").value;
+            let monthInput = document.getElementById("empty").value;
+
+            // Convert date input to Date object
+            let date = new Date(dateStr);
+
+            // Calculate new year and month values
+            let newYear = date.getFullYear();
+            let newMonth = date.getMonth() + 1; // add 1 to account for 0-based months
+            if (yearInput) {
+                newYear += parseInt(yearInput);
+            }
+            if (monthInput) {
+                newMonth += parseInt(monthInput);
+                if (newMonth > 12) {
+                    // adjust year and month values if newMonth overflows into a new year
+                    newYear += Math.floor((newMonth - 1) / 12);
+                    newMonth = (newMonth - 1) % 12 + 1;
+                }
+            }
+
+            // Set new date value, subtracting 15 days
+            let newDate = new Date(newYear, newMonth - 1, date.getDate());
+            newDate.setDate(newDate.getDate() - 14);
+
+            // Convert new date to string in the same format as the input date
+            let newDateStr = newDate.toISOString().substr(0, 10);
+
+            // Set the new date input value
+            document.getElementById("new-date-input").value = newDateStr;
+        }
     </script>
     <!-- Vendor JS Files -->
     <script src="{{url('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
