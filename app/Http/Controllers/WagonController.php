@@ -227,7 +227,14 @@ $filename = 'wali_' . $zg . '_' . $vb . '-' . $bb .'_' .$dt . '.pdf';
       $wagon->empty = request('empty');
       $wagon->sonstigebemerkungen = request('sonstigebemerkungen');
       $wagon->maxzuladung = request('maxzuladung');
-      $wagon->alertdate = request('alertdate');
+      if (request('revsdatum') != ""){
+        $wagon->alertdate = request('alertdate');
+      }
+      else{
+        $wagon->alertdate = null;
+      }
+        
+      
       
       
       $user = Auth::user();
@@ -351,7 +358,13 @@ $filename = 'wali_' . $zg . '_' . $vb . '-' . $bb .'_' .$dt . '.pdf';
     $wagon->gattungsbuchstabe = $request->get('gattungsbuchstabe');
     $wagon->längeüberpuffer = $request->get('längeüberpuffer');
     $wagon->bremsgewichte = $request->get('bremsgewichte');
-    $wagon->alertdate = $request->get('alertdate');
+    
+    if (request('revsdatum') != ""){
+      $wagon->alertdate = $request->get('alertdate');
+    }
+    else{
+      $wagon->alertdate = null;
+    }
     $wagon->arch = request('arch');
       $wagon->revsdatum = $request->get('revsdatum');
       $wagon->gultigkeit = $request->get('gultigkeit');

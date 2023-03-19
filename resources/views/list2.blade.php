@@ -200,7 +200,7 @@ use Illuminate\Support\Facades\Auth;
 
                 ?>
                 <?php
-
+                if ($wagons->alertdate != null) {
                 if ( strtotime(date('Y-m-d')) >= strtotime($wagons->alertdate ) ) {
 
                 ?>
@@ -208,7 +208,7 @@ use Illuminate\Support\Facades\Auth;
 
                 <?php
                 }
-
+              }
 
                 ?>
 

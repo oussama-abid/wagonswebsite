@@ -239,18 +239,17 @@
 
                                 <div class="col-lg-3 col-md-4">
                                     <label for="AnzahlderAcshen" style="white-space: nowrap;">Revisionsdatum</label>
-                                    <input type="text" class="form-control" value="{{  $wagon[0]->revsdatum }}" id="datum" name="revsdatum" pattern="\d{2}.\d{2}.\d{4}" required placeholder="DD.MM.YY">
-
+                                    <input type="date" class="form-control" value="{{  $wagon[0]->revsdatum }}" name="revsdatum" id="date-input" oninput="calculateDate()">
 
                                 </div>
                                 <div class="col-lg-2 col-md-4">
                                     <label for="AnzahlderAcshen" style="white-space: nowrap;">Gültigkeit</label>
-                                    <input type="text" class="form-control" value="{{  $wagon[0]->gultigkeit }}" name="gultigkeit" id="gultigkeit" placeholder="z.B 6" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
+                                    <input type="text" class="form-control" value="{{  $wagon[0]->gultigkeit }}" name="gultigkeit" id="gultigkeit" placeholder="z.B 6" data-rule="minlen:4" data-msg="Please enter at least 4 chars" oninput="calculateDate()">
 
                                 </div>
                                 <div class="col-lg-2 col-md-4">
                                     <label for="AnzahlderAcshen" style="font-size: small;white-space: nowrap;">Verlängert</label>
-                                    <input type="text" class="form-control" value="{{  old('empty') }}" name="empty" id="empty" placeholder="z.B +3M" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
+                                    <input type="text" class="form-control" value="{{  old('empty') }}" name="empty" id="empty" placeholder="z.B +3M" data-rule="minlen:4" data-msg="Please enter at least 4 chars" oninput="calculateDate()">
 
                                 </div>
                                 <div class="col-lg-12 col-md-4">
@@ -258,7 +257,7 @@
                                     <input type="text" class="form-control" value="{{  $wagon[0]->sonstigebemerkungen }}" name="sonstigebemerkungen" id="sonstigebemerkungen" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
 
                                 </div>
-
+                                <input type="date" id="new-date-input" readonly value="{{  $wagon[0]->alertdate }}" hidden name="alertdate">
 
 
                             </div>
@@ -411,6 +410,43 @@
             });
         });
     </script>
+    <script>
+        function calculateDate() {
+            // Get user inputs
+            let dateStr = document.getElementById("date-input").value;
+            let yearInput = document.getElementById("gultigkeit").value;
+            let monthInput = document.getElementById("empty").value;
+
+            // Convert date input to Date object
+            let date = new Date(dateStr);
+
+            // Calculate new year and month values
+            let newYear = date.getFullYear();
+            let newMonth = date.getMonth() + 1; // add 1 to account for 0-based months
+            if (yearInput) {
+                newYear += parseInt(yearInput);
+            }
+            if (monthInput) {
+                newMonth += parseInt(monthInput);
+                if (newMonth > 12) {
+                    // adjust year and month values if newMonth overflows into a new year
+                    newYear += Math.floor((newMonth - 1) / 12);
+                    newMonth = (newMonth - 1) % 12 + 1;
+                }
+            }
+
+            // Set new date value, subtracting 15 days
+            let newDate = new Date(newYear, newMonth - 1, date.getDate());
+            newDate.setDate(newDate.getDate() - 14);
+
+            // Convert new date to string in the same format as the input date
+            let newDateStr = newDate.toISOString().substr(0, 10);
+
+            // Set the new date input value
+            document.getElementById("new-date-input").value = newDateStr;
+        }
+    </script>
+    
     <!-- Vendor JS Files -->
     <script src="{{url('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
     <script src="{{url('vendor/aos/aos.js')}}"></script>

@@ -158,6 +158,18 @@ use Illuminate\Support\Facades\Auth;
                 }
               }
                 ?>
+                <?php
+                if ($wagons->alertdate != null) {
+                if ( strtotime(date('Y-m-d')) >= strtotime($wagons->alertdate ) ) {
+
+                ?>
+                  <i class="fa fa-exclamation-triangle fa-fade" aria-hidden="true" style="color: #fcc404; font-size: 26px; "></i>
+
+                <?php
+                }
+              }
+
+                ?>
 
               </td>
               <td>
