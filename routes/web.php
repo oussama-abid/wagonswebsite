@@ -41,7 +41,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/add-employee', function () {
             return view('boss/addemployee');
         })->name('add-employee');
-        Route::get('/home-Firmenchef', 'ZugController@bossshow');   
+        Route::get('/home-Firmenchef', 'ZugController@bossshow');  
+        Route::post('/add-wagon-archive/{wagon}', 'WagonController@addnewarchive'); 
         Route::get('/employeesmanagment', 'LoginController@employeesmanagment')->name('employeesmanagment');     
     });
     
@@ -188,8 +189,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/deletewagon/{wagon}', 'WagonController@deleteone');
     Route::post('/logout', 'LoginController@logout')->name('logout');
 });
-
-
+Route::get('/get-list', 'ZugController@getList')->name('getList');
 
 
 Route::get('/login', function () {

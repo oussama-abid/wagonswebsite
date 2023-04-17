@@ -16,19 +16,83 @@ class WagonController extends Controller
   public function deleteone(int $wagon)
   {
     $wagon = Wagon::find($wagon);
-  
-   
+
+
     $wagon->arch = 1;
     $wagon->save();
     return back();
   }
+  public function addnewarchive(int $wagon)
+  {
+    $wagon = Wagon::find($wagon);
+    $bossid = $wagon->idboss;
+
+    $zug = Zug::where('bossid', $bossid)->where('userid', $bossid)->pluck('id');
+    if (count($zug) == 0) {
+      return redirect()->back()->with('message', 'no zug created yet!');
+    } else {
+      if (Wagon::where('arch', 1)->where('iduser', $bossid)->where('wagennummer', $wagon->wagennummer)->exists()) {
+        $wg = DB::table('wagons')->where('arch', 1)->where('wagennummer', $wagon->wagennummer)->where('iduser', $bossid)->pluck("id");
+        DB::table('relations')->where('wagon_id', $wg)->delete();
+        DB::table('wagons')->where('id', $wg)->delete();
+      }
+
+      $wagonn = new Wagon;
+      $wagonn->wagennummer = $wagon->wagennummer;
+      $wagonn->zugid = $zug[0];
+      $wagonn->gattungsbuchstabe = $wagon->gattungsbuchstabe;
+      $wagonn->längeüberpuffer = $wagon->längeüberpuffer;
+      $wagonn->eigenmasse = $wagon->eigenmasse;
+      $wagonn->arch = 1;
+      $wagonn->AnzahlderAcshen = $wagon->AnzahlderAcshen;
+      $wagonn->GewichtderLadung = $wagon->GewichtderLadung;
+      $wagonn->Bremsgewicht = $wagon->Bremsgewicht;
+      $wagonn->lastwechselundbremsgewicht = $wagon->lastwechselundbremsgewicht;
+      $wagonn->bremsstellung = $wagon->bremsstellung;
+      $wagonn->hinweisezureibungsbremse = $wagon->hinweisezureibungsbremse;
+      $wagonn->bemerkungenzurfeststellbremse = $wagon->bemerkungenzurfeststellbremse;
+      $wagonn->bemerkung = $wagon->bemerkung;
+      $wagonn->Schadwagen = $wagon->Schadwagen;
+      $wagonn->Beladenmitgefahrgut = $wagon->Beladenmitgefahrgut;
+      $wagonn->UNNummer = $wagon->UNNummer;
+      $wagonn->versandbanhof = $wagon->versandbanhof;
+      $wagonn->bestimmungsbanhof = $wagon->bestimmungsbanhof;
+      $wagonn->datum = $wagon->datum;
+      $wagonn->b = $wagon->b;
+      $wagonn->a = $wagon->a;
+      $wagonn->d = $wagon->d;
+      $wagonn->e = $wagon->e;
+      $wagonn->k = $wagon->k;
+      $wagonn->l =$wagon->l;
+      $wagonn->sh = $wagon->sh;
+      $wagonn->h = $wagon->h;
+      $wagonn->bm = $wagon->bm;
+      $wagonn->fir = $wagon->fir;
+      $wagonn->sec = $wagon->sec;
+      $wagonn->thir = $wagon->thir;
+      $wagonn->four = $wagon->four;
+      $wagonn->five = $wagon->five;
+      $wagonn->ge = $wagon->ge;
+      $wagonn->bremsgewichte = $wagon->bremsgewichte;
+      $wagonn->revsdatum = $wagon->revsdatum;
+      $wagonn->gultigkeit = $wagon->gultigkeit;
+      $wagonn->empty = $wagon->empty;
+      $wagonn->sonstigebemerkungen = $wagon->sonstigebemerkungen;
+      $wagonn->maxzuladung = $wagon->maxzuladung;
+      $wagonn->alertdate = $wagon->alertdate;
+      $wagonn->idboss = $bossid;
+      $wagonn->iduser = $bossid;
+      $wagonn->save();
+      return back()->with('message', 'die Daten sind im Archiv gespeichert!');;
+    }
+  }
   public function deleteonearch(int $wagon)
   {
-    $x=DB::table('wagons')->where('id', $wagon)->pluck("id");
-    DB::table('relations')->where('wagon_id',$x)->delete();
+    $x = DB::table('wagons')->where('id', $wagon)->pluck("id");
+    DB::table('relations')->where('wagon_id', $x)->delete();
     DB::table('wagons')->where('id', $wagon)->delete();
 
-    
+
     return back();
   }
   public function deleteall(int $zug)
@@ -51,18 +115,18 @@ class WagonController extends Controller
       ->where('wagons.arch', 0)
       ->get();
 
-      $zg= $zugs->first()->zugnummer;
-      $vb = $zugs->first()->versandbanhof;
-      $bb = $zugs->first()->bestimmungsbanhof;
-      $dt = $zugs->first()->datum;
+    $zg = $zugs->first()->zugnummer;
+    $vb = $zugs->first()->versandbanhof;
+    $bb = $zugs->first()->bestimmungsbanhof;
+    $dt = $zugs->first()->datum;
 
-$filename = 'wali_' . $zg . '_' . $vb . '-' . $bb .'_' .$dt . '.pdf';
+    $filename = 'wali_' . $zg . '_' . $vb . '-' . $bb . '_' . $dt . '.pdf';
     //print value
     //$user_role['role_id'];
 
     return Pdf::loadView('pdf', ['zug' => $zugs], ['wagon' => $wagons])->setPaper('a4')
       ->setOption('zoom', '200')
-     ->download($filename);
+      ->stream($filename);
   }
   public function index()
   {
@@ -76,44 +140,39 @@ $filename = 'wali_' . $zg . '_' . $vb . '-' . $bb .'_' .$dt . '.pdf';
     $zugs = DB::table('zugs')
       ->where('id', $zug)
       ->get();
-      $user = Auth::user();
-      $bossid = $zugs->first()->bossid;
+    $user = Auth::user();
+    $bossid = $zugs->first()->bossid;
 
     $wagons = Wagon::join('relations', 'wagons.id', '=', 'relations.wagon_id')
       ->join('zugs', 'zugs.id', '=', 'relations.zug_id')
       ->where('zugs.id', $zug)
       ->where('wagons.arch', 0)
       ->get();
-      if($user->type == "boss"){
-          
-        if( $bossid  == $user->id){
-          
-          return view('/list2', ['zug' => $zugs], ['wagon' => $wagons]);
-        }
-        else{
-          return redirect()->back();
-        }
-      }
-      if($user->type == "admin"){
-        return view('/list2', ['zug' => $zugs], ['wagon' => $wagons]);
-      }
-      else{
-        if( $bossid  == $user->userboss){
-          
-    $wagons = Wagon::join('relations', 'wagons.id', '=', 'relations.wagon_id')
-    ->join('zugs', 'zugs.id', '=', 'relations.zug_id')
-    ->where('zugs.id', $zug)
-    ->where('wagons.arch', 0)
-    ->where('wagons.iduser',$user->id)
-    ->get();
-          return view('/list2', ['zug' => $zugs], ['wagon' => $wagons]);
-        }
-        else{
-          return redirect()->back();
-        }
-      }
+    if ($user->type == "boss") {
 
-    
+      if ($bossid  == $user->id) {
+
+        return view('/list2', ['zug' => $zugs], ['wagon' => $wagons]);
+      } else {
+        return redirect()->back();
+      }
+    }
+    if ($user->type == "admin") {
+      return view('/list2', ['zug' => $zugs], ['wagon' => $wagons]);
+    } else {
+      if ($bossid  == $user->userboss) {
+
+        $wagons = Wagon::join('relations', 'wagons.id', '=', 'relations.wagon_id')
+          ->join('zugs', 'zugs.id', '=', 'relations.zug_id')
+          ->where('zugs.id', $zug)
+          ->where('wagons.arch', 0)
+          ->where('wagons.iduser', $user->id)
+          ->get();
+        return view('/list2', ['zug' => $zugs], ['wagon' => $wagons]);
+      } else {
+        return redirect()->back();
+      }
+    }
   }
 
   public function wagonszug()
@@ -122,33 +181,17 @@ $filename = 'wali_' . $zg . '_' . $vb . '-' . $bb .'_' .$dt . '.pdf';
   public function store($zug, Request $request)
   {
     $zugdata = Zug::where('id', $zug)
-        ->get();
-    if (Wagon::where('arch', 1)->where('wagennummer', request('wagennummer'))->where('zugid',request('zugid'))->exists()) {
-      $wg=DB::table('wagons')->where('wagennummer', request('wagennummer'))->where('zugid',request('zugid'))->pluck("id");
-      DB::table('relations')->where('wagon_id',$wg)->delete();
+      ->get();
+    if (Wagon::where('arch', 1)->where('wagennummer', request('wagennummer'))->where('zugid', request('zugid'))->exists()) {
+      $wg = DB::table('wagons')->where('wagennummer', request('wagennummer'))->where('zugid', request('zugid'))->pluck("id");
+      DB::table('relations')->where('wagon_id', $wg)->delete();
       DB::table('wagons')->where('id', $wg)->delete();
 
-        $this->validate(
-          $request,
-          [
-  
-            'wagennummer' => 'required|unique:wagons,wagennummer,NULL,id,zugid,'.request('zugid')
-  
-          ],
-          [
-            'wagennummer.unique' => 'Die Wagennummer ist bereits vergeben!',
-  
-          ]
-        );
-        $x=$request->wagennummer;
-    
-      
-    } else {
       $this->validate(
         $request,
         [
 
-          'wagennummer' => 'required|unique:wagons,wagennummer,NULL,id,zugid,'.request('zugid')
+          'wagennummer' => 'required|unique:wagons,wagennummer,NULL,id,zugid,' . request('zugid')
 
         ],
         [
@@ -156,134 +199,142 @@ $filename = 'wali_' . $zg . '_' . $vb . '-' . $bb .'_' .$dt . '.pdf';
 
         ]
       );
-      $x=$request->wagennummer;
+      $x = $request->wagennummer;
+    } else {
+      $this->validate(
+        $request,
+        [
+
+          'wagennummer' => 'required|unique:wagons,wagennummer,NULL,id,zugid,' . request('zugid')
+
+        ],
+        [
+          'wagennummer.unique' => 'Die Wagennummer ist bereits vergeben!',
+
+        ]
+      );
+      $x = $request->wagennummer;
     }
 
-      $wagon = new Wagon;
-      $wagon->wagennummer = $x;
-      $wagon->zugid = request('zugid');
-      $wagon->gattungsbuchstabe = request('gattungsbuchstabe');
-      $wagon->längeüberpuffer = request('längeüberpuffer');
-      $wagon->eigenmasse = request('eigenmasse');
-      $wagon->arch = request('arch');
-      $wagon->AnzahlderAcshen = request('AnzahlderAcshen');
-      $wagon->GewichtderLadung = request('GewichtderLadung');
-      $wagon->Bremsgewicht = request('Bremsgewicht');
-      $wagon->lastwechselundbremsgewicht = request('lastwechselundbremsgewicht');
-      $wagon->bremsstellung = request('bremsstellung');
-      $wagon->hinweisezureibungsbremse = request('hinweisezureibungsbremse');
-      $wagon->bemerkungenzurfeststellbremse = request('bemerkungenzurfeststellbremse');
+    $wagon = new Wagon;
+    $wagon->wagennummer = $x;
+    $wagon->zugid = request('zugid');
+    $wagon->gattungsbuchstabe = request('gattungsbuchstabe');
+    $wagon->längeüberpuffer = request('längeüberpuffer');
+    $wagon->eigenmasse = request('eigenmasse');
+    $wagon->arch = request('arch');
+    $wagon->AnzahlderAcshen = request('AnzahlderAcshen');
+    $wagon->GewichtderLadung = request('GewichtderLadung');
+    $wagon->Bremsgewicht = request('Bremsgewicht');
+    $wagon->lastwechselundbremsgewicht = request('lastwechselundbremsgewicht');
+    $wagon->bremsstellung = request('bremsstellung');
+    $wagon->hinweisezureibungsbremse = request('hinweisezureibungsbremse');
+    $wagon->bemerkungenzurfeststellbremse = request('bemerkungenzurfeststellbremse');
 
-      $wagon->bemerkung = request('lademaßüberschreitung') . "," . request('außergewöhnlichesendung') . ","  . request('windgefährdeteladung');
-      $wagon->Schadwagen = request('Schadwagen');
-      $wagon->Beladenmitgefahrgut = request('Beladenmitgefahrgut');
-      $wagon->UNNummer = request('UNNummer');
-      $wagon->versandbanhof = request('zugversandbanhof');
-      $wagon->bestimmungsbanhof = request('zugbestimmungsbanhof');
-      $wagon->datum = request('zugdatum');
-      if (request('lastwechselundbremsgewicht') == "Leer") {
-        $wagon->b = request('AnzahlderAcshen');
-      }
-      if (request('lastwechselundbremsgewicht') != "Leer") {
-        $wagon->a = request('AnzahlderAcshen');
-      }
-      if (request('bremsstellung') == "P") {
-        $wagon->d = request('Bremsgewicht');
-      }
-      if (request('bremsstellung') == "G") {
-        $wagon->e = request('Bremsgewicht');
-      }
-      if (request('hinweisezureibungsbremse') == "K") {
-        $wagon->k = "X";
-      }
-      if (request('hinweisezureibungsbremse') == "L" || request('hinweisezureibungsbremse') == "LL") {
-        $wagon->l = "X";
-      }
-      if (request('hinweisezureibungsbremse') == "D") {
-        $wagon->sh = "X";
-      }
-      if (request('bemerkungenzurfeststellbremse') == "bühnenbedienbar" || request('bemerkungenzurfeststellbremse') == "bodenbedienbar") {
-        $wagon->h = "X";
-      }
-      if (request('UNNummer') == "") {
-        $wagon->bm = request('Schadwagen');
-      }
-      if (request('UNNummer') != "") {
-        $wagon->bm = request('UNNummer');
-      }
+    $wagon->bemerkung = request('lademaßüberschreitung') . "," . request('außergewöhnlichesendung') . ","  . request('windgefährdeteladung');
+    $wagon->Schadwagen = request('Schadwagen');
+    $wagon->Beladenmitgefahrgut = request('Beladenmitgefahrgut');
+    $wagon->UNNummer = request('UNNummer');
+    $wagon->versandbanhof = request('zugversandbanhof');
+    $wagon->bestimmungsbanhof = request('zugbestimmungsbanhof');
+    $wagon->datum = request('zugdatum');
+    if (request('lastwechselundbremsgewicht') == "Leer") {
+      $wagon->b = request('AnzahlderAcshen');
+    }
+    if (request('lastwechselundbremsgewicht') != "Leer") {
+      $wagon->a = request('AnzahlderAcshen');
+    }
+    if (request('bremsstellung') == "P") {
+      $wagon->d = request('Bremsgewicht');
+    }
+    if (request('bremsstellung') == "G") {
+      $wagon->e = request('Bremsgewicht');
+    }
+    if (request('hinweisezureibungsbremse') == "K") {
+      $wagon->k = "X";
+    }
+    if (request('hinweisezureibungsbremse') == "L" || request('hinweisezureibungsbremse') == "LL") {
+      $wagon->l = "X";
+    }
+    if (request('hinweisezureibungsbremse') == "D") {
+      $wagon->sh = "X";
+    }
+    if (request('bemerkungenzurfeststellbremse') == "bühnenbedienbar" || request('bemerkungenzurfeststellbremse') == "bodenbedienbar") {
+      $wagon->h = "X";
+    }
+    if (request('UNNummer') == "") {
+      $wagon->bm = request('Schadwagen');
+    }
+    if (request('UNNummer') != "") {
+      $wagon->bm = request('UNNummer');
+    }
 
-      $wagon->fir = substr($wagon->wagennummer, 0, 2);
-      $wagon->sec = substr($wagon->wagennummer, 2, 2);
-      $wagon->thir = substr($wagon->wagennummer, 4, 4);
-      $theRest = substr($wagon->wagennummer, 8);
-      $wagon->four = substr($theRest, 0, 3);
-      $wagon->five = substr($theRest, 3, 3);
+    $wagon->fir = substr($wagon->wagennummer, 0, 2);
+    $wagon->sec = substr($wagon->wagennummer, 2, 2);
+    $wagon->thir = substr($wagon->wagennummer, 4, 4);
+    $theRest = substr($wagon->wagennummer, 8);
+    $wagon->four = substr($theRest, 0, 3);
+    $wagon->five = substr($theRest, 3, 3);
 
-      $wagon->ge = (int) $wagon->eigenmasse + (int)$wagon->GewichtderLadung;
-      
-      $wagon->bremsgewichte = request('bremsgewichte');
-      $wagon->revsdatum = request('revsdatum');
-      $wagon->gultigkeit = request('gultigkeit');
-      $wagon->empty = request('empty');
-      $wagon->sonstigebemerkungen = request('sonstigebemerkungen');
-      $wagon->maxzuladung = request('maxzuladung');
-      if (request('revsdatum') != ""){
-        $wagon->alertdate = request('alertdate');
-      }
-      else{
-        $wagon->alertdate = null;
-      }
-        
-      
-      
-      
-      $user = Auth::user();
-      $bossid = $zugdata->first()->bossid;
-      if($user->type == "boss"){
-        $wagon->idboss = $user->id;
-        $wagon->iduser = $user->id;
-        $wagon->save();
-        relation::create([
-          'zug_id' => request('zugid'),
-          'wagon_id' => $wagon->id
-        ]);
-        if($wagon->arch == 0){
-          return redirect()->route('wagons.show', $zug);
-        }
-        else {
-          return redirect()->route('wagonarchivelist', $bossid);
-        }
-      }
-      if($user->type == "admin"){
-        $wagon->idboss = $bossid;
-        $wagon->iduser = $bossid;
-        
-        $wagon->save();
-        relation::create([
-          'zug_id' => request('zugid'),
-          'wagon_id' => $wagon->id
-        ]);
-        if($wagon->arch == 0){
-          return redirect()->route('wagons.show', $zug);
-        }
-        else {
-          return redirect()->route('wagonarchivelist', $bossid);
-        }
-        
-      }
-      else{
-        $wagon->idboss = $bossid;
-        $wagon->iduser = $user->id;
-        $wagon->save();
-        relation::create([
-          'zug_id' => request('zugid'),
-          'wagon_id' => $wagon->id
-        ]);
+    $wagon->ge = (int) $wagon->eigenmasse + (int)$wagon->GewichtderLadung;
+
+    $wagon->bremsgewichte = request('bremsgewichte');
+    $wagon->revsdatum = request('revsdatum');
+    $wagon->gultigkeit = request('gultigkeit');
+    $wagon->empty = request('empty');
+    $wagon->sonstigebemerkungen = request('sonstigebemerkungen');
+    $wagon->maxzuladung = request('maxzuladung');
+    if (request('revsdatum') != "") {
+      $wagon->alertdate = request('alertdate');
+    } else {
+      $wagon->alertdate = null;
+    }
+
+
+
+
+    $user = Auth::user();
+    $bossid = $zugdata->first()->bossid;
+    if ($user->type == "boss") {
+      $wagon->idboss = $user->id;
+      $wagon->iduser = $user->id;
+      $wagon->save();
+      relation::create([
+        'zug_id' => request('zugid'),
+        'wagon_id' => $wagon->id
+      ]);
+      if ($wagon->arch == 0) {
         return redirect()->route('wagons.show', $zug);
+      } else {
+        return redirect()->route('wagonarchivelist', $bossid);
       }
-      
     }
-  
+    if ($user->type == "admin") {
+      $wagon->idboss = $bossid;
+      $wagon->iduser = $bossid;
+
+      $wagon->save();
+      relation::create([
+        'zug_id' => request('zugid'),
+        'wagon_id' => $wagon->id
+      ]);
+      if ($wagon->arch == 0) {
+        return redirect()->route('wagons.show', $zug);
+      } else {
+        return redirect()->route('wagonarchivelist', $bossid);
+      }
+    } else {
+      $wagon->idboss = $bossid;
+      $wagon->iduser = $user->id;
+      $wagon->save();
+      relation::create([
+        'zug_id' => request('zugid'),
+        'wagon_id' => $wagon->id
+      ]);
+      return redirect()->route('wagons.show', $zug);
+    }
+  }
+
 
   /**
    * Update the specified resource in storage.
@@ -299,79 +350,77 @@ $filename = 'wali_' . $zg . '_' . $vb . '-' . $bb .'_' .$dt . '.pdf';
       ->join('zugs', 'zugs.id', '=', 'relations.zug_id')
       ->where('wagons.id', $id)
       ->pluck('zug_id');
-      $wagon = Wagon::find($id);
-      if (Wagon::where('arch', 1)->where('wagennummer', request('wagennummer'))->where('zugid', $wagon->zugid )->exists()) {
-        if ($wagon->arch == 0){
-        $wg=DB::table('wagons')->where('wagennummer', request('wagennummer'))->where('zugid', $wagon->zugid )->pluck("id");
-        DB::table('relations')->where('wagon_id',$wg)->delete();
+    $wagon = Wagon::find($id);
+    if (Wagon::where('arch', 1)->where('wagennummer', request('wagennummer'))->where('zugid', $wagon->zugid)->exists()) {
+      if ($wagon->arch == 0) {
+        $wg = DB::table('wagons')->where('wagennummer', request('wagennummer'))->where('zugid', $wagon->zugid)->pluck("id");
+        DB::table('relations')->where('wagon_id', $wg)->delete();
         DB::table('wagons')->where('id', $wg)->delete();
-  
-          $this->validate(
-            $request,
-            [
-    
-              'wagennummer' => 'required|unique:wagons,wagennummer,'.$wagon->id.',id,zugid,' . $wagon->zugid  
-    
-            ],
-            [
-              'wagennummer.unique' => 'Die Wagennummer ist bereits vergeben!',
-    
-            ]
-          );
-          $x=$request->wagennummer;
-        }
-        if ($wagon->arch == 1){
-    
-            $this->validate(
-              $request,
-              [
-      
-                'wagennummer' => 'required|unique:wagons,wagennummer,'.$wagon->id.',id,zugid,' . $wagon->zugid  
-      
-              ],
-              [
-                'wagennummer.unique' => 'Die Wagennummer ist bereits vergeben!',
-      
-              ]
-            );
-            $x=$request->wagennummer;
-          }
-        
-      } else {
+
         $this->validate(
           $request,
           [
-            'wagennummer' => 'required|unique:wagons,wagennummer,'.$wagon->id.',id,zugid,' . $wagon->zugid 
+
+            'wagennummer' => 'required|unique:wagons,wagennummer,' . $wagon->id . ',id,zugid,' . $wagon->zugid
+
           ],
           [
             'wagennummer.unique' => 'Die Wagennummer ist bereits vergeben!',
-  
+
           ]
         );
-        $x=$request->wagennummer;
+        $x = $request->wagennummer;
       }
-  
-    
+      if ($wagon->arch == 1) {
+
+        $this->validate(
+          $request,
+          [
+
+            'wagennummer' => 'required|unique:wagons,wagennummer,' . $wagon->id . ',id,zugid,' . $wagon->zugid
+
+          ],
+          [
+            'wagennummer.unique' => 'Die Wagennummer ist bereits vergeben!',
+
+          ]
+        );
+        $x = $request->wagennummer;
+      }
+    } else {
+      $this->validate(
+        $request,
+        [
+          'wagennummer' => 'required|unique:wagons,wagennummer,' . $wagon->id . ',id,zugid,' . $wagon->zugid
+        ],
+        [
+          'wagennummer.unique' => 'Die Wagennummer ist bereits vergeben!',
+
+        ]
+      );
+      $x = $request->wagennummer;
+    }
+
+
     // Getting values from the blade template form
     $wagon->wagennummer = $x;
 
     $wagon->gattungsbuchstabe = $request->get('gattungsbuchstabe');
     $wagon->längeüberpuffer = $request->get('längeüberpuffer');
     $wagon->bremsgewichte = $request->get('bremsgewichte');
-    
-    if (request('revsdatum') != ""){
+
+    if (request('revsdatum') != "") {
       $wagon->alertdate = $request->get('alertdate');
-    }
-    else{
+    } else {
       $wagon->alertdate = null;
     }
     $wagon->arch = request('arch');
-      $wagon->revsdatum = $request->get('revsdatum');
-      $wagon->gultigkeit = $request->get('gultigkeit');
-      $wagon->empty = $request->get('empty');
-      $wagon->maxzuladung = $request->get('maxzuladung');
-      $wagon->sonstigebemerkungen = request('sonstigebemerkungen');
-      
+    $wagon->revsdatum = $request->get('revsdatum');
+    $wagon->gultigkeit = $request->get('gultigkeit');
+    $wagon->empty = $request->get('empty');
+    $wagon->maxzuladung = $request->get('maxzuladung');
+    $wagon->sonstigebemerkungen = request('sonstigebemerkungen');
+
     $wagon->eigenmasse = $request->get('eigenmasse');
     $wagon->AnzahlderAcshen = $request->get('AnzahlderAcshen');
     $wagon->GewichtderLadung = $request->get('GewichtderLadung');
@@ -435,10 +484,9 @@ $filename = 'wali_' . $zg . '_' . $vb . '-' . $bb .'_' .$dt . '.pdf';
     $wagon->ge = (int) $wagon->eigenmasse + (int)$wagon->GewichtderLadung;
     $wagon->save();
 
-    if($wagon->arch == 0){
+    if ($wagon->arch == 0) {
       return redirect()->route('wagons.show', $zugid[0]);
-    }
-    else {
+    } else {
       return redirect()->route('wagonarchivelist', $wagon->idboss);
     }
   }

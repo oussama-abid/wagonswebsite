@@ -1140,8 +1140,8 @@ tr:not(:last-of-type) td.nostyle {
 
 <body link='blue' vlink='purple' class='container' style="margin-left: -60px;">
 
-  <table border='0' cellpadding='0' cellspacing='0' width='885' style='border-collapse: 
- collapse;table-layout:fixed;width:663pt'>
+  <table border='0' cellpadding='0' cellspacing='0' width='885' style='margin-left: -14px; border-collapse: 
+ collapse;table-layout:fixed;width:675pt' >
     @foreach ($zug as $key => $zugs)
 
     <col class='x24' width='30' style='mso-width-source:userset;background:none;width:22.5pt'>

@@ -128,7 +128,21 @@ class ZugController extends Controller
        
 
     }
-
+    public function getList(Request $request)
+    {
+      $bossid = $request->input('bossid');
+      $search = $request->input('search');
+      $list = Wagon::where('idboss', $bossid)
+          ->where('iduser', $bossid)
+          ->where('arch', 1)
+          ->where('wagennummer', 'LIKE', $search . '%')
+          ->get();
+      $html = '';
+      foreach ($list as $item) {
+          $html .= '<div>'.$item->wagennummer.'</div>';
+      }
+      return response()->json($html);
+    }
 
     public function update(Request $request, $id)
 {

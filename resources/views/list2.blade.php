@@ -33,6 +33,16 @@ use Illuminate\Support\Facades\Auth;
 
   <!-- Template Main CSS File -->
   <link rel="stylesheet" href="{{url('css/main.css')}}">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <!-- jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+    <!-- Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
 
 </head>
@@ -130,9 +140,16 @@ use Illuminate\Support\Facades\Auth;
         </button>
         <a class="btn btn-dark" href="{{ route('addwagon', ['zug' => $zugs->id]) }}">wagen Hinzufügen <i class="bi bi-plus-circle"></i></a>
         <br><br><br>
-
+        @if (Session::has('message'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ Session::get('message') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                @endif
         <table class="table" id="table" style="text-align: center;">
-          <thead class="thead-dark">
+          <thead class="">
             <tr>
 
               <th scope="col">Reihung</th>
@@ -201,27 +218,49 @@ use Illuminate\Support\Facades\Auth;
                 ?>
                 <?php
                 if ($wagons->alertdate != null) {
-                if ( strtotime(date('Y-m-d')) >= strtotime($wagons->alertdate ) ) {
+                  if (strtotime(date('Y-m-d')) >= strtotime($wagons->alertdate)) {
 
                 ?>
-                  <i class="fa fa-exclamation-triangle fa-fade" aria-hidden="true" style="color: #fcc404; font-size: 26px; "></i>
+                    <i class="fa fa-exclamation-triangle fa-fade" aria-hidden="true" style="color: #fcc404; font-size: 26px; "></i>
 
                 <?php
+                  }
                 }
-              }
 
                 ?>
 
               </td>
               <td>
-                <a class="btn btn-warning" href="{{route('edit-wagon', ['id' => $wagons->wagon_id])}}"> <i class="bi bi-pencil"></i> <span class="hide-on-small">edit</span> </a>
+                <?php
 
 
-                <button type="button" class="btn btn-danger" onclick="confirmDelete2('{{ $wagons->wagon_id  }}');"> <i class="bi bi-trash3"></i> <span class="hide-on-small"> Löschen </span> </button>
+                if ($user->type == "boss") {
+
+                ?>
+                  <button type="button" class="btn btn-success" onclick="addarchive('{{ $wagons->wagon_id  }}');"> <i class="bi bi-plus" style="font-size: large;"></i> </button>
+
+                <?php
+                }
+                ?>
+
+
+
+
+
+                <a class="btn btn-warning" href="{{route('edit-wagon', ['id' => $wagons->wagon_id])}}"> <i class="bi bi-pencil"></i> </a>
+
+
+                <button type="button" class="btn btn-danger" onclick="confirmDelete2('{{ $wagons->wagon_id  }}');"> <i class="bi bi-trash3"></i> </button>
               </td>
               <form action="/deletewagon/{{ $wagons->wagon_id }}" method="POST" id="deleteForm-{{ $wagons->wagon_id  }}">
                 @csrf
               </form>
+
+              <form action="/add-wagon-archive/{{ $wagons->wagon_id }}" method="POST" id="archForm-{{ $wagons->wagon_id  }}">
+                @csrf
+              </form>
+
+
 
             </tr>
             @endforeach
@@ -337,6 +376,10 @@ use Illuminate\Support\Facades\Auth;
         }
       })
       return false;
+    }
+
+    function addarchive(id) {
+      document.getElementById('archForm-' + id).submit();
     }
   </script>
   <!-- Vendor JS Files -->

@@ -33,6 +33,57 @@
             background-color: white;
 
         }
+
+        .custom-dropdown {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+            background-color: none;
+        }
+
+
+        .custom-dropdown .listContainer {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-top: none;
+            z-index: 1;
+            max-height: 150px;
+            overflow-y: auto;
+            background-color: #ddd8d4;
+
+        }
+
+        .custom-dropdown #newwg {
+            color: red;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+
+        #listContainer {
+            position: absolute;
+            z-index: 1;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background-color: #fff;
+            max-height: 150px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+        }
+
+        .custom-dropdown .listItem {
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .custom-dropdown .listItem:hover {
+            background-color: #f5f5f5;
+        }
     </style>
     <style>
         .s {
@@ -103,7 +154,6 @@
                 <div class="section-header">
                     <p>Neuen <span>Wagen</span>Hinzufügen</p><br>
 
-
                 </div>
 
                 <div class="row g-0">
@@ -119,8 +169,38 @@
                                     <label for="wagennummer"> <--Suche oder Wagenummer eingeben</label>
                                             <div class="input-container">
                                                 <a href="" data-bs-toggle="modal" data-bs-target="#exampleModa2" class="icon"><i class="bi bi-camera "></i></a>
+                                                <div class="custom-dropdown">
                                                 <input type="text" minlength="16" maxlength="16" required id="input-rs" class="form-control input-field" placeholder="z.B 37 80 4950 360-0" data-rule="minlen:4" @error('wagennummer') value="{{  rtrim(old('wagennummer')) }}" @enderror>
-                                                <input type="text" hidden id="wagennummer" maxlength="11" name="wagennummer">
+
+                                                    <div id="listContainer" style="display: none; ">
+                                                        <span id="newwg">Neu</span>
+                                                        @foreach($list as $item)
+
+                                                        <div class="listItem" id="{{ $item->id }}">
+
+                                                            <span>{{ formatNumber($item->wagennummer) }}</span>
+                                                            <span hidden>{{ $item->gattungsbuchstabe }}</span>
+                                                            <span hidden>{{ $item->längeüberpuffer }}</span>
+                                                            <span hidden>{{ $item->eigenmasse }}</span>
+                                                            <span hidden>{{ $item->AnzahlderAcshen }}</span>
+                                                            <span hidden>{{ $item->lastwechselundbremsgewicht }}</span>
+                                                            <span hidden>{{ $item->bremsstellung }}</span>
+                                                            <span hidden>{{ $item->hinweisezureibungsbremse }}</span>
+                                                            <span hidden>{{ $item->bemerkungenzurfeststellbremse }}</span>
+                                                            <span hidden>{{ $item->Schadwagen }}</span>
+                                                            <span hidden>{{ $item->UNNummer }}</span>
+                                                            <span hidden>{{ $item->bremsgewichte }}</span>
+                                                            <span hidden>{{ $item->revsdatum }}</span>
+                                                            <span hidden>{{ $item->gultigkeit }}</span>
+                                                            <span hidden>{{ $item->empty }}</span>
+                                                            <span hidden>{{ $item->sonstigebemerkungen }}</span>
+                                                            <span hidden>{{ $item->maxzuladung }}</span>
+           
+                                                        </div>
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+                                                <input type="text" hidden  id="wagennummer" maxlength="11" name="wagennummer">
                                             </div>
 
                                             <div id="error-message" style="display:none; color:red;">
@@ -133,6 +213,7 @@
                                             @enderror
 
                                 </div>
+
                                 <div class="col-lg-5 col-md-6">
                                     <label for="gattungsbuchstabe">Gattungsbuchstabe</label>
                                     <input required @error('wagennummer') value="{{  old('gattungsbuchstabe') }}" @enderror type="text" id="gattungsbuchstabe" name="gattungsbuchstabe" class="form-control" placeholder="z.B S" data-rule="email" data-msg="Please enter a valid email">
@@ -662,13 +743,14 @@
                     const isoDate = `${year}-${paddedMonth}-${paddedDay}`;
                     document.getElementById('date-input').value = isoDate;
                 }
-               
+
                 document.getElementById('gultigkeit').value = this.cells[18].innerHTML.trim().replace(/&nbsp;/g, '');
                 document.getElementById('empty').value = this.cells[19].innerHTML.trim().replace(/&nbsp;/g, '');
                 document.getElementById('sonstigebemerkungen').value = this.cells[20].innerHTML.trim();
                 document.getElementById("maxzuladung").value = this.cells[21].innerHTML.trim().replace(/&nbsp;/g, '');;
                 document.getElementById('Schadwagen').disabled = false;
                 document.getElementById('UNNummer').disabled = false;
+                calculateDate();
                 document.getElementById("cls").click();
             };
         }
@@ -830,6 +912,102 @@
     <!-- Template Main JS File -->
     <script src="{{url('js/main.js')}}"></script>
     <script src="{{url('js/image.js')}}"></script>
+    <script>
+        // Get the input field and list container
+        var input = document.getElementById("input-rs");
+        var listContainer = document.getElementById("listContainer");
+        var newButton = document.getElementById("newwg");
+
+        const data = listContainer;
+
+        function hideListContainer() {
+            // Hide the list container
+            listContainer.innerHTML = "";
+            listContainer.style.display = "none";
+            input.removeEventListener("input", handleInput);
+            // Stop showing the items
+            var items = listContainer.querySelectorAll(".listItem");
+            items.forEach(function(item) {
+                item.style.display = "none";
+            });
+        }
+        // Add event listener to the "New" button
+        newButton.addEventListener("click", function() {
+            // Hide the list container
+            hideListContainer();
+        });
+        // Add event listener to the input field
+        input.addEventListener("input", function() {
+            // Get the value entered by the user
+            var filter = input.value.trim().toLowerCase();
+
+            // Hide the list container if the input value is empty or the user clears the input
+            if (filter === "") {
+                listContainer.style.display = "hidden";
+                return;
+            } else {
+                listContainer.style.display = "block";
+            }
+
+            // Loop through all list items and hide/show them based on the filter
+            var items = listContainer.querySelectorAll(".listItem");
+            items.forEach(function(item) {
+                var text = item.querySelector("span").textContent.trim().toLowerCase();
+                if (text.startsWith(filter)) {
+                    item.style.display = "block";
+                } else {
+                    item.style.display = "none";
+                }
+            });
+        });
+
+        // Add event listeners to the document object
+        document.addEventListener("click", function(event) {
+            // Check if the click happened outside the input field and list container
+            if (event.target !== input && event.target.parentNode !== listContainer) {
+                listContainer.style.display = "none";
+            }
+        });
+
+        // Add click event listeners to list items
+        var listItems = listContainer.querySelectorAll(".listItem");
+        listItems.forEach(function(item) {
+            item.addEventListener("click", function() {
+                // Get the data from the selected item
+                var nb = item.querySelector("span:nth-of-type(1)").textContent.trim();
+
+                // Fill in the other input fields with the selected data
+                document.getElementById("input-rs").value = nb;
+                const res = document.getElementById('wagennummer');
+                res.value = nb.replace(/\D/g, '').substring(0, 12);
+                var errorMessage = document.getElementById("error-message");
+                errorMessage.style.display = "none";
+
+
+
+                document.getElementById("gattungsbuchstabe").value = item.querySelector("span:nth-of-type(2)").textContent.trim();
+                document.getElementById("längeüberpuffer").value = item.querySelector("span:nth-of-type(3)").textContent.trim();
+                document.getElementById("eigenmasse").value = item.querySelector("span:nth-of-type(4)").textContent.trim();
+                document.getElementById("AnzahlderAcshen").value = item.querySelector("span:nth-of-type(5)").textContent.trim();
+                document.getElementById('lastwechselundbremsgewicht').value = item.querySelector("span:nth-of-type(6)").textContent.trim();
+                document.getElementById('bremsstellung').value = item.querySelector("span:nth-of-type(7)").textContent.trim();
+                document.getElementById('hinweisezureibungsbremse').value = item.querySelector("span:nth-of-type(8)").textContent.trim();
+                document.getElementById('bemerkungenzurfeststellbremse').value = item.querySelector("span:nth-of-type(9)").textContent.trim();
+                document.getElementById('Schadwagen').value = item.querySelector("span:nth-of-type(10)").textContent.trim();
+                document.getElementById('UNNummer').value =item.querySelector("span:nth-of-type(11)").textContent.trim();
+                document.getElementById('bremsgewichte').value = item.querySelector("span:nth-of-type(12)").textContent.trim();
+                document.getElementById('date-input').value = item.querySelector("span:nth-of-type(13)").textContent.trim();
+                document.getElementById('gultigkeit').value = item.querySelector("span:nth-of-type(14)").textContent.trim();
+                document.getElementById('empty').value = item.querySelector("span:nth-of-type(15)").textContent.trim();
+                document.getElementById('sonstigebemerkungen').value = item.querySelector("span:nth-of-type(16)").textContent.trim();
+                document.getElementById("maxzuladung").value = item.querySelector("span:nth-of-type(17)").textContent.trim();
+               
+                calculateDate();
+                // Hide the list container
+                listContainer.style.display = "none";
+            });
+        });
+    </script>
 </body>
 
 </html>

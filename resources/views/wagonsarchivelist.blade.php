@@ -176,9 +176,9 @@ use Illuminate\Support\Facades\Auth;
                 <a class="btn btn-warning" href="{{route('editarchivewagon', ['id' => $wagons->id])}}"> <i class="bi bi-pencil"></i> <span class="hide-on-small"></span> </a>
 
 
-                <button type="button" class="btn btn-danger" onclick="confirmDelete2('{{ $wagons->wagon_id  }}');"> <i class="bi bi-trash3"></i> <span class="hide-on-small">  </span> </button>
+                <button type="button" class="btn btn-danger" onclick="confirmDelete2('{{ $wagons->id  }}');"> <i class="bi bi-trash3"></i> <span class="hide-on-small">  </span> </button>
               </td>
-              <form action="{{route('deletearch', ['wagon' => $wagons->id]) }} "  method="POST" id="deleteForm-{{ $wagons->wagon_id  }}">
+              <form action="{{route('deletearch', ['wagon' => $wagons->id]) }} "  method="POST" id="deleteForm-{{ $wagons->id  }}">
                 @csrf
               </form>
 
